@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CareerRoadmap | Student Career Journey</title>
+    <meta name="description" content="A comprehensive student career roadmap from beginner to advanced professional.">
+    <link rel="stylesheet" href="style.css">
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+    <div class="bg-blobs">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+    </div>
+
+    <nav id="main-nav" style="display: none;">
+        <div class="brand" id="nav-brand">CareerRoadmap</div>
+        <div class="nav-actions">
+            <div class="search-container">
+                <i data-lucide="search" class="search-icon"></i>
+                <input type="text" id="course-search" placeholder="Search paths (e.g. AI, MBA)..." autocomplete="off">
+            </div>
+            <button class="sign-out-btn" id="sign-out">
+                <i data-lucide="log-out"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Home View -->
+    <section id="home-view" class="active">
+        <div class="hero-section fade-in">
+            <h1>Design Your <span class="gradient-text">Future</span></h1>
+            <p>From beginner to advanced professional — your step-by-step career journey starts here.</p>
+            <button class="btn-primary btn-large" id="get-started">Unlock Your Path <i data-lucide="rocket"></i></button>
+        </div>
+
+
+
+        <div class="journey-section">
+            <div class="journey-header">
+                <h2>The Process</h2>
+                <p>A proven roadmap for student success</p>
+            </div>
+            
+            <div class="journey-grid">
+                <div class="journey-banner fade-in" style="animation-delay: 0.2s;">
+                    <img src="file:///C:/Users/katte/.gemini/antigravity/brain/294e1766-1d2e-4bb0-bb6c-95614e3a60f6/media__1775563399638.jpg" alt="Journey Part 1">
+                    <div class="banner-overlay">
+                        <h3>Foundation & Planning</h3>
+                        <p>Learn new skills and plan your future with precision.</p>
+                    </div>
+                </div>
+                <div class="journey-banner fade-in" style="animation-delay: 0.4s;">
+                    <img src="file:///C:/Users/katte/.gemini/antigravity/brain/294e1766-1d2e-4bb0-bb6c-95614e3a60f6/media__1775563399690.jpg" alt="Journey Part 2">
+                    <div class="banner-overlay">
+                        <h3>Execution & Career</h3>
+                        <p>Find your path, set clear goals, and launch your new job.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Login View -->
+    <section id="login-view">
+        <div class="login-card fade-in">
+            <div class="login-header">
+                <h2>Welcome Back</h2>
+                <p>Start your career journey with us</p>
+            </div>
+            
+            <form id="login-form">
+                <div class="input-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" placeholder="name@company.com" required>
+                </div>
+                <div class="input-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" placeholder="••••••••" required>
+                </div>
+                <button type="submit" class="btn-primary">Sign In</button>
+            </form>
+
+            <div class="divider">
+                <span>OR</span>
+            </div>
+
+            <button class="btn-google" id="google-login">
+                <svg viewBox="0 0 24 24" width="18" height="18"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.1c-.22-.66-.35-1.36-.35-2.1s.13-1.44.35-2.1V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l3.66-2.84z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z" fill="#EA4335"/></svg>
+                Continue with Google
+            </button>
+
+            <div class="login-footer">
+                <p>Don't have an account? <a href="#" id="toggle-register">Create an account</a></p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Dashboard View -->
+    <main id="dashboard-view" style="display: none;">
+        <aside class="sidebar">
+            <div class="sidebar-nav">
+                <button class="nav-item active" data-view="path-selection">
+                    <i data-lucide="layout-grid"></i> <span>Home</span>
+                </button>
+                <button class="nav-item" data-view="roadmap-container">
+                    <i data-lucide="map"></i> <span>Roadmap</span>
+                </button>
+                <button class="nav-item" data-view="quiz-view">
+                    <i data-lucide="brain"></i> <span>Quiz & Test</span>
+                </button>
+                <button class="nav-item" data-view="profile-view">
+                    <i data-lucide="user"></i> <span>Profile</span>
+                </button>
+            </div>
+            <div class="sidebar-footer">
+                <button class="nav-item" id="sidebar-sign-out">
+                    <i data-lucide="log-out"></i> <span>Sign Out</span>
+                </button>
+            </div>
+        </aside>
+
+        <div class="main-content">
+
+            <!-- Path Selection Section (Home) -->
+            <section id="path-selection" class="view-section active fade-in">
+                <header style="text-align: center; margin-bottom: 50px; padding-top: 20px;">
+                    <h1 style="font-size: 2.5rem; margin-bottom: 10px;">Select Your Path</h1>
+                    <p style="color: var(--text-secondary); font-size: 1rem;">Choose a career field to see your step-by-step roadmap.</p>
+                </header>
+                
+                <div id="dashboard">
+                    <!-- Path cards will be injected here by app.js -->
+                </div>
+            </section>
+
+            <!-- Roadmap View Section (Specific Path) -->
+            <section id="roadmap-container" class="view-section">
+                <!-- Empty State -->
+                <div class="empty-state" id="roadmap-empty-state">
+                    <i data-lucide="map-pin" style="width: 48px; height: 48px; opacity: 0.3; margin-bottom: 20px;"></i>
+                    <h3>No Active Roadmap</h3>
+                    <p>Select a career path from the Home screen to start your journey.</p>
+                    <button class="btn-primary" onclick="app.showHome()">Go to Home</button>
+                </div>
+
+                <div id="roadmap-active-content" style="display: none;">
+                    <button class="back-btn" id="back-to-dashboard">
+                        <i data-lucide="arrow-left"></i> Back to Career Paths
+                    </button>
+
+                    <!-- Roadmap Header with Course Banner -->
+                    <div class="roadmap-course-header" id="roadmap-course-header">
+                        <div class="roadmap-course-info">
+                            <div class="roadmap-course-icon" id="roadmap-course-icon"></div>
+                            <div>
+                                <h2 id="roadmap-title"></h2>
+                                <p id="roadmap-desc"></p>
+                            </div>
+                        </div>
+                        <div class="roadmap-overall-progress">
+                            <span id="roadmap-progress-label">0% Complete</span>
+                            <div class="progress-bar-track">
+                                <div class="progress-bar-fill" id="roadmap-progress-fill"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- AI Adaptive Schedule Panel -->
+                    <div class="adaptive-schedule-panel" id="adaptive-schedule-panel">
+                        <div class="schedule-panel-header">
+                            <i data-lucide="sparkles"></i>
+                            <h3>Your AI-Powered Schedule</h3>
+                            <span class="ai-badge">Adaptive</span>
+                        </div>
+                        <p class="schedule-subtitle">Complete module tests to unlock your personalized learning schedule.</p>
+                        <div class="schedule-weeks" id="schedule-weeks">
+                            <!-- Week schedule cards injected here -->
+                        </div>
+                    </div>
+
+                    <!-- Visual Node Roadmap Path -->
+                    <div class="visual-roadmap" id="visual-roadmap">
+                        <!-- Nodes injected by JS -->
+                    </div>
+
+                    <!-- Job Guide -->
+                    <div class="job-guide-card" id="job-guide-container">
+                        <h3><i data-lucide="briefcase"></i> Job Search Guide</h3>
+                        <div id="job-guide-content"></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Module Test Modal -->
+            <div class="modal-overlay" id="module-test-modal" style="display:none;">
+                <div class="modal-content test-modal-content">
+                    <div class="test-modal-header">
+                        <div>
+                            <span class="test-modal-badge">Module Assessment</span>
+                            <h3 id="test-modal-title">Module Test</h3>
+                        </div>
+                        <button class="close-modal" id="close-test-modal"><i data-lucide="x"></i></button>
+                    </div>
+
+                    <!-- Test State: Intro -->
+                    <div id="test-intro-state">
+                        <p id="test-intro-desc">Test your knowledge on this module.</p>
+                        <div class="test-meta">
+                            <span><i data-lucide="help-circle"></i> <span id="test-q-count">5</span> Questions</span>
+                            <span><i data-lucide="clock"></i> ~5 Minutes</span>
+                            <span><i data-lucide="zap"></i> Adaptive Scoring</span>
+                        </div>
+                        <button class="btn-primary" id="start-test-btn" style="width:100%; margin-top: 20px;">Start Assessment</button>
+                    </div>
+
+                    <!-- Test State: Questions -->
+                    <div id="test-question-state" style="display:none;">
+                        <div class="test-progress">
+                            <span id="test-q-progress">1 / 5</span>
+                            <div class="progress-bar-track">
+                                <div class="progress-bar-fill" id="test-q-fill"></div>
+                            </div>
+                        </div>
+                        <p class="test-question" id="test-question-text"></p>
+                        <div class="test-options" id="test-options"></div>
+                        <button class="btn-primary" id="next-q-btn" style="width:100%; margin-top:20px; opacity:0.4;" disabled>Next Question</button>
+                    </div>
+
+                    <!-- Test State: Results -->
+                    <div id="test-result-state" style="display:none;">
+                        <div class="result-score-circle" id="result-score-circle">
+                            <span id="result-score-text">0%</span>
+                        </div>
+                        <h3 id="result-verdict">Well Done!</h3>
+                        <p id="result-message" class="result-message"></p>
+                        <div class="ai-recommendation" id="ai-recommendation"></div>
+                        <button class="btn-primary" id="apply-schedule-btn" style="width:100%; margin-top:20px;">
+                            <i data-lucide="calendar-check"></i> Apply to My Schedule
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Diagnostic Modal -->
+            <div class="modal-overlay" id="diagnostic-modal" style="display:none;">
+                <div class="modal-content test-modal-content">
+                    <div class="test-modal-header">
+                        <div>
+                            <span class="test-modal-badge" style="background: var(--accent-glow); color: var(--accent-color);">Placement Test</span>
+                            <h3 id="diag-modal-title">Career Path Diagnostic</h3>
+                        </div>
+                        <button class="close-modal" id="close-diag-modal"><i data-lucide="x"></i></button>
+                    </div>
+
+                    <!-- Diag Intro -->
+                    <div id="diag-intro-state">
+                        <p id="diag-intro-desc">Take this quick placement test to generate your initial AI-powered schedule.</p>
+                        <div class="test-meta">
+                            <span><i data-lucide="help-circle"></i> <span id="diag-q-count">5</span> Questions</span>
+                            <span><i data-lucide="clock"></i> ~5 Minutes</span>
+                        </div>
+                        <button class="btn-primary" id="start-diag-btn" style="width:100%; margin-top: 20px;">Start Diagnostic</button>
+                    </div>
+
+                    <!-- Diag Questions -->
+                    <div id="diag-question-state" style="display:none;">
+                        <div class="test-progress">
+                            <span id="diag-q-progress">1 / 5</span>
+                            <div class="progress-bar-track">
+                                <div class="progress-bar-fill" id="diag-q-fill"></div>
+                            </div>
+                        </div>
+                        <p class="test-question" id="diag-question-text"></p>
+                        <div class="test-options" id="diag-options"></div>
+                        <button class="btn-primary" id="next-diag-btn" style="width:100%; margin-top:20px; opacity:0.4;" disabled>Next Question</button>
+                    </div>
+
+                    <!-- Diag Results -->
+                    <div id="diag-result-state" style="display:none;">
+                        <div class="result-score-circle" id="diag-score-circle">
+                            <span id="diag-score-text">0%</span>
+                        </div>
+                        <h3 id="diag-verdict">Diagnostic Complete!</h3>
+                        <p id="diag-message" class="result-message"></p>
+                        <button class="btn-primary" id="generate-roadmap-btn" style="width:100%; margin-top:20px;">
+                            <i data-lucide="map"></i> Generate My Roadmap
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- Quiz & Test View -->
+            <section id="quiz-view" class="view-section">
+                <header class="section-header">
+                    <h2>Quiz & Assessments</h2>
+                    <p>Test your knowledge and earn badges</p>
+                </header>
+                <div class="quiz-grid" id="quiz-list">
+                    <!-- Mock quizzes will be injected here -->
+                </div>
+            </section>
+
+            <!-- Profile View -->
+            <section id="profile-view" class="view-section">
+                <header class="section-header">
+                    <h2>User Profile</h2>
+                    <p>Monitor your professional growth</p>
+                </header>
+                <div class="profile-dashboard">
+                    <div class="profile-card">
+                        <div class="profile-header" style="display:flex; justify-content:space-between; align-items:center; width: 100%;">
+                            <div style="display:flex; align-items:center; gap:20px;">
+                                <div class="avatar" id="profile-avatar" style="background-size: cover; background-position: center; flex-shrink: 0;">J</div>
+                                <div>
+                                    <h3 id="profile-name">John Doe</h3>
+                                    <p id="profile-email">john@example.com</p>
+                                    <p id="profile-goal" style="color: var(--accent-color); font-size: 0.9rem; margin-top: 5px;"></p>
+                                </div>
+                            </div>
+                            <button id="open-edit-profile-btn" style="padding: 8px 15px; border-radius: 8px; border: 1px solid var(--border-color); background: rgba(255,255,255,0.05); color: var(--text-primary); cursor: pointer; display: flex; align-items: center; gap: 5px; transition: 0.2s;"><i data-lucide="edit-3" style="width:16px; height:16px;"></i> Edit</button>
+                        </div>
+                        <div class="stats-grid">
+                            <div class="stat-item">
+                                <span class="stat-value" id="stats-completed">0</span>
+                                <span class="stat-label">Skills Completed</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-value" id="stats-quizzes">0</span>
+                                <span class="stat-label">Quizzes Taken</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-value" id="stats-level">Junior</span>
+                                <span class="stat-label">Member Level</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="achievements-section">
+                        <h3>Recent Achievements</h3>
+                        <div class="badges-grid" id="badges-container">
+                            <!-- Badges will be injected here -->
+                            <div class="badge-locked"><i data-lucide="lock"></i></div>
+                            <div class="badge-locked"><i data-lucide="lock"></i></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Skill Detail Modal -->
+    <div class="modal-overlay" id="skill-modal">
+        <div class="modal-content">
+            <div class="close-modal" id="close-modal">
+                <i data-lucide="x"></i>
+            </div>
+            <div class="modal-header">
+                <span class="skill-badge" id="modal-badge"></span>
+                <h3 id="modal-title"></h3>
+            </div>
+            <p id="modal-desc" style="color: var(--text-secondary); margin-top: 20px;"></p>
+            <div id="modal-resources">
+                <!-- Resource links will be injected here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Profile Edit Modal -->
+    <div class="modal-overlay" id="profile-edit-modal" style="display:none;">
+        <div class="modal-content login-card" style="max-width: 400px;">
+            <div class="modal-header" style="justify-content: space-between;">
+                <h3 style="margin: 0;">Edit Profile</h3>
+                <div class="close-modal" id="close-profile-modal" style="position: static; font-size: 1rem;"><i data-lucide="x"></i></div>
+            </div>
+            <form id="profile-edit-form" style="display:flex; flex-direction:column; gap:15px; margin-top:20px;">
+                <div class="input-group">
+                    <label for="edit-profile-photo">Profile Photo</label>
+                    <input type="file" id="edit-profile-photo" accept="image/*" style="background: rgba(255,255,255,0.05); color: #fff; padding: 10px; border-radius: 8px; border: 1px solid var(--border-color);">
+                </div>
+                <div class="input-group">
+                    <label for="edit-profile-name">Full Name</label>
+                    <input type="text" id="edit-profile-name" placeholder="John Doe" required style="width: 100%; box-sizing: border-box;">
+                </div>
+                <div class="input-group">
+                    <label for="edit-profile-goal">Career Goal</label>
+                    <input type="text" id="edit-profile-goal" placeholder="e.g. AI Engineer" style="width: 100%; box-sizing: border-box;">
+                </div>
+                <button type="submit" class="btn-primary" id="save-profile-btn" style="margin-top: 10px;">Save Changes</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="data.js"></script>
+    <script type="module" src="app.js"></script>
+    <script>
+        // Initialize Lucide icons on load
+        lucide.createIcons();
+    </script>
+</body>
+</html>
