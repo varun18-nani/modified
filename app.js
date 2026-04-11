@@ -120,16 +120,18 @@ document.addEventListener('DOMContentLoaded', () => {
         if (newEmail) newEmail.textContent = email || 'No Email Linked';
         
         // Avatar Logic
-        const avatarNew = document.getElementById('profile-avatar-new');
-        if (avatarNew) {
+        const avatarImg = document.getElementById('profile-avatar-img');
+        const avatarInitials = document.getElementById('profile-avatar-initials');
+        
+        if (avatarImg && avatarInitials) {
             if (photoURL) {
-                avatarNew.style.backgroundImage = `url(${photoURL})`;
-                avatarNew.style.backgroundSize = 'cover';
-                avatarNew.style.backgroundPosition = 'center';
-                avatarNew.textContent = '';
+                avatarImg.src = photoURL;
+                avatarImg.style.display = 'block';
+                avatarInitials.style.display = 'none';
             } else {
-                avatarNew.style.backgroundImage = 'none';
-                avatarNew.textContent = name ? name.charAt(0).toUpperCase() : 'U';
+                avatarImg.style.display = 'none';
+                avatarInitials.style.display = 'flex';
+                avatarInitials.textContent = name ? name.charAt(0).toUpperCase() : 'U';
             }
         }
         
@@ -1151,7 +1153,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         document.getElementById('start-video-quiz-btn').addEventListener('click', () => {
             const video = activePlaylist[currentVideoIndex];
-            startVideoLessonQuiz(video.quiz);
+            startVideoLessonQuiz(video);
         });
     }
 
@@ -1465,6 +1467,12 @@ document.addEventListener('DOMContentLoaded', () => {
             if (currentPath) showRoadmap(currentPath);
         }
     });
+
+    // Export for YouTube API (needed since this is a module)
+    window.onYouTubeIframeAPIReady = () => {
+        console.log("YouTube IFrame API Ready");
+        // We can pre-initialize if needed, but loadVideo handles it lazily
+    };
 
     // Export for empty state visibility
     window.app.showHome = () => switchView('path-selection');

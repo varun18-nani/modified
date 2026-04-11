@@ -394,43 +394,122 @@ const PLAYLIST_DATA = {
     ],
 
     // --- FULL 37 CATEGORY COVERAGE (Curated Playlists) ---
-    "python": [{ "id": "py-v1", "title": "Python for Beginners (Full Course)", "youtubeId": "_uQrJ0TkZlc", "author": "Programming with Mosh", "testType": "coding-challenge", "task": "Write a script to automate file renaming in a folder." }],
-    "full-stack": [{ "id": "fs-v1", "title": "Ultimate Web Dev Guide", "youtubeId": "mU6an79wzkY", "author": "Traversy Media", "testType": "html-lab", "task": "Build a multi-section landing page using HTML Grid." }],
-    "data-science": [{ "id": "ds-v1", "title": "Data Science for Engineers", "youtubeId": "ua-CiDNNj30", "author": "NPTEL / IIT Madras", "testType": "data-lab", "task": "Analyze the outliers in the sample dataset provided." }],
-    "ai": [{ "id": "ai-v1", "title": "AI: Search Methods", "youtubeId": "JMUxmLyz9W4", "author": "IIT Madras (Deepak)", "testType": "quiz", "quiz": [{ "q": "Search algorithm for shortest path?", "opts": ["BFS", "DFS"], "ans": 0 }] }],
-    "ml": [{ "id": "ml-v1", "title": "Machine Learning Class", "youtubeId": "PPLop4L2eGk", "author": "Balaraman Ravindran (IIT)", "testType": "quiz", "quiz": [{ "q": "Is regression supervised?", "opts": ["Yes", "No"], "ans": 0 }] }],
-    "cloud": [{ "id": "cl-v1", "title": "Cloud Fundamentals", "youtubeId": "EN4fPBX22is", "author": "AWS Full Course", "testType": "quiz", "quiz": [{ "q": "S3 is for?", "opts": ["Storage", "Compute"], "ans": 0 }] }],
-    "devops": [{ "id": "dev-v1", "title": "DevOps Course", "youtubeId": "hQcFE0nvGuU", "author": "Nana", "testType": "quiz", "quiz": [{ "q": "What is CI?", "opts": ["Integration", "Interface"], "ans": 0 }] }],
-    "ui-ux": [{ "id": "ui-v1", "title": "UI UX Design Full Course", "youtubeId": "c9Wg6i-P7pA", "author": "DesignCode", "testType": "html-lab", "task": "Create a high-fidelity Figma mockup of a login screen." }],
-    "m-tech": [{ "id": "mt-v1", "title": "Advanced Engineering Theory", "youtubeId": "ua-CiDNNj30", "author": "IIT Scholars", "testType": "quiz", "quiz": [{ "q": "Complex systems?", "opts": ["Yes", "No"], "ans": 0 }] }],
-    "cyber-security": [{ "id": "cs-v1", "title": "Cybersecurity for Beginners", "youtubeId": "nzj7u9bf_94", "author": "IIT / Simplilearn", "testType": "quiz", "quiz": [{ "q": "Malware type?", "opts": ["Virus", "VPC"], "ans": 0 }] }],
-    "blockchain": [{ "id": "bc-v1", "title": "Blockchain Full Course", "youtubeId": "gyMwXuJrbJQ", "author": "Simplilearn", "testType": "quiz", "quiz": [{ "q": "Genesis block index?", "opts": ["0", "1"], "ans": 0 }] }],
-    "business-analytics": [{ "id": "ba-v1", "title": "Data Mining Professionals", "youtubeId": "jN-S6Z7bBHo", "author": "IIT Roorkee", "testType": "data-lab", "task": "Find trends in categorical data." }],
-    "product-management": [{ "id": "pm-v1", "title": "Product Management Roadmap", "youtubeId": "8o6pC0xN00w", "author": "Product School", "testType": "quiz", "quiz": [{ "q": "MVP purpose?", "opts": ["Learning", "Scaling"], "ans": 0 }] }],
-    "digital-marketing": [{ "id": "dm-v1", "title": "Google Ads Full Course", "youtubeId": "nLp3shG2ZNo", "author": "Google Masters", "testType": "quiz", "quiz": [{ "q": "Keyword match types?", "opts": ["Broad/Exact", "High/Low"], "ans": 0 }] }],
-    "mba": [{ "id": "mba-v1", "title": "MBA Strategy Masterclass", "youtubeId": "7P8V0L0W9rM", "author": "Business Insider", "testType": "quiz", "quiz": [{ "q": "SWOT Meaning?", "opts": ["Strength/Weakness", "Sales/Web"], "ans": 0 }] }],
-    "pgdm": [{ "id": "pg-v1", "title": "Management Fundamentals", "youtubeId": "fR8b8fLzX6k", "author": "Corporate Hub", "testType": "quiz", "quiz": [{ "q": "Soft skills?", "opts": ["Yes", "No"], "ans": 0 }] }],
-    "cfa": [{ "id": "cfa-v1", "title": "CFA Level 1 Guide", "youtubeId": "W79zK6Wz5vQ", "author": "Mark Meldrum", "testType": "quiz", "quiz": [{ "q": "Ethical standards?", "opts": ["Critical", "Optional"], "ans": 0 }] }],
-    "frm": [{ "id": "frm-v1", "title": "Financial Risk Manager", "youtubeId": "6m9H_X1vj1Q", "author": "Bionic Turtle", "testType": "quiz", "quiz": [{ "q": "VaR Meaning?", "opts": ["Value at Risk", "Variable"], "ans": 0 }] }],
-    "financial-modeling": [{ "id": "fm-v1", "title": "LBO Modeling", "youtubeId": "V_V7e9G6-wM", "author": "Wall Street Prep", "testType": "quiz", "quiz": [{ "q": "Shortcuts?", "opts": ["ALT+H", "CTRL+C"], "ans": 0 }] }],
-    "investment-banking": [{ "id": "ib-v1", "title": "IB Deal Cycle", "youtubeId": "V_V7e9G6-wM", "author": "WSO", "testType": "quiz", "quiz": [{ "q": "Pitchbook?", "opts": ["Sales doc", "Code doc"], "ans": 0 }] }],
-    "graphic-design": [{ "id": "gd-v1", "title": "Photoshop Essentials", "youtubeId": "IyR_uYsRdPs", "author": "Adobe Masters", "testType": "html-lab", "task": "Create a vector logo of a coffee shop." }],
-    "animation-vfx": [{ "id": "av-v1", "title": "Blender 3D", "youtubeId": "TPrnSACiTJ4", "author": "Blender Guru", "testType": "quiz", "quiz": [{ "q": "Viewport engine?", "opts": ["Eevee", "Cycles"], "ans": 0 }] }],
-    "video-editing": [{ "id": "ve-v1", "title": "Premiere Pro Tutorial", "youtubeId": "Hls3Tp7JS8E", "author": "Justin Odisho", "testType": "quiz", "quiz": [{ "q": "Cut shortcut?", "opts": ["C", "V"], "ans": 0 }] }],
-    "robotics": [{ "id": "ro-v1", "title": "Robotics Intro", "youtubeId": "fR8V0V9_M4U", "author": "Stanford University", "testType": "quiz", "quiz": [{ "q": "Kinematics?", "opts": ["Geometry", "Physics"], "ans": 0 }] }],
-    "embedded-systems": [{ "id": "es-v1", "title": "Embedded Learning", "youtubeId": "joL8Vp8AtYI", "author": "IIT Delhi", "testType": "coding-challenge", "task": "Write an ISR." }],
-    "vlsi": [{ "id": "vl-v1", "title": "Digital VLSI Design", "youtubeId": "9SnR3M3C11M", "author": "IIT Roorkee", "testType": "quiz", "quiz": [{ "q": "Moore's Law?", "opts": ["Yes", "No"], "ans": 0 }] }],
-    "automation": [{ "id": "au-v1", "title": "Industrial Automation", "youtubeId": "fR8V0V9_M4U", "author": "Rockwell", "testType": "quiz", "quiz": [{ "q": "PLC?", "opts": ["Yes", "No"], "ans": 0 }] }],
-    "renewable-energy": [{ "id": "re-v1", "title": "Solar Energy", "youtubeId": "EN4fPBX22is", "author": "National Geographic", "testType": "quiz", "quiz": [{ "q": "PV?", "opts": ["Yes", "No"], "ans": 0 }] }],
-    "upsc": [{ "id": "up-v1", "title": "UPSC CS Preparation", "youtubeId": "V_V7e9G6-wM", "author": "Drishti IAS", "testType": "quiz", "quiz": [{ "q": "IAS?", "opts": ["Yes", "No"], "ans": 0 }] }],
-    "gate": [{ "id": "gt-v1", "title": "GATE Prep Guide", "youtubeId": "EN4fPBX22is", "author": "Unacademy", "testType": "quiz", "quiz": [{ "q": "3 Years validity?", "opts": ["Yes", "No"], "ans": 0 }] }],
-    "ssc": [{ "id": "sc-v1", "title": "SSC CGL Full Course", "youtubeId": "nzj7u9bf_94", "author": "Abhinay Maths", "testType": "quiz", "quiz": [{ "q": "CGL?", "opts": ["Yes", "No"], "ans": 0 }] }],
-    "banking": [{ "id": "bk-v1", "title": "IBPS PO 2024", "youtubeId": "jN-S6Z7bBHo", "author": "Adda247", "testType": "quiz", "quiz": [{ "q": "RBI?", "opts": ["Yes", "No"], "ans": 0 }] }],
-    "robotics-engineering": [{ "id": "re-v1", "title": "Robotics Engineering", "youtubeId": "fR8V0V9_M4U", "author": "MIT OCW", "testType": "quiz", "quiz": [{ "q": "Feedback?", "opts": ["Yes", "No"], "ans": 0 }] }],
-    "structural-engineering": [{ "id": "se-v1", "title": "Structural Analysis", "youtubeId": "EN4fPBX22is", "author": "Civil Engineering Hub", "testType": "quiz", "quiz": [{ "q": "Loads?", "opts": ["Yes", "No"], "ans": 0 }] }],
-    "chemical-engineering": [{ "id": "ce-v1", "title": "Chemical Process", "youtubeId": "nzj7u9bf_94", "author": "Learn ChemE", "testType": "quiz", "quiz": [{ "q": "Dynamics?", "opts": ["Yes", "No"], "ans": 0 }] }],
-    "aerospace": [{ "id": "ae-v1", "title": "Flight Dynamics", "youtubeId": "joL8Vp8AtYI", "author": "NASA Learn", "testType": "quiz", "quiz": [{ "q": "Lift?", "opts": ["Yes", "No"], "ans": 0 }] }],
-    "biotech": [{ "id": "bt-v1", "title": "Biotechnology Course", "youtubeId": "nzj7u9bf_94", "author": "BioHub", "testType": "quiz", "quiz": [{ "q": "Genetics?", "opts": ["Yes", "No"], "ans": 0 }] }]
+    "python": [
+        { "id": "py-v1", "title": "1. Introduction to Python", "youtubeId": "Y8Tko2YC5hA", "author": "Programming with Mosh", "testType": "quiz", "quiz": [{ "q": "What is Python?", "opts": ["Scripting Language", "Hardware Language"], "ans": 0 }] },
+        { "id": "py-v2", "title": "2. Variables and Types", "youtubeId": "kqtD5dpn9C8", "author": "Programming with Mosh", "testType": "coding-challenge", "task": "Declare a variable named age and set it to 25." },
+        { "id": "py-v3", "title": "3. If Statements", "youtubeId": "Zp5MuPOxlW0", "author": "Programming with Mosh", "testType": "quiz", "quiz": [{ "q": "Result of if True?", "opts": ["Execute", "Skip"], "ans": 0 }] }
+    ],
+    "full-stack": [
+        { "id": "fs-v1", "title": "1. Frontend Fundamentals", "youtubeId": "mU6an79wzkY", "author": "Traversy Media", "testType": "html-lab", "task": "Create a centered div with 20px padding." },
+        { "id": "fs-v2", "title": "2. Backend with Node.js", "youtubeId": "RLtyhwFtXWc", "author": "Traversy Media", "testType": "quiz", "quiz": [{ "q": "What is Node.js?", "opts": ["Runtime", "Framework"], "ans": 0 }] }
+    ],
+    "data-science": [
+        { "id": "ds-v1", "title": "1. Data Science for Engineers", "youtubeId": "ua-CiDNNj30", "author": "NPTEL", "testType": "data-lab", "task": "Calculate the mean of [10, 20, 30]." },
+        { "id": "ds-v2", "title": "2. Statistics Foundations", "youtubeId": "VzcE0o5fU0k", "author": "NPTEL", "testType": "quiz", "quiz": [{ "q": "Standard deviation measures?", "opts": ["Spread", "Average"], "ans": 0 }] }
+    ],
+    "ai": [
+        { "id": "ai-v1", "title": "1. AI Search Methods", "youtubeId": "JMUxmLyz9W4", "author": "IIT Madras", "testType": "quiz", "quiz": [{ "q": "What is BFS?", "opts": ["Breadth First Search", "Best First Search"], "ans": 0 }] },
+        { "id": "ai-v2", "title": "2. Game Playing Algorithms", "youtubeId": "Z7E0V_w6HlM", "author": "IIT Madras", "testType": "quiz", "quiz": [{ "q": "Can Minimax solve chess?", "opts": ["Yes", "In theory"], "ans": 1 }] }
+    ],
+    "ml": [
+        { "id": "ml-v1", "title": "1. Regression Analysis", "youtubeId": "PPLop4L2eGk", "author": "NPTEL", "testType": "quiz", "quiz": [{ "q": "Linear regression is Supervised?", "opts": ["Yes", "No"], "ans": 0 }] }
+    ],
+    "cloud": [
+        { "id": "cl-v1", "title": "1. Cloud Fundamentals", "youtubeId": "EN4fPBX22is", "author": "AWS Full Course", "testType": "quiz", "quiz": [{ "q": "What is EC2?", "opts": ["Compute", "Storage"], "ans": 0 }] }
+    ],
+    "cyber-security": [
+        { "id": "cs-v1", "title": "1. Cybersecurity Basics", "youtubeId": "nzj7u9bf_94", "author": "Simplilearn", "testType": "quiz", "quiz": [{ "q": "What is Phishing?", "opts": ["Email Scam", "Hardware hack"], "ans": 0 }] }
+    ],
+    "devops": [
+        { "id": "dv-v1", "title": "1. DevOps Roadmap", "youtubeId": "hQcFE0nvGuU", "author": "TechWorld with Nana", "testType": "quiz", "quiz": [{ "q": "What is Docker?", "opts": ["Containerization", "Automation"], "ans": 0 }] }
+    ],
+    "blockchain": [
+        { "id": "bc-v1", "title": "1. Blockchain Intro", "youtubeId": "gyMwXuJrbJQ", "author": "Simplilearn", "testType": "quiz", "quiz": [{ "q": "What is a block?", "opts": ["Data unit", "Physical limit"], "ans": 0 }] }
+    ],
+    "software-testing": [
+        { "id": "st-v1", "title": "1. QA Automation", "youtubeId": "nd17m_oY27U", "author": "Automation Step by Step", "testType": "quiz", "quiz": [{ "q": "What is Selenium?", "opts": ["Test Tool", "Dev Tool"], "ans": 0 }] }
+    ],
+    "ui-ux": [
+        { "id": "ui-v1", "title": "1. UI/UX Principles", "youtubeId": "c9Wg6i-P7pA", "author": "DesignCode", "testType": "html-lab", "task": "Style a button with blue background and white text." }
+    ],
+    "mba": [
+        { "id": "mba-v1", "title": "1. Strategic Management", "youtubeId": "7P8V0L0W9rM", "author": "Business Insider", "testType": "quiz", "quiz": [{ "q": "SWOT Analysis S?", "opts": ["Strengths", "Sales"], "ans": 0 }] }
+    ],
+    "pgdm": [
+        { "id": "pg-v1", "title": "1. Management Theory", "youtubeId": "fR8b8fLzX6k", "author": "Corporate Hub", "testType": "quiz", "quiz": [{ "q": "Scientific Mgmt Author?", "opts": ["Taylor", "Fayol"], "ans": 0 }] }
+    ],
+    "business-analytics": [
+        { "id": "ba-v1", "title": "1. Predictive Analytics", "youtubeId": "jN-S6Z7bBHo", "author": "IIT Roorkee", "testType": "data-lab", "task": "Identify the target variable in a churn dataset." }
+    ],
+    "product-management": [
+        { "id": "pm-v1", "title": "1. Product Launch", "youtubeId": "8o6pC0xN00w", "author": "Product School", "testType": "quiz", "quiz": [{ "q": "What is MVP?", "opts": ["Min Viable Product", "Max Val Product"], "ans": 0 }] }
+    ],
+    "digital-marketing": [
+        { "id": "dm-v1", "title": "1. Google Ads", "youtubeId": "nLp3shG2ZNo", "author": "Simplilearn", "testType": "quiz", "quiz": [{ "q": "Keyword Match Types?", "opts": ["Broad/Exact", "High/Low"], "ans": 0 }] }
+    ],
+    "m-tech": [
+        { "id": "mt-v1", "title": "1. Advanced Engineering", "youtubeId": "ua-CiDNNj30", "author": "IIT Madras", "testType": "quiz", "quiz": [{ "q": "Complex Systems?", "opts": ["Yes", "No"], "ans": 0 }] }
+    ],
+    "robotics": [
+        { "id": "ro-v1", "title": "1. Robotics Intro", "youtubeId": "fR8V0V9_M4U", "author": "Stanford", "testType": "quiz", "quiz": [{ "q": "Kinematics?", "opts": ["Joint Motion", "Electronic flow"], "ans": 0 }] }
+    ],
+    "embedded-systems": [
+        { "id": "es-v1", "title": "1. Microcontrollers", "youtubeId": "joL8Vp8AtYI", "author": "IIT Delhi", "testType": "coding-challenge", "task": "Write an ISR header." }
+    ],
+    "vlsi": [
+        { "id": "vl-v1", "title": "1. Digital Design", "youtubeId": "9SnR3M3C11M", "author": "IIT Roorkee", "testType": "quiz", "quiz": [{ "q": "CMOS stands for?", "opts": ["Comp Metal Oxide", "Circuit Mod"], "ans": 0 }] }
+    ],
+    "industrial-auto": [
+        { "id": "ia-v1", "title": "1. PLC Programming", "youtubeId": "fR8V0V9_M4U", "author": "Rockwell", "testType": "quiz", "quiz": [{ "q": "Ladder Logic?", "opts": ["Yes", "No"], "ans": 0 }] }
+    ],
+    "renewable-energy": [
+        { "id": "re-v1", "title": "1. Solar Power", "youtubeId": "EN4fPBX22is", "author": "Nat Geo", "testType": "quiz", "quiz": [{ "q": "Photovoltaic?", "opts": ["Solar", "Wind"], "ans": 0 }] }
+    ],
+    "cfa": [
+        { "id": "cfa-v1", "title": "1. Financial Ethics", "youtubeId": "W79zK6Wz5vQ", "author": "Mark Meldrum", "testType": "quiz", "quiz": [{ "q": "GIPS Standards?", "opts": ["Ethics", "Trading"], "ans": 0 }] }
+    ],
+    "frm": [
+        { "id": "frm-v1", "title": "1. Risk Management", "youtubeId": "6m9H_X1vj1Q", "author": "Bionic Turtle", "testType": "quiz", "quiz": [{ "q": "What is VaR?", "opts": ["Value at Risk", "Variable"], "ans": 0 }] }
+    ],
+    "financial-modeling": [
+        { "id": "fm-v1", "title": "1. Excel Modeling", "youtubeId": "V_V7e9G6-wM", "author": "Wall Street Prep", "testType": "quiz", "quiz": [{ "q": "F4 in Excel?", "opts": ["Locking", "Copying"], "ans": 0 }] }
+    ],
+    "investment-banking": [
+        { "id": "ib-v1", "title": "1. M&A Deal Cycle", "youtubeId": "V_V7e9G6-wM", "author": "WSO", "testType": "quiz", "quiz": [{ "q": "Pitchbook?", "opts": ["Sales doc", "Code doc"], "ans": 0 }] }
+    ],
+    "graphic-design": [
+        { "id": "gd-v1", "title": "1. Photoshop Basics", "youtubeId": "IyR_uYsRdPs", "author": "Adobe", "testType": "html-lab", "task": "Create a layer style mock." }
+    ],
+    "animation-vfx": [
+        { "id": "av-v1", "title": "1. Blender 3D", "youtubeId": "TPrnSACiTJ4", "author": "Blender Guru", "testType": "quiz", "quiz": [{ "q": "Node Editor?", "opts": ["Shaders", "Layers"], "ans": 0 }] }
+    ],
+    "video-editing": [
+        { "id": "ve-v1", "title": "1. Premiere Pro", "youtubeId": "Hls3Tp7JS8E", "author": "Justin Odisho", "testType": "quiz", "quiz": [{ "q": "Cutting Clip?", "opts": ["Razor Tool", "Pen Tool"], "ans": 0 }] }
+    ],
+    "upsc": [
+        { "id": "sc-v1", "title": "1. Indian Polity", "youtubeId": "V_V7e9G6-wM", "author": "Drishti IAS", "testType": "quiz", "quiz": [{ "q": "Article 14?", "opts": ["Equality", "Freedom"], "ans": 0 }] }
+    ],
+    "gate": [
+        { "id": "gt-v1", "title": "1. Engineering Math", "youtubeId": "EN4fPBX22is", "author": "Unacademy", "testType": "quiz", "quiz": [{ "q": "Calculus limit?", "opts": ["0", "1"], "ans": 0 }] }
+    ],
+    "ssc": [
+        { "id": "ss-v1", "title": "1. Reasoning Fundamentals", "youtubeId": "nzj7u9bf_94", "author": "Abhinay Maths", "testType": "quiz", "quiz": [{ "q": "Logical pattern?", "opts": ["A-B", "1-2"], "ans": 0 }] }
+    ],
+    "banking-exams": [
+        { "id": "be-v1", "title": "1. Banking Awareness", "youtubeId": "jN-S6Z7bBHo", "author": "Adda247", "testType": "quiz", "quiz": [{ "q": "RBI Repo Rate?", "opts": ["Finance", "Trade"], "ans": 0 }] }
+    ],
+    "ms-abroad": [
+        { "id": "ms-v1", "title": "1. GRE Prep", "youtubeId": "nzj7u9bf_94", "author": "Magoosh", "testType": "quiz", "quiz": [{ "q": "Quantitative?", "opts": ["Yes", "No"], "ans": 0 }] }
+    ],
+    "mba-abroad": [
+        { "id": "ma-v1", "title": "1. GMAT Strategy", "youtubeId": "V_V7e9G6-wM", "author": "GMAT Club", "testType": "quiz", "quiz": [{ "q": "CR scope?", "opts": ["Logic", "Facts"], "ans": 0 }] }
+    ],
+    "ethical-hacking": [
+        { "id": "eh-v1", "title": "1. Penetration Testing", "youtubeId": "nzj7u9bf_94", "author": "IIT Madras", "testType": "quiz", "quiz": [{ "q": "Nmap used for?", "opts": ["Scanning", "Cracking"], "ans": 0 }] }
+    ],
+    "iot": [
+        { "id": "io-v1", "title": "1. IoT Sensors", "youtubeId": "joL8Vp8AtYI", "author": "IIT Delhi", "testType": "quiz", "quiz": [{ "q": "MQTT protocol?", "opts": ["Lightweight", "Heavy"], "ans": 0 }] }
+    ]
 };
 
 window.PLAYLIST_DATA = PLAYLIST_DATA;
