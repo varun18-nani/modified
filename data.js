@@ -369,7 +369,6 @@ const ROADMAP_DATA = {
         "milestones": [
             { "level": "Core", "title": "Genetics", "skills": [{ "name": "Bioinformatics", "desc": "Data in biology.", "importance": "Critical" }] }
         ],
-        "job_guide": { "resume": "Lab research.", "portfolio": "PCR results.", "interview": "Ethics & DNA." }
     }
 };
 
