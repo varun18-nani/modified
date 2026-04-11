@@ -1195,36 +1195,121 @@ document.addEventListener('DOMContentLoaded', () => {
         setTimeout(() => badge.style.display = 'none', 3000);
     }
 
-    function startVideoLessonQuiz(quizQuestions) {
+    function startVideoLessonQuiz(video) {
         isQuizActive = true;
         
-        // Reuse existing Module Test Modal
-        const milestone = activePlaylist[currentVideoIndex];
         activeTestState = { 
             pathKey: currentPath, 
             milestoneIndex: currentVideoIndex, 
-            questions: quizQuestions, 
+            questions: video.quiz || [], 
             currentQ: 0, 
             score: 0, 
             selectedOpt: null,
-            isLessonQuiz: true 
+            isLessonQuiz: true,
+            testType: video.testType || 'quiz',
+            task: video.task || ''
         };
 
-        document.getElementById('test-modal-title').textContent = `Lesson Assessment: ${milestone.title}`;
-        document.getElementById('test-intro-desc').textContent = "Complete this quick test to unlock the next lesson. Academic integrity rules apply.";
-        document.getElementById('test-q-count').textContent = quizQuestions.length;
-
-        // Modify result btn for lessons
-        document.getElementById('apply-schedule-btn').innerHTML = '<i data-lucide="check-circle"></i> Complete Lesson';
+        document.getElementById('test-modal-title').textContent = `Lesson Assessment: ${video.title}`;
+        document.getElementById('test-intro-desc').textContent = "Complete this challenge to unlock the next lesson.";
+        
+        // Render appropriate view based on test type
+        renderTestView();
 
         document.getElementById('test-intro-state').style.display = 'block';
         document.getElementById('test-question-state').style.display = 'none';
+        document.getElementById('test-coding-state').style.display = 'none';
+        document.getElementById('test-html-state').style.display = 'none';
+        document.getElementById('test-data-state').style.display = 'none';
         document.getElementById('test-result-state').style.display = 'none';
         document.getElementById('module-test-modal').style.display = 'flex';
         
-        // Hide overlay once quiz starts
         document.getElementById('video-quiz-overlay').style.display = 'none';
         lucide.createIcons();
+    }
+
+    function renderTestView() {
+        // Reset sub-views
+        const states = ['test-question-state', 'test-coding-state', 'test-html-state', 'test-data-state'];
+        states.forEach(s => document.getElementById(s).style.display = 'none');
+
+        const { testType, task, questions } = activeTestState;
+
+        if (testType === 'quiz') {
+            document.getElementById('test-q-count').textContent = questions.length;
+        } else if (testType === 'coding-challenge') {
+            document.getElementById('coding-task-desc').textContent = task;
+            document.getElementById('coding-textarea').value = '';
+        } else if (testType === 'html-lab') {
+            document.getElementById('html-task-desc').textContent = task;
+            document.getElementById('html-lab-textarea').value = '<!-- Write HTML here -->\n<div class="card">\n  \n</div>';
+            updateHtmlPreview();
+        } else if (testType === 'data-lab') {
+            document.getElementById('data-task-desc').textContent = task;
+            document.getElementById('data-task-display').innerHTML = '<p>Dataset: [Sample Data View]</p><table style="width:100%; border-collapse:collapse; font-size:12px;"><tr><th>ID</th><th>Value</th></tr><tr><td>1</td><td>100</td></tr><tr><td>2</td><td>200</td></tr></table>';
+        }
+    }
+
+    // Initialize listeners for specialized tests
+    document.getElementById('start-test-btn').onclick = () => {
+        document.getElementById('test-intro-state').style.display = 'none';
+        const type = activeTestState.testType;
+        if (type === 'quiz') {
+            document.getElementById('test-question-state').style.display = 'block';
+            renderTestQuestion();
+        } else if (type === 'coding-challenge') {
+            document.getElementById('test-coding-state').style.display = 'block';
+        } else if (type === 'html-lab') {
+            document.getElementById('test-html-state').style.display = 'block';
+        } else if (type === 'data-lab') {
+            document.getElementById('test-data-state').style.display = 'block';
+        }
+    };
+
+    // HTML Lab Preview Engine
+    const htmlTextArea = document.getElementById('html-lab-textarea');
+    htmlTextArea.addEventListener('input', updateHtmlPreview);
+
+    function updateHtmlPreview() {
+        const previewFrame = document.getElementById('html-lab-preview');
+        const content = htmlTextArea.value;
+        const frameDoc = previewFrame.contentDocument || previewFrame.contentWindow.document;
+        frameDoc.open();
+        frameDoc.write(`
+            <style>
+                body { font-family: sans-serif; padding: 20px; }
+                .card { padding: 20px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); border: 1px solid #ddd; }
+            </style>
+            ${content}
+        `);
+        frameDoc.close();
+    }
+
+    // Submission Handlers
+    document.getElementById('submit-code-btn').onclick = () => validateSpecialTest('coding');
+    document.getElementById('submit-html-btn').onclick = () => validateSpecialTest('html');
+    document.getElementById('submit-data-btn').onclick = () => validateSpecialTest('data');
+
+    async function validateSpecialTest(type) {
+        let passed = false;
+        if (type === 'coding') {
+            const code = document.getElementById('coding-textarea').value;
+            // Simple validation: check if code is not empty and has basic structure
+            if (code.length > 20) passed = true;
+        } else if (type === 'html') {
+            const html = document.getElementById('html-lab-textarea').value;
+            if (html.includes('<div') || html.includes('<p')) passed = true;
+        } else if (type === 'data') {
+            const input = document.getElementById('data-lab-input').value;
+            if (input.length > 5) passed = true;
+        }
+
+        if (passed) {
+            activeTestState.score = activeTestState.questions.length || 1; // Simulation pass
+            showTestResults();
+        } else {
+            alert("Your solution is incomplete or incorrect. Please try again!");
+        }
     }
 
     // Override the "Apply Schedule" button logic to handle lesson completion

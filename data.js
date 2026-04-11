@@ -402,49 +402,395 @@ const ROADMAP_DATA = {
 window.ROADMAP_DATA = ROADMAP_DATA;
 
 const PLAYLIST_DATA = {
-    "data-science": [
+    // --- BATCH A: TECH FOUNDATIONS ---
+    "python": [
         {
-            "id": "ds-v1",
-            "title": "Introduction to Data Science",
-            "youtubeId": "ua-CiDNNj30",
+            "id": "py-v1",
+            "title": "Python: Programming, Data Structures and Algorithms",
+            "youtubeId": "I8x5FpAL9zI",
+            "author": "Prof. Madhavan Mukund (IIT Madras)",
+            "testType": "quiz",
             "quiz": [
-                { "q": "What is the main goal of Data Science?", "opts": ["To fix computers", "To extract insights from data", "To build websites", "To play games"], "ans": 1 },
-                { "q": "Which language is most popular in Data Science?", "opts": ["C++", "Java", "Python", "Ruby"], "ans": 2 },
-                { "q": "What does a data scientist do with raw data?", "opts": ["Delete it", "Clean and analyze it", "Print it out", "Ignore it"], "ans": 1 }
+                { "q": "In Python, which of these is an immutable type?", "opts": ["List", "Dictionary", "Tuple", "Set"], "ans": 2 },
+                { "q": "What is the result of 3 // 2 in Python 3?", "opts": ["1.5", "1", "2", "0"], "ans": 1 }
             ]
         },
         {
-            "id": "ds-v2",
-            "title": "Data Science Lifecycle",
-            "youtubeId": "X3paOmcrTjQ",
-            "quiz": [
-                { "q": "What is the first step in the data science lifecycle?", "opts": ["Data Cleaning", "Problem Definition", "Model Building", "Deployment"], "ans": 1 },
-                { "q": "Why is data cleaning important?", "opts": ["To make it smaller", "To ensure accuracy and reliability", "To change the results", "To hide errors"], "ans": 1 },
-                { "q": "Which phase comes after Data Exploration?", "opts": ["Data Collection", "Feature Engineering", "Deployment", "None of these"], "ans": 1 }
-            ]
+            "id": "py-v2",
+            "title": "Control Structures and Functions",
+            "youtubeId": "hYp6qY7YmS0",
+            "author": "Prof. Madhavan Mukund (IIT Madras)",
+            "testType": "coding-challenge",
+            "task": "Write a function 'is_palindrome(s)' that returns true if a string is a palindrome."
         }
     ],
-    "ai": [
+    "dsa": [
         {
-            "id": "ai-v1",
-            "title": "What is Artificial Intelligence?",
-            "youtubeId": "JMUxmLyz9W4",
+            "id": "dsa-v1",
+            "title": "Introduction to Data Structures",
+            "youtubeId": "RPpbeon7o_U",
+            "author": "Prof. Naveen Garg (IIT Delhi)",
+            "testType": "quiz",
             "quiz": [
-                { "q": "What is AI?", "opts": ["A type of robot", "Simulation of human intelligence by machines", "A video game", "A hardware component"], "ans": 1 },
-                { "q": "What is the 'Narrow AI'?", "opts": ["AI that can do everything", "AI designed for a specific task", "AI with a small brain", "Old AI from the 60s"], "ans": 1 },
-                { "q": "Which of these is an example of AI?", "opts": ["A calculator", "Voice assistant like Alexa", "A microwave", "A flashlight"], "ans": 1 }
+                { "q": "Which data structure follows LIFO?", "opts": ["Queue", "Stack", "Tree", "Graph"], "ans": 1 },
+                { "q": "What is the time complexity of searching in a sorted array using Binary Search?", "opts": ["O(n)", "O(log n)", "O(n^2)", "O(1)"], "ans": 1 }
             ]
+        },
+        {
+            "id": "dsa-v2",
+            "title": "Analysis of Algorithms & Asymptotic Notation",
+            "youtubeId": "r9T5LshA8V4",
+            "author": "Prof. Naveen Garg (IIT Delhi)",
+            "testType": "coding-challenge",
+            "task": "Implement a function 'binarySearch(arr, target)' that returns the index of the target in a sorted array."
         }
     ],
     "full-stack": [
         {
             "id": "fs-v1",
-            "title": "What is Full Stack Development?",
+            "title": "Web Development Basics: HTML & CSS",
             "youtubeId": "8f8eNal5X-M",
+            "testType": "html-lab",
+            "task": "Create a simple card with a title and a description using HTML and CSS."
+        },
+        {
+            "id": "fs-v2",
+            "title": "Responsive Web Design with Flexbox",
+            "youtubeId": "3YW65K6ig0w",
+            "testType": "html-lab",
+            "task": "Build a responsive navigation bar with three links centered horizontally."
+        }
+    ],
+    "software-testing": [
+        {
+            "id": "st-v1",
+            "title": "Software Engineering & Testing",
+            "youtubeId": "X_S_Y1E7TjY",
+            "author": "Prof. Rajib Mall (IIT Kharagpur)",
+            "testType": "quiz",
             "quiz": [
-                { "q": "What does 'Full Stack' mean?", "opts": ["Only Frontend", "Only Backend", "Both Frontend and Backend", "Database only"], "ans": 2 },
-                { "q": "Which of these is a Frontend technology?", "opts": ["SQL", "Node.js", "React", "Python"], "ans": 2 },
-                { "q": "What is the purpose of the Backend?", "opts": ["To design buttons", "To handle logic and data", "To display colors", "To make it pretty"], "ans": 1 }
+                { "q": "What is White Box Testing?", "opts": ["Testing without code knowledge", "Testing with internal logic knowledge", "Testing the UI only", "Testing by end users"], "ans": 1 },
+                { "q": "Which of these is a functional testing type?", "opts": ["Load Testing", "Stress Testing", "Unit Testing", "Scalability Testing"], "ans": 2 }
+            ]
+        }
+    ],
+
+    // --- BATCH B: AI & DATA ---
+    "ai": [
+        {
+            "id": "ai-v1",
+            "title": "Artificial Intelligence Search Methods for Problem Solving",
+            "youtubeId": "JMUxmLyz9W4",
+            "author": "Prof. Deepak Khemani (IIT Madras)",
+            "testType": "quiz",
+            "quiz": [
+                { "q": "Which search algorithm is guaranteed to find the shortest path?", "opts": ["DFS", "BFS", "Greedy Search", "Random Walk"], "ans": 1 }
+            ]
+        }
+    ],
+    "ml": [
+        {
+            "id": "ml-v1",
+            "title": "Introduction to Machine Learning",
+            "youtubeId": "PPLop4L2eGk",
+            "author": "Prof. Balaraman Ravindran (IIT Madras)",
+            "testType": "quiz",
+            "quiz": [
+                { "q": "What is Supervised Learning?", "opts": ["Learning without labels", "Learning from labeled data", "Learning through rewards", "Learning by imitation"], "ans": 1 }
+            ]
+        }
+    ],
+    "data-science": [
+        {
+            "id": "ds-v1",
+            "title": "Data Science for Engineers",
+            "youtubeId": "ua-CiDNNj30",
+            "author": "Professors from IIT Madras",
+            "testType": "data-lab",
+            "task": "Analyze the correlation between the provided Value A and Value B columns."
+        }
+    ],
+    "business-analytics": [
+        {
+            "id": "ba-v1",
+            "title": "Business Analytics & Data Mining",
+            "youtubeId": "jN-S6Z7bBHo",
+            "author": "Prof. Gaurav Dixit (IIT Roorkee)",
+            "testType": "data-lab",
+            "task": "Identify the top-performing category from the mock sales dataset provided."
+        }
+    ],
+
+    // --- BATCH C: INFRA & SECURITY ---
+    "cloud": [
+        {
+            "id": "cloud-v1",
+            "title": "AWS Certified Cloud Practitioner Full Course",
+            "youtubeId": "SOTamWNgDKc",
+            "author": "FreeCodeCamp / AWS Expert",
+            "testType": "quiz",
+            "quiz": [
+                { "q": "Which AWS service is used for scalable object storage?", "opts": ["EC2", "S3", "RDS", "Lambda"], "ans": 1 }
+            ]
+        }
+    ],
+    "devops": [
+        {
+            "id": "dev-v1",
+            "title": "DevOps Foundations",
+            "youtubeId": "hQcFE0nvGuU",
+            "author": "TechWorld with Nana",
+            "testType": "quiz",
+            "quiz": [
+                { "q": "What is the core goal of CI/CD?", "opts": ["Manual deployment", "Automating software delivery", "Writing documentation", "Designing UIs"], "ans": 1 }
+            ]
+        }
+    ],
+    "cyber-security": [
+        {
+            "id": "cs-v1",
+            "title": "Cyber Security Full Course",
+            "youtubeId": "nzj7u9bf_94",
+            "author": "IIT Professional Series",
+            "testType": "quiz",
+            "quiz": [
+                { "q": "What is a Phishing attack?", "opts": ["A direct hack into a server", "Deceptive attempt to obtain sensitive info", "A type of firewall", "A hardware failure"], "ans": 1 }
+            ]
+        }
+    ],
+    "ethical-hacking": [
+        {
+            "id": "eh-v1",
+            "title": "Ethical Hacking: Footprinting & Reconnaissance",
+            "youtubeId": "3Kq1MIfTWCE",
+            "author": "Professional Cyber Security Expert",
+            "testType": "coding-challenge",
+            "task": "Identify the potential vulnerability in the provided network scan log."
+        }
+    ],
+
+    // --- BATCH D: ENGINEERING (IIT/NPTEL CORE) ---
+    "m-tech": [
+        {
+            "id": "mt-v1",
+            "title": "Advanced Theory of Computer Science",
+            "youtubeId": "X7W_8A9UonY",
+            "author": "Prof. N.S. Narayanaswamy (IIT Madras)",
+            "testType": "quiz",
+            "quiz": [
+                { "q": "What is the P vs NP problem primarily about?", "opts": ["Programming style", "Computational complexity", "Network protocols", "Memory management"], "ans": 1 }
+            ]
+        }
+    ],
+    "embedded-systems": [
+        {
+            "id": "es-v1",
+            "title": "Introduction to Embedded Systems",
+            "youtubeId": "joL8Vp8AtYI",
+            "author": "Prof. Santanu Chaudhury (IIT Delhi)",
+            "testType": "coding-challenge",
+            "task": "Write a snippet to toggle an LED connected to PIN 13 in an interrupt service routine."
+        }
+    ],
+    "vlsi": [
+        {
+            "id": "vlsi-v1",
+            "title": "Digital VLSI Design",
+            "youtubeId": "9SnR3M3C11M",
+            "author": "Prof. S. Dasgupta (IIT Roorkee)",
+            "testType": "quiz",
+            "quiz": [
+                { "q": "What is the primary material used in MOSFET fabrication?", "opts": ["Germanium", "Silicon", "Copper", "Gallium Arsenide"], "ans": 1 }
+            ]
+        }
+    ],
+    "automation": [
+        {
+            "id": "auto-v1",
+            "title": "Control Engineering & Industrial Automation",
+            "youtubeId": "fW_7eOshY-8",
+            "author": "Prof. Madan Gopal (IIT Delhi)",
+            "testType": "quiz",
+            "quiz": [
+                { "q": "What does a PID controller stand for?", "opts": ["Path Index Driver", "Proportional-Integral-Derivative", "Point In Data", "Parallel Input Device"], "ans": 1 }
+            ]
+        }
+    ],
+    "robotics": [
+        {
+            "id": "rob-v1",
+            "title": "Robotics: Mechanics and Control",
+            "youtubeId": "L0W6V2O-Z8Y",
+            "author": "Prof. C. Amarnath (IIT Bombay)",
+            "testType": "quiz",
+            "quiz": [
+                { "q": "Which coordinate system is commonly used in robot kinematics?", "opts": ["Cartesian", "Spherical", "Cylindrical", "All of the above"], "ans": 3 }
+            ]
+        }
+    ],
+    "renewable-energy": [
+        {
+            "id": "re-v1",
+            "title": "Renewable Energy Engineering",
+            "youtubeId": "SOn_Hly0X0k",
+            "author": "NPTEL Energy Series",
+            "testType": "quiz",
+            "quiz": [
+                { "q": "What is the main source of energy for Photovoltaic cells?", "opts": ["Wind", "Water", "Sunlight", "Geothermal heat"], "ans": 2 }
+            ]
+        }
+    ],
+    "gate": [
+        {
+            "id": "gate-v1",
+            "title": "Engineering Mathematics for GATE",
+            "youtubeId": "D_yB3iK7_RE",
+            "author": "Prof. Jitendra Kumar (IIT Kharagpur)",
+            "testType": "coding-challenge",
+            "task": "Solve the provided linear differential equation using Laplace transform."
+        }
+    ],
+
+    // --- BATCH E: MANAGEMENT & FINANCE ---
+    "mba": [
+        {
+            "id": "mba-v1",
+            "title": "Strategic Management",
+            "youtubeId": "pB2bL1-Xb_4",
+            "author": "Prof. Kalyan Chakravarti (IIT Kharagpur)",
+            "testType": "quiz",
+            "quiz": [
+                { "q": "What is SWOT analysis used for?", "opts": ["Financial auditing", "Strategic planning", "Product testing", "Employee hiring"], "ans": 1 }
+            ]
+        }
+    ],
+    "product-management": [
+        {
+            "id": "pm-v1",
+            "title": "Product Design and Development",
+            "youtubeId": "W22Y1vYv-Xo",
+            "author": "Prof. P.K. Kalra (IIT Delhi)",
+            "testType": "quiz",
+            "quiz": [
+                { "q": "What is the primary goal of an MVP?", "opts": ["Add every feature", "Validate core idea with minimal effort", "Design the perfect logo", "Maximize profit immediately"], "ans": 1 }
+            ]
+        }
+    ],
+    "cfa": [
+        {
+            "id": "cfa-v1",
+            "title": "Investment Management",
+            "youtubeId": "X_YV_oA9-Uo",
+            "author": "IIM Bangalore / NPTEL Series",
+            "testType": "quiz",
+            "quiz": [
+                { "q": "What is a 'Fiduciary duty'?", "opts": ["Legal obligation to act in best interest of client", "Duty to pay taxes", "Option to buy stock", "A type of loan"], "ans": 1 }
+            ]
+        }
+    ],
+    "financial-modeling": [
+        {
+            "id": "fm-v1",
+            "title": "Financial Modeling and Valuation",
+            "youtubeId": "S3K_O_8Yogw",
+            "author": "Corporate Finance Institute / Pro",
+            "testType": "data-lab",
+            "task": "Link the Balance Sheet and Cash Flow Statement in the template provided."
+        }
+    ],
+
+    // --- BATCH F: DESIGN & MEDIA ---
+    "ui-ux": [
+        {
+            "id": "ui-v1",
+            "title": "User Interface Design",
+            "youtubeId": "8f8eNal5X-M",
+            "author": "Prof. Anirudha Joshi (IIT Bombay)",
+            "testType": "html-lab",
+            "task": "Design a user-friendly login form following accessibility guidelines."
+        }
+    ],
+    "graphic-design": [
+        {
+            "id": "gd-v1",
+            "title": "Understanding Design",
+            "youtubeId": "9SnR3M3C11M",
+            "author": "Prof. Ajanta Sen (IIT Bombay)",
+            "testType": "quiz",
+            "quiz": [
+                { "q": "What is 'White Space' in design?", "opts": ["The empty space between elements", "A color choice", "A mistake", "A background image"], "ans": 1 }
+            ]
+        }
+    ],
+    "video-editing": [
+        {
+            "id": "ve-v1",
+            "title": "Video Production & Editing",
+            "youtubeId": "3YW65K6ig0w",
+            "author": "Creative Professional Series",
+            "testType": "quiz",
+            "quiz": [
+                { "q": "What does 'Jump Cut' imply?", "opts": ["Smooth transition", "Abrupt transition in time/space", "A fade to black", "A sound effect"], "ans": 1 }
+            ]
+        }
+    ],
+
+    // --- BATCH G: EXAMS & OTHER ---
+    "upsc": [
+        {
+            "id": "up-v1",
+            "title": "UPSC: Indian Polity & Constitution",
+            "youtubeId": "I8x5FpAL9zI",
+            "author": "Civil Services Academy Series",
+            "testType": "quiz",
+            "quiz": [
+                { "q": "Which article of the Indian Constitution deals with the Right to Equality?", "opts": ["Article 14", "Article 19", "Article 21", "Article 32"], "ans": 1 }
+            ]
+        }
+    ],
+    "banking": [
+        {
+            "id": "bk-v1",
+            "title": "Banking Awareness & Financial Systems",
+            "youtubeId": "9SnR3M3C11M",
+            "author": "Financial Expert Series",
+            "testType": "quiz",
+            "quiz": [
+                { "q": "What is the primary function of the RBI?", "opts": ["To lend money to individuals", "To issue currency and manage monetary policy", "To design websites for banks", "To sell gold"], "ans": 1 }
+            ]
+        }
+    ],
+    "blockchain": [
+        {
+            "id": "bc-v1",
+            "title": "Blockchain Architecture Design and Use Cases",
+            "youtubeId": "D8H8X_A_T8k",
+            "author": "Prof. Sandip Chakraborty (IIT Kharagpur)",
+            "testType": "coding-challenge",
+            "task": "Explain the role of a Merkle Tree in a block header."
+        }
+    ],
+    "iot": [
+        {
+            "id": "iot-v1",
+            "title": "Introduction to Internet of Things",
+            "youtubeId": "O_8Z6A-W_y8",
+            "author": "Prof. Sudip Misra (IIT Kharagpur)",
+            "testType": "quiz",
+            "quiz": [
+                { "q": "What is the most common protocol used for IoT communication?", "opts": ["HTTP", "MQTT", "FTP", "SMTP"], "ans": 1 }
+            ]
+        }
+    ],
+    "study-abroad": [
+        {
+            "id": "sa-v1",
+            "title": "The Ultimate Guide to MS Abroad",
+            "youtubeId": "3YW65K6ig0w",
+            "author": "Global Education Expert",
+            "testType": "quiz",
+            "quiz": [
+                { "q": "What is an 'SOP' in the context of university applications?", "opts": ["Standard Operating Procedure", "Statement of Purpose", "System of Payments", "Simple Object Protocol"], "ans": 1 }
             ]
         }
     ]

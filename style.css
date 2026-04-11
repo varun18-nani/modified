@@ -1886,3 +1886,137 @@ main {
         height: 400px;
     }
 }
+
+/* =============================================
+   SPECIALIZED TEST STYLES (NEW)
+   ============================================= */
+.special-test-header {
+    text-align: left;
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid var(--glass-border);
+}
+
+.special-test-header h4 {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 1.1rem;
+    margin-bottom: 5px;
+}
+
+.special-test-header p {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+}
+
+.code-editor-wrapper {
+    background: #1e1e1e;
+    border-radius: 12px;
+    border: 1px solid #333;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+.code-editor-header {
+    padding: 8px 15px;
+    background: #252526;
+    border-bottom: 1px solid #333;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.75rem;
+    color: #999;
+}
+
+.lang-badge {
+    background: #3e3e3e;
+    padding: 2px 8px;
+    border-radius: 4px;
+}
+
+#coding-textarea, #html-lab-textarea, #data-lab-input {
+    width: 100%;
+    height: 250px;
+    background: transparent;
+    border: none;
+    color: #d4d4d4;
+    padding: 15px;
+    font-family: 'Consolas', 'Monaco', monospace;
+    font-size: 0.9rem;
+    resize: none;
+    outline: none;
+    line-height: 1.5;
+}
+
+/* Lab Split Screen */
+.lab-split {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    background: #333;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid #333;
+    height: 350px;
+}
+
+.lab-editor, .lab-preview {
+    background: #1e1e1e;
+    display: flex;
+    flex-direction: column;
+}
+
+.lab-preview {
+    background: white;
+}
+
+#html-lab-preview {
+    width: 100%;
+    flex: 1;
+    border: none;
+}
+
+/* Data Lab Layout */
+.data-lab-content {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.data-view-panel {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px dashed var(--glass-border);
+    border-radius: 12px;
+    padding: 20px;
+    font-family: monospace;
+    font-size: 0.85rem;
+    max-height: 150px;
+    overflow-y: auto;
+}
+
+.data-input-panel label {
+    display: block;
+    font-size: 0.8rem;
+    margin-bottom: 8px;
+    color: var(--text-secondary);
+}
+
+#data-lab-input {
+    height: 120px;
+    background: #1e1e1e;
+    border-radius: 8px;
+    border: 1px solid #333;
+}
+
+.test-modal-content {
+    max-width: 800px !important; /* Wider for lab views */
+}
+
+@media (max-width: 768px) {
+    .lab-split {
+        grid-template-columns: 1fr;
+        height: 500px;
+    }
+}

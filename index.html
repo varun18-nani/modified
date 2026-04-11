@@ -219,7 +219,7 @@
                         <button class="btn-primary" id="start-test-btn" style="width:100%; margin-top: 20px;">Start Assessment</button>
                     </div>
 
-                    <!-- Test State: Questions -->
+                    <!-- Test State: Questions (MCQ) -->
                     <div id="test-question-state" style="display:none;">
                         <div class="test-progress">
                             <span id="test-q-progress">1 / 5</span>
@@ -230,6 +230,59 @@
                         <p class="test-question" id="test-question-text"></p>
                         <div class="test-options" id="test-options"></div>
                         <button class="btn-primary" id="next-q-btn" style="width:100%; margin-top:20px; opacity:0.4;" disabled>Next Question</button>
+                    </div>
+
+                    <!-- Test State: Coding Challenge (DSA/Logic) -->
+                    <div id="test-coding-state" style="display:none;">
+                        <div class="special-test-header">
+                            <h4><i data-lucide="code"></i> Coding Challenge</h4>
+                            <p id="coding-task-desc">Write an algorithm to solve the problem below.</p>
+                        </div>
+                        <div class="code-editor-wrapper">
+                            <div class="code-editor-header">
+                                <span>main.js</span>
+                                <span class="lang-badge">JavaScript</span>
+                            </div>
+                            <textarea id="coding-textarea" spellcheck="false" placeholder="// Write your code here..."></textarea>
+                        </div>
+                        <button class="btn-primary" id="submit-code-btn" style="width:100%; margin-top: 20px;">Submit Solution</button>
+                    </div>
+
+                    <!-- Test State: HTML/CSS Lab (Full Stack) -->
+                    <div id="test-html-state" style="display:none;">
+                        <div class="special-test-header">
+                            <h4><i data-lucide="layout"></i> Page Builder Lab</h4>
+                            <p id="html-task-desc">Build the component requested below.</p>
+                        </div>
+                        <div class="lab-split">
+                            <div class="lab-editor">
+                                <div class="code-editor-header">HTML / CSS</div>
+                                <textarea id="html-lab-textarea" spellcheck="false" placeholder="<div>Hello World</div>"></textarea>
+                            </div>
+                            <div class="lab-preview">
+                                <div class="code-editor-header">Preview</div>
+                                <iframe id="html-lab-preview"></iframe>
+                            </div>
+                        </div>
+                        <button class="btn-primary" id="submit-html-btn" style="width:100%; margin-top: 20px;">Verify Design</button>
+                    </div>
+
+                    <!-- Test State: Data Lab (Science/Analytics) -->
+                    <div id="test-data-state" style="display:none;">
+                        <div class="special-test-header">
+                            <h4><i data-lucide="bar-chart-2"></i> Analytical Lab</h4>
+                            <p id="data-task-desc">Analyze the data and provide your findings.</p>
+                        </div>
+                        <div class="data-lab-content">
+                            <div class="data-view-panel" id="data-task-display">
+                                <!-- Data/Task displayed here -->
+                            </div>
+                            <div class="data-input-panel">
+                                <label>Your Analysis / SQL Query:</label>
+                                <textarea id="data-lab-input" placeholder="SELECT * FROM table..."></textarea>
+                            </div>
+                        </div>
+                        <button class="btn-primary" id="submit-data-btn" style="width:100%; margin-top: 20px;">Submit Analysis</button>
                     </div>
 
                     <!-- Test State: Results -->
