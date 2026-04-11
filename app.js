@@ -100,18 +100,48 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function updateProfileUI() {
         const { name, email, goal, photoURL } = userData.profile;
-        document.getElementById('profile-name').textContent = name || 'User';
-        document.getElementById('ig-username-header').textContent = name || 'User';
-        document.getElementById('profile-email').textContent = email || 'No Email';
-        document.getElementById('profile-goal').textContent = goal ? `${goal}` : 'Goal: Not Set';
+        const nameVal = name || 'User';
         
-        const avatarEl = document.getElementById('profile-avatar');
-        if (photoURL) {
-            avatarEl.style.backgroundImage = `url(${photoURL})`;
-            avatarEl.textContent = '';
-        } else {
-            avatarEl.style.backgroundImage = 'none';
-            avatarEl.textContent = name ? name.charAt(0).toUpperCase() : 'U';
+        // Legacy IDs (keeping for backward compatibility if needed)
+        const legacyName = document.getElementById('profile-name');
+        if (legacyName) legacyName.textContent = nameVal;
+        
+        const legacyUserHeader = document.getElementById('ig-username-header');
+        if (legacyUserHeader) legacyUserHeader.textContent = nameVal;
+
+        // New Design IDs
+        const newName = document.getElementById('profile-name-val');
+        if (newName) newName.textContent = nameVal;
+
+        const newTitle = document.getElementById('profile-title-val');
+        if (newTitle) newTitle.textContent = goal || 'Career Goal Not Set';
+
+        const newEmail = document.getElementById('profile-email-val');
+        if (newEmail) newEmail.textContent = email || 'No Email Linked';
+        
+        // Avatar Logic
+        const avatarNew = document.getElementById('profile-avatar-new');
+        if (avatarNew) {
+            if (photoURL) {
+                avatarNew.style.backgroundImage = `url(${photoURL})`;
+                avatarNew.style.backgroundSize = 'cover';
+                avatarNew.style.backgroundPosition = 'center';
+                avatarNew.textContent = '';
+            } else {
+                avatarNew.style.backgroundImage = 'none';
+                avatarNew.textContent = name ? name.charAt(0).toUpperCase() : 'U';
+            }
+        }
+        
+        // Populate Skill Tags (Top 3 completed skills)
+        const tagsContainer = document.getElementById('profile-skills-tags');
+        if (tagsContainer) {
+            const topSkills = userData.completedSkills.slice(0, 3);
+            if (topSkills.length > 0) {
+                tagsContainer.innerHTML = topSkills.map(s => `<span class="px-4 py-1.5 bg-[#e1e3de] text-[#5d605c] rounded-full text-sm font-medium">${s}</span>`).join('');
+            } else {
+                tagsContainer.innerHTML = `<span class="px-4 py-1.5 bg-[#e1e3de] text-[#5d605c] rounded-full text-sm font-medium">New Student</span>`;
+            }
         }
     }
 
@@ -800,23 +830,111 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function updateProfileStats() {
-        const completedCount = userData.completedSkills.length;
-        document.getElementById('stats-completed').textContent = completedCount;
-        document.getElementById('stats-quizzes').textContent = "0"; // Placeholder
-        
-        const level = completedCount > 10 ? 'Senior' : completedCount > 5 ? 'Intermediate' : 'Junior';
-        document.getElementById('stats-level').textContent = level;
+        // 1. Skills Mastered
+        const completedCount = userData.completedSkills ? userData.completedSkills.length : 0;
+        const skillsValEl = document.getElementById('stats-skills-val');
+        if (skillsValEl) skillsValEl.textContent = completedCount;
 
-        // Populate badges
-        const badgesContainer = document.getElementById('badges-container');
-        if (completedCount > 0) {
-            badgesContainer.innerHTML = `
-                <div class="badge-active" title="First Skill Completed" style="background: var(--accent-glow); border: 1px solid var(--accent-color); padding: 15px; border-radius: 12px; color: var(--accent-color);">
-                    <i data-lucide="award"></i>
+        // 2. Aggregate Progress
+        let totalProgressPct = 0;
+        if (currentPath && userData.scores[currentPath]) {
+            const scores = userData.scores[currentPath];
+            const milestoneCount = ROADMAP_DATA[currentPath].milestones.length;
+            const completedMilestones = Object.keys(scores).filter(k => scores[k] >= 80).length;
+            totalProgressPct = Math.round((completedMilestones / milestoneCount) * 100);
+        }
+        
+        const progressValEl = document.getElementById('stats-progress-val');
+        if (progressValEl) progressValEl.textContent = `${totalProgressPct}%`;
+
+        // 3. Certificates (Badges)
+        const badgeCount = completedCount; // Simplified: 1 skill = 1 badge feel
+        const badgesValEl = document.getElementById('stats-badges-val');
+        if (badgesValEl) badgesValEl.textContent = badgeCount;
+
+        // 4. Current Roadmap Card
+        const titleCardEl = document.getElementById('roadmap-title-card');
+        const levelTagEl = document.getElementById('roadmap-level-tag');
+        const fillBarEl = document.getElementById('roadmap-progress-bar-fill');
+        const statusTextEl = document.getElementById('roadmap-status-text');
+
+        if (currentPath) {
+            const pathData = ROADMAP_DATA[currentPath];
+            if (titleCardEl) titleCardEl.textContent = pathData.title;
+            
+            // Calculate level (Basic simplified leveling)
+            const level = totalProgressPct >= 80 ? 'Expert' : totalProgressPct >= 40 ? 'Intermediate' : 'Beginner';
+            if (levelTagEl) levelTagEl.textContent = level;
+            
+            if (fillBarEl) fillBarEl.style.width = `${totalProgressPct}%`;
+            if (statusTextEl) statusTextEl.textContent = totalProgressPct === 100 ? 'Course Mastered' : `${totalProgressPct}% Progress`;
+        } else {
+            if (titleCardEl) titleCardEl.textContent = 'Select a path to begin';
+        }
+
+        // 5. Skill Proficiency Bars
+        renderSkillProficiency();
+
+        // 6. Achievements Carousel
+        renderAchievementsCarousel();
+    }
+
+    function renderSkillProficiency() {
+        const container = document.getElementById('proficiency-skills-list');
+        if (!container) return;
+
+        if (!currentPath || !userData.scores[currentPath]) {
+            container.innerHTML = `<p class="text-sm text-[#5d605c]">Explore career paths and take assessments to build your proficiency profile.</p>`;
+            return;
+        }
+
+        const pathData = ROADMAP_DATA[currentPath];
+        const scores = userData.scores[currentPath];
+        
+        container.innerHTML = pathData.milestones.map((milestone, idx) => {
+            const score = scores[idx] || 0;
+            const level = score >= 80 ? 'Expert' : score >= 60 ? 'Advanced' : score >= 40 ? 'Intermediate' : 'Novice';
+            return `
+                <div class="space-y-2">
+                    <div class="flex justify-between text-sm">
+                        <span class="font-medium text-[#303330]">${milestone.title}</span>
+                        <span class="text-[#3b6852] font-bold">${level}</span>
+                    </div>
+                    <div class="h-1.5 w-full bg-[#e1e3de] rounded-full">
+                        <div class="h-full bg-[#3b6852] rounded-full transition-all duration-1000" style="width: ${score}%"></div>
+                    </div>
                 </div>
             `;
-            lucide.createIcons();
+        }).join('');
+    }
+
+    function renderAchievementsCarousel() {
+        const carousel = document.getElementById('achievements-carousel');
+        if (!carousel) return;
+
+        const skills = userData.completedSkills || [];
+        if (skills.length === 0) {
+            carousel.innerHTML = `
+                <div class="flex-shrink-0 w-48 bg-white p-6 rounded-[2rem] text-center shadow-sm border border-[#e1e3de]">
+                    <div class="w-20 h-20 bg-[#f4f4f0] rounded-full mx-auto mb-4 flex items-center justify-center">
+                        <span class="material-symbols-outlined text-3xl text-gray-400">workspace_premium</span>
+                    </div>
+                    <h5 class="font-bold text-sm text-[#303330]">Locked</h5>
+                    <p class="text-[10px] text-[#5d605c] uppercase tracking-widest mt-1">First Achievement</p>
+                </div>
+            `;
+            return;
         }
+
+        carousel.innerHTML = skills.map(skill => `
+            <div class="flex-shrink-0 w-48 bg-white p-6 rounded-[2rem] text-center shadow-sm border border-[#e1e3de] hover:border-[#3b6852]/30 transition-all">
+                <div class="w-20 h-20 bg-[#bceed2] rounded-full mx-auto mb-4 flex items-center justify-center">
+                    <span class="material-symbols-outlined text-3xl text-[#3b6852]" style="font-variation-settings: 'FILL' 1;">workspace_premium</span>
+                </div>
+                <h5 class="font-bold text-sm text-[#303330]">${skill}</h5>
+                <p class="text-[10px] text-[#5d605c] uppercase tracking-widest mt-1">Skill Mastered</p>
+            </div>
+        `).join('');
     }
 
     // --- Helpers ---
@@ -930,86 +1048,45 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    function setupProfileEditListeners() {
-        // Direct Avatar Upload Logic
-        const wrapper = document.getElementById('profile-avatar-wrapper');
-        const directInput = document.getElementById('direct-profile-photo');
-        
-        if (wrapper && directInput) {
-            wrapper.addEventListener('click', () => directInput.click());
-            
-            directInput.addEventListener('change', async (e) => {
+        // New Design Listeners
+        const signOutBtnNew = document.getElementById('sign-out-btn-new');
+        if (signOutBtnNew) signOutBtnNew.onclick = () => signOut(auth);
+
+        const openEditBtnNew = document.getElementById('open-edit-profile-btn-new');
+        if (openEditBtnNew) {
+            openEditBtnNew.onclick = () => {
+                document.getElementById('edit-profile-name').value = userData.profile.name || '';
+                document.getElementById('edit-profile-goal').value = userData.profile.goal || '';
+                document.getElementById('profile-edit-modal').style.display = 'flex';
+            };
+        }
+
+        const avatarWrapperNew = document.getElementById('profile-avatar-wrapper-new');
+        const photoInputNew = document.getElementById('direct-profile-photo-new');
+        if (avatarWrapperNew && photoInputNew) {
+            avatarWrapperNew.onclick = () => photoInputNew.click();
+            photoInputNew.onchange = async (e) => {
                 if (!currentUser || e.target.files.length === 0) return;
                 const file = e.target.files[0];
-                
-                const overlay = document.querySelector('.ig-avatar-overlay');
-                overlay.innerHTML = '<i data-lucide="loader-2" class="spin"></i>';
-                overlay.style.opacity = '1';
-                lucide.createIcons();
+                const avatarIcon = avatarWrapperNew.querySelector('.material-symbols-outlined');
+                if (avatarIcon) avatarIcon.textContent = 'sync'; // Show loading state
                 
                 try {
                     const storageRef = ref(storage, `profile_photos/${currentUser.uid}_${file.name}`);
                     await uploadBytes(storageRef, file);
                     const photoURL = await getDownloadURL(storageRef);
-                    
                     userData.profile = { ...userData.profile, photoURL };
                     await updateDoc(doc(db, 'users', currentUser.uid), { profile: userData.profile });
                     updateProfileUI();
                 } catch (err) {
-                    console.error("Error uploading photo:", err);
-                    alert("Failed to upload photo.");
-                } finally {
-                    overlay.style.opacity = '';
-                    overlay.innerHTML = '<i data-lucide="camera"></i>';
-                    lucide.createIcons();
+                    console.error(err);
+                    alert("Upload failed");
                 }
-            });
+            };
         }
 
-        // Standard Modal Logic
-        const modal = document.getElementById('profile-edit-modal');
-        const openBtn = document.getElementById('open-edit-profile-btn');
-        const closeBtn = document.getElementById('close-profile-modal');
-        const form = document.getElementById('profile-edit-form');
-        
-        openBtn.addEventListener('click', () => {
-            document.getElementById('edit-profile-name').value = userData.profile.name || '';
-            document.getElementById('edit-profile-goal').value = userData.profile.goal || '';
-            modal.style.display = 'flex';
-        });
-        
-        closeBtn.addEventListener('click', () => modal.style.display = 'none');
-        
-        form.addEventListener('submit', async (e) => {
-            e.preventDefault();
-            if (!currentUser) return;
-            
-            const saveBtn = document.getElementById('save-profile-btn');
-            const originalText = saveBtn.textContent;
-            saveBtn.textContent = 'Saving...';
-            saveBtn.disabled = true;
-            
-            try {
-                const name = document.getElementById('edit-profile-name').value;
-                const goal = document.getElementById('edit-profile-goal').value;
-                
-                // Photo is now handled directly by the avatar wrapper!
-                
-                userData.profile = { ...userData.profile, name, goal };
-                await updateDoc(doc(db, 'users', currentUser.uid), {
-                    profile: userData.profile
-                });
-                
-                updateProfileUI();
-                modal.style.display = 'none';
-            } catch (err) {
-                console.error("Error updating profile:", err);
-                alert("Failed to update profile.");
-            } finally {
-                saveBtn.textContent = originalText;
-                saveBtn.disabled = false;
-            }
-        });
+        updateProfileUI();
+        modal.style.display = 'none';
     }
 
     function setupDiagnosticListeners() {

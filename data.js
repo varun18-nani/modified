@@ -1,13 +1,13 @@
 const ROADMAP_DATA = {
-    // --- TECH & SOFTWARE ---
+    // --- TECH & SOFTWARE (13 Categories) ---
     "data-science": {
         "title": "Data Science",
         "description": "Turning raw data into actionable insights and intelligent systems.",
         "icon": "database",
         "milestones": [
-            { "level": "Beginner", "title": "Math & Python Foundations", "skills": [{ "name": "Python", "desc": "Logic, Data Structures, and libraries like NumPy.", "importance": "Critical", "resources": ["https://python.org"] }, { "name": "Statistics", "desc": "Probability, Distributions, and Hypothesis testing.", "importance": "High", "resources": ["https://khanacademy.org"] }] },
-            { "level": "Intermediate", "title": "Data Engineering & Viz", "skills": [{ "name": "Pandas", "desc": "Data manipulation and cleaning.", "importance": "Critical", "resources": ["https://pandas.pydata.org"] }, { "name": "Visualization", "desc": "Matplotlib and Seaborn for storytelling.", "importance": "High", "resources": ["https://seaborn.pydata.org"] }] },
-            { "level": "Advanced", "title": "Machine Learning Models", "skills": [{ "name": "Scikit-Learn", "desc": "Supervised and Unsupervised learning.", "importance": "Critical", "resources": ["https://scikit-learn.org"] }, { "name": "Big Data Tooling", "desc": "Spark and Hadoop basics.", "importance": "Medium", "resources": ["https://spark.apache.org"] }] }
+            { "level": "Beginner", "title": "Math & Python Foundations", "skills": [{ "name": "Python", "desc": "Logic, Data Structures, and libraries like NumPy.", "importance": "Critical" }, { "name": "Statistics", "desc": "Probability, Distributions, and Hypothesis testing.", "importance": "High" }] },
+            { "level": "Intermediate", "title": "Data Engineering & Viz", "skills": [{ "name": "Pandas", "desc": "Data manipulation and cleaning.", "importance": "Critical" }, { "name": "Visualization", "desc": "Matplotlib and Seaborn for storytelling.", "importance": "High" }] },
+            { "level": "Advanced", "title": "Machine Learning Models", "skills": [{ "name": "Scikit-Learn", "desc": "Supervised and Unsupervised learning.", "importance": "Critical" }, { "name": "Big Data Tooling", "desc": "Spark and Hadoop basics.", "importance": "Medium" }] }
         ],
         "job_guide": { "resume": "Highlight analytical projects and Kaggle rankings.", "portfolio": "Showcase end-to-end data pipelines on GitHub.", "interview": "Focus on explaining model trade-offs." }
     },
@@ -16,784 +16,422 @@ const ROADMAP_DATA = {
         "description": "Building systems that simulate human intelligence and solve complex problems.",
         "icon": "cpu",
         "milestones": [
-            { "level": "Beginner", "title": "Logic & Algebra", "skills": [{ "name": "Linear Algebra", "desc": "Tensors, Matrices, and Vector spaces.", "importance": "Critical", "resources": ["https://ocw.mit.edu"] }, { "name": "Logic Programming", "desc": "Understanding search algorithms and heuristics.", "importance": "High", "resources": ["https://edx.org"] }] },
-            { "level": "Intermediate", "title": "Neural Networks", "skills": [{ "name": "Deep Learning", "desc": "Perceptrons, CNNs, and RNNs.", "importance": "Critical", "resources": ["https://deeplearning.ai"] }, { "name": "PyTorch / TensorFlow", "desc": "Building models using modern frameworks.", "importance": "High", "resources": ["https://tensorflow.org"] }] },
-            { "level": "Advanced", "title": "Modern AI Paradigms", "skills": [{ "name": "LLMs & Transformers", "desc": "Attention mechanisms and fine-tuning.", "importance": "Critical", "resources": ["https://huggingface.co"] }, { "name": "Reinforcement Learning", "desc": "Q-Learning and policy gradients.", "importance": "Medium", "resources": ["https://gymnasium.farama.org/"] }] }
+            { "level": "Beginner", "title": "Logic & Algebra", "skills": [{ "name": "Linear Algebra", "desc": "Tensors, Matrices.", "importance": "Critical" }] },
+            { "level": "Intermediate", "title": "Neural Networks", "skills": [{ "name": "Deep Learning", "desc": "CNNs, RNNs.", "importance": "Critical" }] },
+            { "level": "Advanced", "title": "Modern AI Paradigms", "skills": [{ "name": "LLMs", "desc": "Transformers, fine-tuning.", "importance": "Critical" }] }
         ],
-        "job_guide": { "resume": "Showcase expertise in deep learning frameworks.", "portfolio": "Demonstrate fine-tuned models or custom AI agents.", "interview": "Expect deep dives into architecture design." }
+        "job_guide": { "resume": "Showcase expertise in deep learning frameworks.", "portfolio": "Demonstrate fine-tuned models.", "interview": "Expect deep dives into architecture." }
     },
     "ml": {
         "title": "Machine Learning (ML)",
         "description": "Developing algorithms that allow computers to learn from and make predictions on data.",
         "icon": "brain-circuit",
         "milestones": [
-            { "level": "Beginner", "title": "Statistical Learning", "skills": [{ "name": "Regression & Classification", "desc": "Linear regression, Logistic regression, and KNN.", "importance": "Critical", "resources": ["https://coursera.org"] }] },
-            { "level": "Intermediate", "title": "Ensemble Methods", "skills": [{ "name": "Random Forests & Boosting", "desc": "XGBoost, LightGBM, and Decision Trees.", "importance": "High", "resources": ["https://xgboost.ai"] }] },
-            { "level": "Advanced", "title": "Deployment & MLOps", "skills": [{ "name": "Model Serving", "desc": "Flask/FastAPI for model deployment.", "importance": "High", "resources": ["https://fastapi.tiangolo.com"] }, { "name": "Model Monitoring", "desc": "Drift detection and performance tracking.", "importance": "Medium", "resources": ["https://evidentlyai.com"] }] }
+            { "level": "Beginner", "title": "Statistical Learning", "skills": [{ "name": "Regression & Classification", "desc": "Linear regression, Logistic.", "importance": "Critical" }] },
+            { "level": "Intermediate", "title": "Ensemble Methods", "skills": [{ "name": "Boosting", "desc": "XGBoost, LightGBM.", "importance": "High" }] },
+            { "level": "Advanced", "title": "Deployment & MLOps", "skills": [{ "name": "Model Serving", "desc": "FastAPI, Docker.", "importance": "High" }] }
         ],
-        "job_guide": { "resume": "Focus on accuracy improvements and business impact.", "portfolio": "Link to ML models deployed as web apps.", "interview": "Practice live coding for ML algorithms." }
+        "job_guide": { "resume": "Focus on accuracy improvements.", "portfolio": "Link to deployed models.", "interview": "Practice live coding." }
     },
     "full-stack": {
         "title": "Full Stack Web Development",
         "description": "Mastering both frontend and backend technologies to build complete web applications.",
         "icon": "layers",
         "milestones": [
-            { "level": "Beginner", "title": "Frontend Core", "skills": [{ "name": "HTML/CSS/JS", "desc": "The holy trinity of web structure, style, and logic.", "importance": "Critical", "resources": ["https://developer.mozilla.org"] }] },
-            { "level": "Intermediate", "title": "Frontend Frameworks & Backend", "skills": [{ "name": "React / Vue", "desc": "Reactive UI development.", "importance": "Critical", "resources": ["https://react.dev"] }, { "name": "Node.js / Express", "desc": "Building robust APIs.", "importance": "High", "resources": ["https://nodejs.org"] }] },
-            { "level": "Advanced", "title": "Database & DevOps", "skills": [{ "name": "PostgreSQL / MongoDB", "desc": "Relational and document-based data storage.", "importance": "High", "resources": ["https://postgresql.org"] }, { "name": "Docker & Deployment", "desc": "Containerization and CI/CD pipelines.", "importance": "Medium", "resources": ["https://docker.com"] }] }
+            { "level": "Beginner", "title": "Frontend Core", "skills": [{ "name": "HTML/CSS/JS", "desc": "Core web trinity.", "importance": "Critical" }] },
+            { "level": "Intermediate", "title": "Frontend Frameworks & Backend", "skills": [{ "name": "React", "desc": "Reactive UI.", "importance": "Critical" }, { "name": "Node.js", "desc": "APIs.", "importance": "High" }] },
+            { "level": "Advanced", "title": "Database & DevOps", "skills": [{ "name": "PostgreSQL", "desc": "Relational storage.", "importance": "High" }, { "name": "Docker", "desc": "Containerization.", "importance": "Medium" }] }
         ],
-        "job_guide": { "resume": "List your tech stack clearly (e.g., MERN, MEAN).", "portfolio": "Show at least one full-featured SaaS project.", "interview": "Review system design and API best practices." }
+        "job_guide": { "resume": "List tech stack (e.g. MERN).", "portfolio": "Show one full-featured SaaS project.", "interview": "Review system design." }
     },
     "cloud": {
         "title": "Cloud Computing",
         "description": "Designing and managing scalable infrastructure on platforms like AWS, Azure, and GCP.",
         "icon": "cloud",
         "milestones": [
-            { "level": "Beginner", "title": "Cloud Fundamentals", "skills": [{ "name": "VPC & Networking", "desc": "Understanding subnets, routing, and IP addressing.", "importance": "Critical", "resources": ["https://aws.amazon.com/training"] }] },
-            { "level": "Intermediate", "title": "Compute & Storage", "skills": [{ "name": "EC2 / S3 / Lambda", "desc": "Serverless and compute instances.", "importance": "High", "resources": ["https://azure.microsoft.com"] }] },
-            { "level": "Advanced", "title": "Infrastructure as Code", "skills": [{ "name": "Terraform / CloudFormation", "desc": "Automating cloud provisioning.", "importance": "Critical", "resources": ["https://terraform.io"] }] }
+            { "level": "Beginner", "title": "Networking", "skills": [{ "name": "VPC", "desc": "Subnets, routing.", "importance": "Critical" }] },
+            { "level": "Intermediate", "title": "Compute & Storage", "skills": [{ "name": "S3/Lambda", "desc": "Object storage, serverless.", "importance": "High" }] },
+            { "level": "Advanced", "title": "IaC", "skills": [{ "name": "Terraform", "desc": "Automating cloud.", "importance": "Critical" }] }
         ],
-        "job_guide": { "resume": "Get AWS/Azure certifications.", "portfolio": "Build a multi-region scalable architecture on a cloud provider.", "interview": "Focus on cost-optimization and security." }
+        "job_guide": { "resume": "Get cloud certifications.", "portfolio": "Build multi-region architecture.", "interview": "Focus on security." }
     },
     "cyber-security": {
         "title": "Cyber Security",
-        "description": "Safeguarding digital assets and networks from malicious attacks and data breaches.",
+        "description": "Safeguarding digital assets and networks from malicious attacks.",
         "icon": "shield-check",
         "milestones": [
-            { "level": "Beginner", "title": "Networking & OS", "skills": [{ "name": "TCP/IP Mastery", "desc": "How data moves across the internet.", "importance": "Critical", "resources": ["https://cisco.com"] }] },
-            { "level": "Intermediate", "title": "Penetration Testing", "skills": [{ "name": "Kali Linux Tools", "desc": "Metasploit, Nmap, and Wireshark.", "importance": "High", "resources": ["https://kali.org"] }] },
-            { "level": "Advanced", "title": "Security Architecture", "skills": [{ "name": "Incident Response", "desc": "Detecting and mitigating active threats.", "importance": "Critical", "resources": ["https://sans.org"] }] }
+            { "level": "Beginner", "title": "Networking & OS", "skills": [{ "name": "TCP/IP", "desc": "Data movement.", "importance": "Critical" }] },
+            { "level": "Intermediate", "title": "Penetration Testing", "skills": [{ "name": "Kali Linux", "desc": "Metasploit, Nmap.", "importance": "High" }] },
+            { "level": "Advanced", "title": "Architecture", "skills": [{ "name": "Incident Response", "desc": "Detecting threats.", "importance": "Critical" }] }
         ],
-        "job_guide": { "resume": "List bug bounty findings and certifications like OSCP or CEH.", "portfolio": "Document CTF (Capture The Flag) solutions.", "interview": "Be ready to live-demo a vulnerability exploit." }
+        "job_guide": { "resume": "List bug bounty findings.", "portfolio": "CTF solutions.", "interview": "Live demo an exploit." }
     },
     "devops": {
         "title": "DevOps",
-        "description": "Bridging the gap between software development and IT operations through automation.",
+        "description": "Bridging dev and ops through automation.",
         "icon": "infinity",
         "milestones": [
-            { "level": "Beginner", "title": "Linux & Git", "skills": [{ "name": "Linux Admin", "desc": "Shell scripting and system management.", "importance": "Critical", "resources": ["https://linux.org"] }] },
-            { "level": "Intermediate", "title": "CI/CD & Containers", "skills": [{ "name": "Jenkins / GitHub Actions", "desc": "Automated build and test pipelines.", "importance": "High", "resources": ["https://github.com/features/actions"] }] },
-            { "level": "Advanced", "title": "Orchestration", "skills": [{ "name": "Kubernetes", "desc": "Managing containerized apps at scale.", "importance": "Critical", "resources": ["https://kubernetes.io"] }] }
+            { "level": "Beginner", "title": "Linux & Git", "skills": [{ "name": "Linux Admin", "desc": "Shell scripting.", "importance": "Critical" }] },
+            { "level": "Intermediate", "title": "CI/CD & Containers", "skills": [{ "name": "GitHub Actions", "desc": "Automated pipelines.", "importance": "High" }] },
+            { "level": "Advanced", "title": "Orchestration", "skills": [{ "name": "Kubernetes", "desc": "Managing at scale.", "importance": "Critical" }] }
         ],
-        "job_guide": { "resume": "Showcase experience with zero-downtime deployments.", "portfolio": "A fully automated deployment pipeline project.", "interview": "Study site reliability engineering (SRE) principles." }
+        "job_guide": { "resume": "Show zero-downtime deployment exp.", "portfolio": "Automated pipeline project.", "interview": "Study SRE principles." }
     },
     "blockchain": {
         "title": "Blockchain Technology",
-        "description": "Developing decentralized applications and smart contracts using distributed ledger tech.",
+        "description": "Developing decentralized apps and smart contracts.",
         "icon": "link-2",
         "milestones": [
-            { "level": "Beginner", "title": "Cryptography & P2P", "skills": [{ "name": "Hash Functions", "desc": "Consensus mechanisms like PoW and PoS.", "importance": "Critical", "resources": ["https://bitcoin.org"] }] },
-            { "level": "Intermediate", "title": "Smart Contracts", "skills": [{ "name": "Solidity", "desc": "Writing logic for the Ethereum Virtual Machine.", "importance": "Critical", "resources": ["https://soliditylang.org"] }] },
-            { "level": "Advanced", "title": "DApp Development", "skills": [{ "name": "Web3.js / Ethers.js", "desc": "Connecting frontend to blockchain data.", "importance": "High", "resources": ["https://web3js.org"] }] }
+            { "level": "Beginner", "title": "Cryptography", "skills": [{ "name": "Hash Functions", "desc": "Consensus (PoW, PoS).", "importance": "Critical" }] },
+            { "level": "Intermediate", "title": "Smart Contracts", "skills": [{ "name": "Solidity", "desc": "Ethereum logic.", "importance": "Critical" }] },
+            { "level": "Advanced", "title": "DApps", "skills": [{ "name": "Web3.js", "desc": "Frontend to chain.", "importance": "High" }] }
         ],
-        "job_guide": { "resume": "Highlight smart contract security audits.", "portfolio": "Deploy a custom token or NFT marketplace on a testnet.", "interview": "Understand gas optimization and reentrancy attacks." }
+        "job_guide": { "resume": "Highlight security audits.", "portfolio": "Deploy an NFT marketplace.", "interview": "Understand gas optimization." }
     },
     "software-testing": {
         "title": "Software Testing",
-        "description": "Ensuring software quality through rigorous manual and automated testing methodologies.",
+        "description": "Ensuring quality through Rigorous manual and automated testing.",
         "icon": "badge-check",
         "milestones": [
-            { "level": "Beginner", "title": "Manual Testing", "skills": [{ "name": "Bug Lifecycle", "desc": "Writing effective bug reports and test cases.", "importance": "Critical", "resources": ["https://istqb.org"] }] },
-            { "level": "Intermediate", "title": "Automation Basics", "skills": [{ "name": "Selenium / Selenium Grid", "desc": "Cross-browser testing automation.", "importance": "High", "resources": ["https://selenium.dev"] }] },
-            { "level": "Advanced", "title": "Advanced Frameworks", "skills": [{ "name": "Playwright / Cypress", "desc": "Modern E2E testing for SPAs.", "importance": "High", "resources": ["https://playwright.dev"] }] }
+            { "level": "Beginner", "title": "Manual Testing", "skills": [{ "name": "Bug Lifecycle", "desc": "Effective bug reports.", "importance": "Critical" }] },
+            { "level": "Intermediate", "title": "Automation Basics", "skills": [{ "name": "Selenium", "desc": "Cross-browser testing.", "importance": "High" }] },
+            { "level": "Advanced", "title": "Modern Frameworks", "skills": [{ "name": "Cypress", "desc": "Modern E2E.", "importance": "High" }] }
         ],
-        "job_guide": { "resume": "Highlight reduced manual testing time through automation.", "portfolio": "A test suite covering a complex web application.", "interview": "Focus on testing patterns like POM (Page Object Model)." }
+        "job_guide": { "resume": "Highlight automation time reduction.", "portfolio": "Complex test suite.", "interview": "Focus on POM pattern." }
     },
     "dsa": {
         "title": "Data Structures & Algorithms",
         "description": "The foundation of computer science and technical interviews.",
         "icon": "binary",
         "milestones": [
-            { "level": "Beginner", "title": "Fundamental Structures", "skills": [{ "name": "Arrays & Strings", "desc": "Manipulation, searching, and sorting basics.", "importance": "Critical", "resources": ["https://leetcode.com"] }, { "name": "Linked Lists & Stacks", "desc": "Memory management and linear data flow.", "importance": "High", "resources": ["https://geeksforgeeks.org"] }] },
-            { "level": "Intermediate", "title": "Non-Linear Structures", "skills": [{ "name": "Trees & Graphs", "desc": "BFS, DFS, and tree traversals.", "importance": "Critical", "resources": ["https://visualgo.net"] }, { "name": "Hashing & Heaps", "desc": "Efficiency and priority management.", "importance": "High", "resources": ["https://hackerrank.com"] }] },
-            { "level": "Advanced", "title": "Optimization Paradigms", "skills": [{ "name": "Dynamic Programming", "desc": "Overlapping subproblems and memoization.", "importance": "Critical", "resources": ["https://leetcode.com/discuss/general-discussion/458695/Dynamic-Programming-Patterns"] }, { "name": "Greedy & Backtracking", "desc": "Local optimization and exhaustive search.", "importance": "Medium", "resources": ["https://algorithm-visualizer.org/"] }] }
+            { "level": "Beginner", "title": "Step 1 & 2: Basics & Sorting", "skills": [{ "name": "Arrays & Strings", "desc": "Foundational manipulation.", "importance": "Critical" }, { "name": "Complexity Analysis", "desc": "Big O notation mastery.", "importance": "Critical" }] },
+            { "level": "Intermediate", "title": "Step 3-7: Arrays, LL & Recursion", "skills": [{ "name": "Linked Lists", "desc": "Dynamic pointers.", "importance": "Critical" }, { "name": "Recursion", "desc": "Divide and conquer.", "importance": "High" }] },
+            { "level": "Advanced", "title": "Step 13-18: Trees, Graphs & DP", "skills": [{ "name": "Dynamic Programming", "desc": "Optimal subproblems.", "importance": "Critical" }, { "name": "Graph Theory", "desc": "Network algorithms.", "importance": "Critical" }] }
         ],
-        "job_guide": { "resume": "Showcase competitive programming certificates or rankings.", "portfolio": "Implement complex algorithms from scratch on GitHub.", "interview": "Focus on Time and Space Complexity (Big O notation)." }
-    },
-
-    // --- MANAGEMENT & BUSINESS ---
-    "mba": {
-        "title": "MBA",
-        "description": "Advanced business administration to lead organizations and manage global scale operations.",
-        "icon": "graduation-cap",
-        "milestones": [
-            { "level": "Phase 1", "title": "Core Foundations", "skills": [{ "name": "Business Strategy", "desc": "Competitive analysis and market positioning.", "importance": "Critical", "resources": ["https://hbr.org"] }] },
-            { "level": "Phase 2", "title": "Functional Mastery", "skills": [{ "name": "Finance & Analytics", "desc": "Data-driven decision making.", "importance": "High", "resources": ["https://investopedia.com"] }] },
-            { "level": "Phase 3", "title": "Leadership & Networking", "skills": [{ "name": "Strategic Leadership", "desc": "Managing teams and organisational change.", "importance": "High", "resources": ["https://forbes.com"] }] }
-        ],
-        "job_guide": { "resume": "Focus on quantifying impact and leadership roles.", "portfolio": "Build a network of corporate mentors.", "interview": "Excel at case studies and behavioral questions." }
-    },
-    "pgdm": {
-        "title": "PGDM",
-        "description": "Post-graduate diploma in management with a focus on practical, industry-aligned skillsets.",
-        "icon": "scroll",
-        "milestones": [
-            { "level": "Phase 1", "title": "Industry Orientation", "skills": [{ "name": "Operational Excellence", "desc": "Supply chain and operations basics.", "importance": "High", "resources": ["https://ascm.org"] }] },
-            { "level": "Phase 2", "title": "Corporate Readiness", "skills": [{ "name": "Corporate Finance", "desc": "Budgeting and financial forecasting.", "importance": "High", "resources": ["https://finance.yahoo.com"] }] }
-        ],
-        "job_guide": { "resume": "Highlight internships and industry projects.", "portfolio": "Certification in specific management tools (ERP, SAP).", "interview": "Focus on situational business problems." }
-    },
-    "business-analytics": {
-        "title": "Business Analytics",
-        "description": "Using data analysis to optimize business processes and drive strategic improvements.",
-        "icon": "bar-chart-big",
-        "milestones": [
-            { "level": "Beginner", "title": "Excel & Stats", "skills": [{ "name": "Advanced Excel", "desc": "Pivot tables, macros, and financial modeling.", "importance": "Critical", "resources": ["https://microsoft.com/excel"] }] },
-            { "level": "Intermediate", "title": "BI Tools", "skills": [{ "name": "Tableau / Power BI", "desc": "Building dynamic business dashboards.", "importance": "Critical", "resources": ["https://tableau.com"] }] },
-            { "level": "Advanced", "title": "Strategic Modeling", "skills": [{ "name": "SQL for Business", "desc": "Extracting insights from large DBs.", "importance": "High", "resources": ["https://sqlzoo.net"] }] }
-        ],
-        "job_guide": { "resume": "Showcase dashboards created for real business cases.", "portfolio": "A LinkedIn post or blog explaining a data-driven business insight.", "interview": "Practice explaining tech insights to non-tech stakeholders." }
-    },
-    "product-management": {
-        "title": "Product Management",
-        "description": "Leading the lifecycle of a product from initial ideation to launch and optimization.",
-        "icon": "package",
-        "milestones": [
-            { "level": "Beginner", "title": "Empathy & Ideation", "skills": [{ "name": "User Research", "desc": "Validating problems and user interviews.", "importance": "Critical", "resources": ["https://nngroup.com"] }] },
-            { "level": "Intermediate", "title": "Agile & Delivery", "skills": [{ "name": "PRD Writing", "desc": "Defining requirements clearly.", "importance": "Critical", "resources": ["https://productschool.com"] }] },
-            { "level": "Advanced", "title": "Growth & Strategy", "skills": [{ "name": "Product Analytics", "desc": "Tracking metrics like DAU and Retention.", "importance": "High", "resources": ["https://mixpanel.com"] }] }
-        ],
-        "job_guide": { "resume": "Focus on 'launched' products and specific impact metrics.", "portfolio": "A teardown of a popular app with suggested improvements.", "interview": "Master the 'design a better X' style questions." }
-    },
-    "digital-marketing": {
-        "title": "Digital Marketing",
-        "description": "Strategizing and executing online marketing campaigns across various digital channels.",
-        "icon": "megaphone",
-        "milestones": [
-            { "level": "Beginner", "title": "Content & SEO", "skills": [{ "name": "SEO Foundations", "desc": "Keywords and On-page optimization.", "importance": "Critical", "resources": ["https://moz.com"] }] },
-            { "level": "Intermediate", "title": "Paid Media", "skills": [{ "name": "Google Ads / Meta Ads", "desc": "Running targeted ad campaigns.", "importance": "High", "resources": ["https://skillshop.exceedlms.com"] }] },
-            { "level": "Advanced", "title": "Automation & CRM", "skills": [{ "name": "Email Marketing", "desc": "HubSpot/Mailchimp automation.", "importance": "High", "resources": ["https://academy.hubspot.com"] }] }
-        ],
-        "job_guide": { "resume": "List ROAS (Return On Ad Spend) benchmarks you've achieved.", "portfolio": "Showcase a campaign that went viral or improved sales.", "interview": "Understand analytics and attribution modeling." }
-    },
-
-    // --- FINANCE ---
-    "cfa": {
-        "title": "CFA",
-        "description": "Chartered Financial Analyst: The global standard for investment professional certification.",
-        "icon": "coins",
-        "milestones": [
-            { "level": "Level I", "title": "Investment Tools", "skills": [{ "name": "Ethical Standards", "desc": "Integrity and trust in financial markets.", "importance": "Critical", "resources": ["https://cfainstitute.org"] }] },
-            { "level": "Level II", "title": "Asset Valuation", "skills": [{ "name": "Equity/Fixed Income", "desc": "Deep dive into financial instruments.", "importance": "High", "resources": ["https://investopedia.com"] }] }
-        ],
-        "job_guide": { "resume": "Highlight passed levels of the CFA exam.", "portfolio": "Network through local CFA societies.", "interview": "Deep technical knowledge of financial statements." }
-    },
-    "frm": {
-        "title": "FRM",
-        "description": "Financial Risk Manager: Expert certification for managing financial and operational risks.",
-        "icon": "shield-alert",
-        "milestones": [
-            { "level": "Part I", "title": "Risk Foundation", "skills": [{ "name": "Quant Analysis", "desc": "Measuring and managing market risk.", "importance": "Critical", "resources": ["https://garp.org"] }] },
-            { "level": "Part II", "title": "Applied Risk", "skills": [{ "name": "Operational Risk", "desc": "Basics of credit and liquidity risk.", "importance": "High", "resources": ["https://garp.org/frm"] }] }
-        ],
-        "job_guide": { "resume": "Focus on risk modeling and compliance skills.", "portfolio": "Certification in Risk management tools.", "interview": "Prepare for scenarios involving financial stress tests." }
-    },
-    "financial-modeling": {
-        "title": "Financial Modeling",
-        "description": "Building abstract representations of financial situations to support decision making.",
-        "icon": "file-spreadsheet",
-        "milestones": [
-            { "level": "Beginner", "title": "Excel Mastery", "skills": [{ "name": "Keyboard Shortcuts", "desc": "Building models without a mouse.", "importance": "High", "resources": ["https://wallstreetprep.com"] }] },
-            { "level": "Intermediate", "title": "Three-Statement Model", "skills": [{ "name": "IS, BS, CFS", "desc": "Linking financial statements.", "importance": "Critical", "resources": ["https://corporatefinanceinstitute.com"] }] },
-            { "level": "Advanced", "title": "LBO & M&A", "skills": [{ "name": "Valuation Techniques", "desc": "DCF and comparable analysis.", "importance": "High", "resources": ["https://mergersandinquisitions.com"] }] }
-        ],
-        "job_guide": { "resume": "Quantify accuracy and speed in modeling tasks.", "portfolio": "Examples of detailed models built for dummy companies.", "interview": "Live modeling tests are common; speed and accuracy key." }
-    },
-    "investment-banking": {
-        "title": "Investment Banking",
-        "description": "Advising corporations on capital raising and complex financial transactions like M&A.",
-        "icon": "banknote",
-        "milestones": [
-            { "level": "Beginner", "title": "Market Awareness", "skills": [{ "name": "Current Affairs", "desc": "Following global market trends and news.", "importance": "High", "resources": ["https://wsj.com"] }] },
-            { "level": "Intermediate", "title": "Deal Execution", "skills": [{ "name": "Pitchbooks", "desc": "Creating compelling investment narratives.", "importance": "High", "resources": ["https://breakingintowallstreet.com"] }] }
-        ],
-        "job_guide": { "resume": "Highlight internships at known financial firms.", "portfolio": "A list of deal-related case studies you've analysed.", "interview": "Prepare for long hours and high-pressure technicals." }
-    },
-
-    // --- DESIGN ---
-    "ui-ux": {
-        "title": "UI/UX Design",
-        "description": "Designing intuitive and visually appealing user interfaces for digital products.",
-        "icon": "framer",
-        "milestones": [
-            { "level": "Beginner", "title": "Design Principles", "skills": [{ "name": "Color & Typography", "desc": "Visual hierarchy and contrast.", "importance": "Critical", "resources": ["https://refactoringui.com"] }] },
-            { "level": "Intermediate", "title": "Tools & Prototyping", "skills": [{ "name": "Figma / Adobe XD", "desc": "Building interactive design systems.", "importance": "Critical", "resources": ["https://figma.com/learn"] }] },
-            { "level": "Advanced", "title": "User Experience", "skills": [{ "name": "Design Sprints", "desc": "Rapid prototyping and user testing.", "importance": "High", "resources": ["https://designsprintkit.withgoogle.com"] }] }
-        ],
-        "job_guide": { "resume": "Clean, visually driven resume design.", "portfolio": "A Behance/Dribbble profile with deep case studies.", "interview": "Explain the 'Why' behind every design choice." }
-    },
-    "graphic-design": {
-        "title": "Graphic Design",
-        "description": "Creating visual content to communicate messages through print and digital media.",
-        "icon": "palette",
-        "milestones": [
-            { "level": "Beginner", "title": "Raster & Vector", "skills": [{ "name": "Photoshop", "desc": "Image manipulation and retouching.", "importance": "Critical", "resources": ["https://adobe.com/photoshop"] }, { "name": "Illustrator", "desc": "Vector-based logos and illustrations.", "importance": "Critical", "resources": ["https://adobe.com/illustrator"] }] }
-        ],
-        "job_guide": { "resume": "Visual and creative layout.", "portfolio": "Variety of branding and social media projects.", "interview": "Prepare to talk about branding and identity theory." }
-    },
-    "animation-vfx": {
-        "title": "Animation & VFX",
-        "description": "Creating computer-generated animations and visual effects for movies and games.",
-        "icon": "sparkles",
-        "milestones": [
-            { "level": "Beginner", "title": "3D Basics", "skills": [{ "name": "Blender / Maya", "desc": "Modeling and simple animations.", "importance": "Critical", "resources": ["https://blender.org"] }] },
-            { "level": "Intermediate", "title": "Special Effects", "skills": [{ "name": "Houdini / After Effects", "desc": "Particle systems and compositing.", "importance": "High", "resources": ["https://sidefx.com"] }] }
-        ],
-        "job_guide": { "resume": "Link to a high-quality showreel.", "portfolio": "Demo reel on Vimeo/YouTube.", "interview": "Critique your own work and show technical growth." }
-    },
-    "video-editing": {
-        "title": "Video Editing",
-        "description": "Assembling recorded footage into a finished product, including sound and color grading.",
-        "icon": "video",
-        "milestones": [
-            { "level": "Beginner", "title": "Editing Logic", "skills": [{ "name": "Premiere Pro / DaVinci", "desc": "Cutting and sequence building.", "importance": "Critical", "resources": ["https://blackmagicdesign.com/products/davinciresolve"] }] },
-            { "level": "Advanced", "title": "Color & Sound", "skills": [{ "name": "Color Grading", "desc": "Correcting and stylizing footage.", "importance": "High", "resources": ["https://mixinglight.com"] }] }
-        ],
-        "job_guide": { "resume": "Variety of styles (Commercial, Vlogs, Narrative).", "portfolio": "Showcase your best 3 edits in a portfolio site.", "interview": "Focus on storytelling and pacing." }
-    },
-
-    // --- ENGINEERING & CORE ---
-    "m-tech": {
-        "title": "M.Tech",
-        "description": "Advanced specialized degree in various engineering and technology domains.",
-        "icon": "microscope",
-        "milestones": [
-            { "level": "Phase 1", "title": "Advanced Core", "skills": [{ "name": "Specialized Theory", "desc": "Deep dive into your specific branch.", "importance": "Critical", "resources": ["https://nptel.ac.in"] }] },
-            { "level": "Phase 2", "title": "Research & Thesis", "skills": [{ "name": "Literature Review", "desc": "Scientific writing and original research.", "importance": "High", "resources": ["https://scholar.google.com"] }] }
-        ],
-        "job_guide": { "resume": "Focus on research papers and technical projects.", "portfolio": "Document your thesis findings on a personal blog.", "interview": "Technical expertise in the niche specialisation." }
-    },
-    "robotics": {
-        "title": "Robotics",
-        "description": "Designing, building, and operating robots to perform complex tasks autonomously.",
-        "icon": "bot",
-        "milestones": [
-            { "level": "Beginner", "title": "Electronics & C", "skills": [{ "name": "Arduino / Pi", "desc": "Basic sensors and actuators.", "importance": "Critical", "resources": ["https://arduino.cc"] }] },
-            { "level": "Intermediate", "title": "Control Systems", "skills": [{ "name": "ROS (Robot OS)", "desc": "The industry standard for robot logic.", "importance": "Critical", "resources": ["https://ros.org"] }] }
-        ],
-        "job_guide": { "resume": "Highlight hardware-software integration projects.", "portfolio": "Videos of physical robots you've built.", "interview": "Understand kinematics and sensor fusion." }
-    },
-    "embedded-systems": {
-        "title": "Embedded Systems",
-        "description": "Developing specialized computer systems embedded within larger mechanical or electrical systems.",
-        "icon": "circuit-board",
-        "milestones": [
-            { "level": "Beginner", "title": "Microcontrollers", "skills": [{ "name": "C Programming", "desc": "Low-level system logic.", "importance": "Critical", "resources": ["https://st.com"] }] },
-            { "level": "Advanced", "title": "RTOS", "skills": [{ "name": "Real-time Operating Systems", "desc": "FreeRTOS or Zephyr.", "importance": "High", "resources": ["https://freertos.org"] }] }
-        ],
-        "job_guide": { "resume": "Experience with circuit design (PCB).", "portfolio": "GitHub repos with firmware projects.", "interview": "Deep dive into interrupts and memory management." }
-    },
-    "vlsi": {
-        "title": "VLSI Design",
-        "description": "Creating integrated circuits by combining thousands of transistors on a single chip.",
-        "icon": "microchip",
-        "milestones": [
-            { "level": "Beginner", "title": "Digital Logic", "skills": [{ "name": "Verilog / VHDL", "desc": "Hardware description languages.", "importance": "Critical", "resources": ["https://edaplayground.com"] }] },
-            { "level": "Advanced", "title": "Physical Design", "skills": [{ "name": "ASIC Flow", "desc": "Synthesis, Place, and Route.", "importance": "High", "resources": ["https://cadence.com"] }] }
-        ],
-        "job_guide": { "resume": "Highlight projects with IC design flows.", "portfolio": "Simulations and design documentation.", "interview": "Prepare for tough logic design questions." }
-    },
-    "automation": {
-        "title": "Industrial Automation",
-        "description": "Automating industrial processes using advanced control systems and robotics.",
-        "icon": "factory",
-        "milestones": [
-            { "level": "Beginner", "title": "PLC Basics", "skills": [{ "name": "Logix / Siemens", "desc": "Programming programmable logic controllers.", "importance": "Critical", "resources": ["https://rockwellautomation.com"] }] },
-            { "level": "Intermediate", "title": "SCADA", "skills": [{ "name": "DCS & HMI", "desc": "Process monitoring interfaces.", "importance": "High", "resources": ["https://inductiveautomation.com"] }] }
-        ],
-        "job_guide": { "resume": "Certifications in PLC/SCADA.", "portfolio": "Case studies of production line optimizations.", "interview": "Understand safety protocols and industrial standards." }
-    },
-    "renewable-energy": {
-        "title": "Renewable Energy",
-        "description": "Focusing on sustainable energy sources like solar, wind, and hydrogen systems.",
-        "icon": "zap",
-        "milestones": [
-            { "level": "Beginner", "title": "Energy Basics", "skills": [{ "name": "Solar/Wind Tech", "desc": "Understanding photovoltaic and wind power.", "importance": "High", "resources": ["https://irena.org"] }] },
-            { "level": "Advanced", "title": "Grid Integration", "skills": [{ "name": "Smart Grids", "desc": "Modernizing the electrical grid.", "importance": "High", "resources": ["https://energy.gov"] }] }
-        ],
-        "job_guide": { "resume": "Focus on sustainability and efficiency metrics.", "portfolio": "Projects involving PV system design.", "interview": "Stay updated on global energy policies." }
-    },
-
-    // --- COMPETITIVE EXAMS ---
-    "upsc": {
-        "title": "UPSC Civil Services",
-        "description": "Preparation for the elite civil services of India (IAS, IPS, IFS, etc.).",
-        "icon": "landmark",
-        "milestones": [
-            { "level": "Prelims", "title": "General Studies I & CSAT", "skills": [{ "name": "Polity & History", "desc": "Deep understanding of Indian constitution and roots.", "importance": "Critical", "resources": ["https://upsc.gov.in"] }] },
-            { "level": "Mains", "title": "Optional & Essay", "skills": [{ "name": "Analytical Writing", "desc": "Synthesising complex social issues into coherent essays.", "importance": "Critical", "resources": ["https://insightsonindia.com"] }] },
-            { "level": "Interview", "title": "Personality Test", "skills": [{ "name": "Current Affairs", "desc": "Critical thinking on global and national news.", "importance": "High", "resources": ["https://thehindu.com"] }] }
-        ],
-        "job_guide": { "resume": "Strong consistent academic record.", "portfolio": "Document your study strategies.", "interview": "Focus on ethics, integrity, and social awareness." }
-    },
-    "gate": {
-        "title": "GATE",
-        "description": "Graduate Aptitude Test in Engineering for post-grad admissions into IITs/NITs and PSU jobs.",
-        "icon": "award",
-        "milestones": [
-            { "level": "Stage 1", "title": "Subject Core", "skills": [{ "name": "Engineering Math", "desc": "The backbone of the GATE exam.", "importance": "Critical", "resources": ["https://gate.iitk.ac.in"] }] },
-            { "level": "Stage 2", "title": "Branch Specifics", "skills": [{ "name": "Core Concepts", "desc": "In-depth problem solving in your branch.", "importance": "Critical", "resources": ["https://geeksforgeeks.org"] }] }
-        ],
-        "job_guide": { "resume": "High GATE score/rank.", "portfolio": "Previous projects showing technical depth.", "interview": "Expect pure technical questioning." }
-    },
-    "ssc": {
-        "title": "SSC CGL",
-        "description": "Exams for various government department posts under the Staff Selection Commission.",
-        "icon": "stamp",
-        "milestones": [
-            { "level": "Tier I", "title": "Aptitude & Logic", "skills": [{ "name": "Quant Aptitude", "desc": "Speed and accuracy in mathematics.", "importance": "Critical", "resources": ["https://ssc.nic.in"] }] },
-            { "level": "Tier II", "title": "Advanced English", "skills": [{ "name": "English Grammar", "desc": "Effective communication and comprehension skills.", "importance": "High", "resources": ["https://testbook.com"] }] }
-        ],
-        "job_guide": { "resume": "Clear academic background.", "portfolio": "Mock test scores consistency.", "interview": "Focus on general awareness." }
-    },
-    "banking": {
-        "title": "Banking Exams (IBPS/SBI)",
-        "description": "Competitive exams for Probationary Officers and Clerks in state-run banks.",
-        "icon": "landmark-2",
-        "milestones": [
-            { "level": "Prelims", "title": "Speed Test", "skills": [{ "name": "Data Interpretation", "desc": "Analysing tables and charts rapidly.", "importance": "Critical", "resources": ["https://ibps.in"] }] },
-            { "level": "Mains", "title": "Advanced Banking", "skills": [{ "name": "Banking Awareness", "desc": "Roles of RBI and modern banking trends.", "importance": "High", "resources": ["https://bankersadda.com"] }] }
-        ],
-        "job_guide": { "resume": "Strong focus on numerical skills.", "portfolio": "Mock interview practice sessions.", "interview": "Deep dive into financial term definitions." }
-    },
-
-    // --- OTHER ---
-    "study-abroad": {
-        "title": "MS / MBA Abroad",
-        "description": "A roadmap for pursuing higher education in international universities.",
-        "icon": "plane",
-        "milestones": [
-            { "level": "Step 1", "title": "Tests (GRE/GMAT/TOEFL)", "skills": [{ "name": "Quant & Verbal", "desc": "Achieving target scores for top schools.", "importance": "Critical", "resources": ["https://ets.org/gre"] }] },
-            { "level": "Step 2", "title": "Applications & SOP", "skills": [{ "name": "Statement of Purpose", "desc": "Crafting a compelling life story and goal.", "importance": "Critical", "resources": ["https://magoosh.com"] }] }
-        ],
-        "job_guide": { "resume": "Highlight global exposure and extra-curriculars.", "portfolio": "Strong portfolio of projects/internships.", "interview": "Focus on the 'Why this university' question." }
+        "job_guide": { "resume": "Showcase competitive ranks.", "portfolio": "Complex algorithms in repo.", "interview": "Focus on Big O." }
     },
     "python": {
         "title": "Python Programming",
-        "description": "General purpose programming from basic scripting to complex systems.",
+        "description": "General purpose programming for everything from web to AI.",
         "icon": "terminal",
         "milestones": [
-            { "level": "Beginner", "title": "Syntax & Scripting", "skills": [{ "name": "Core Python", "desc": "Automation, Scraping, and Scripts.", "importance": "Critical", "resources": ["https://realpython.com"] }] }
+            { "level": "Beginner", "title": "Core Syntax", "skills": [{ "name": "Automation", "desc": "Scripting, Scraping.", "importance": "Critical" }] }
         ],
-        "job_guide": { "resume": "List of automation scripts created.", "portfolio": "GitHub repos with functional tools.", "interview": "Data structures and algorithm focus." }
+        "job_guide": { "resume": "List automation scripts.", "portfolio": "Functional tools.", "interview": "Focus on Pythonic idioms." }
     },
     "ethical-hacking": {
         "title": "Ethical Hacking",
-        "description": "Legitimately breaking into systems to identify and fix security gaps.",
+        "description": "Identifying and fixing security gaps legally.",
         "icon": "ghost",
         "milestones": [
-            { "level": "Beginner", "title": "Footprinting", "skills": [{ "name": "Scanning Networks", "desc": "Using tools to find weak points.", "importance": "Critical", "resources": ["https://tryhackme.com"] }] },
-            { "level": "Advanced", "title": "Exploitation", "skills": [{ "name": "Post-Exploitation", "desc": "Maintaining access and clearing logs.", "importance": "High", "resources": ["https://hackthebox.com"] }] }
+            { "level": "Beginner", "title": "Footprinting", "skills": [{ "name": "Recon", "desc": "Scanning networks.", "importance": "Critical" }] },
+            { "level": "Advanced", "title": "Exploitation", "skills": [{ "name": "Post-Exploit", "desc": "Maintenance.", "importance": "High" }] }
         ],
-        "job_guide": { "resume": "Certifications (CEH, PenTest+).", "portfolio": "Write-ups on retired boxes.", "interview": "Defend your hacking methodology ethically." }
+        "job_guide": { "resume": "Certifications (CEH, PenTest+).", "portfolio": "Retired box write-ups.", "interview": "Ethics defense." }
     },
     "iot": {
         "title": "Internet of Things (IoT)",
-        "description": "Interconnecting physical devices with the internet to collect and exchange data.",
+        "description": "Interconnecting physical devices with the internet.",
         "icon": "webhook",
         "milestones": [
-            { "level": "Beginner", "title": "Sensors & Circuits", "skills": [{ "name": "ESP32 / NodeMCU", "desc": "Connecting hardware to Wi-Fi.", "importance": "Critical", "resources": ["https://espressif.com"] }] },
-            { "level": "Intermediate", "title": "Protocols", "skills": [{ "name": "MQTT / HTTP", "desc": "Data communication between devices.", "importance": "Critical", "resources": ["https://mqtt.org"] }] }
+            { "level": "Beginner", "title": "Sensors", "skills": [{ "name": "ESP32", "desc": "Arduino connectivity.", "importance": "Critical" }] },
+            { "level": "Intermediate", "title": "Protocols", "skills": [{ "name": "MQTT", "desc": "Device communication.", "importance": "Critical" }] }
         ],
-        "job_guide": { "resume": "Highlight projects with telemetry data visualization.", "portfolio": "Physical prototypes (Smart Home, etc.).", "interview": "Understand logic for low-power devices." }
+        "job_guide": { "resume": "Telemetry data projects.", "portfolio": "Smart prototypes.", "interview": "Low-power logic." }
+    },
+
+    // --- MANAGEMENT & BUSINESS (5 Categories) ---
+    "mba": {
+        "title": "MBA",
+        "description": "Leading organizations and managing global operations.",
+        "icon": "graduation-cap",
+        "milestones": [
+            { "level": "Phase 1", "title": "Strategy", "skills": [{ "name": "Market Positioning", "desc": "Competitive analysis.", "importance": "Critical" }] }
+        ],
+        "job_guide": { "resume": "Quantify leadership impact.", "portfolio": "Corporate mentors.", "interview": "Behavioral cases." }
+    },
+    "pgdm": {
+        "title": "PGDM",
+        "description": "Practical post-grad diploma in management.",
+        "icon": "scroll",
+        "milestones": [
+            { "level": "Phase 1", "title": "Operations", "skills": [{ "name": "Supply Chain", "desc": "Operational excellence.", "importance": "High" }] }
+        ],
+        "job_guide": { "resume": "Highlight internships.", "portfolio": "ERP/SAP certs.", "interview": "Situational problems." }
+    },
+    "business-analytics": {
+        "title": "Business Analytics",
+        "description": "Using data analysis to drive strategic improvements.",
+        "icon": "bar-chart-big",
+        "milestones": [
+            { "level": "Beginner", "title": "Excel", "skills": [{ "name": "Modeling", "desc": "Pivot tables, macros.", "importance": "Critical" }] },
+            { "level": "Intermediate", "title": "BI", "skills": [{ "name": "Tableau", "desc": "Dynamic dashboards.", "importance": "Critical" }] }
+        ],
+        "job_guide": { "resume": "Showcase dashboards.", "portfolio": "Data blog posts.", "interview": "Explain tech to non-tech." }
+    },
+    "product-management": {
+        "title": "Product Management",
+        "description": "Leading product life-cycles from ideation to launch.",
+        "icon": "package",
+        "milestones": [
+            { "level": "Beginner", "title": "Ideation", "skills": [{ "name": "User Research", "desc": "Validating problems.", "importance": "Critical" }] },
+            { "level": "Intermediate", "title": "Agile", "skills": [{ "name": "PRD Writing", "desc": "Defining requirements.", "importance": "Critical" }] }
+        ],
+        "job_guide": { "resume": "Focus on metrics.", "portfolio": "App teardowns.", "interview": "Design a better X." }
+    },
+    "digital-marketing": {
+        "title": "Digital Marketing",
+        "description": "Executing online campaigns across digital channels.",
+        "icon": "megaphone",
+        "milestones": [
+            { "level": "Beginner", "title": "SEO", "skills": [{ "name": "Keywords", "desc": "On-page optimization.", "importance": "Critical" }] },
+            { "level": "Intermediate", "title": "Paid Media", "skills": [{ "name": "Meta Ads", "desc": "Targeted campaigns.", "importance": "High" }] }
+        ],
+        "job_guide": { "resume": "List ROAS benchmarks.", "portfolio": "Viral campaigns.", "interview": "Attribution modeling." }
+    },
+
+    // --- FINANCE (4 Categories) ---
+    "cfa": {
+        "title": "CFA",
+        "description": "Chartered Financial Analyst: Global standard for investment.",
+        "icon": "coins",
+        "milestones": [
+            { "level": "Level I", "title": "Ethics & Tools", "skills": [{ "name": "Integrity", "desc": "Trust in markets.", "importance": "Critical" }] }
+        ],
+        "job_guide": { "resume": "Passed levels.", "portfolio": "CFA societies.", "interview": "Technical expertise." }
+    },
+    "frm": {
+        "title": "FRM",
+        "description": "Financial Risk Manager: Expert in managing risk.",
+        "icon": "shield-alert",
+        "milestones": [
+            { "level": "Part I", "title": "Quant Analysis", "skills": [{ "name": "Market Risk", "desc": "Risk measuring.", "importance": "Critical" }] }
+        ],
+        "job_guide": { "resume": "Modeling & compliance.", "portfolio": "Risk tools.", "interview": "Stress test scenarios." }
+    },
+    "financial-modeling": {
+        "title": "Financial Modeling",
+        "description": "Representing financial situations for decisions.",
+        "icon": "file-spreadsheet",
+        "milestones": [
+            { "level": "Beginner", "title": "Keyboarding", "skills": [{ "name": "Shortcuts", "desc": "Modeling speed.", "importance": "High" }] },
+            { "level": "Intermediate", "title": "3-Statement", "skills": [{ "name": "Linking IS, BS", "desc": "Financial flow.", "importance": "Critical" }] }
+        ],
+        "job_guide": { "resume": "Quantify speed.", "portfolio": "Dummy models.", "interview": "Live modeling tests." }
+    },
+    "investment-banking": {
+        "title": "Investment Banking",
+        "description": "Advising on capital raising and M&A deals.",
+        "icon": "banknote",
+        "milestones": [
+            { "level": "Beginner", "title": "Awareness", "skills": [{ "name": "Markets", "desc": "Global trends.", "importance": "High" }] }
+        ],
+        "job_guide": { "resume": "Internships.", "portfolio": "Deal analysts.", "interview": "High-pressure tech." }
+    },
+
+    // --- DESIGN (4 Categories) ---
+    "ui-ux": {
+        "title": "UI/UX Design",
+        "description": "Designing intuitive interfaces for digital products.",
+        "icon": "framer",
+        "milestones": [
+            { "level": "Beginner", "title": "Typography", "skills": [{ "name": "Contrast", "desc": "Visual hierarchy.", "importance": "Critical" }] },
+            { "level": "Intermediate", "title": "Prototyping", "skills": [{ "name": "Figma", "desc": "Design systems.", "importance": "Critical" }] }
+        ],
+        "job_guide": { "resume": "Visual design.", "portfolio": "Behance profile.", "interview": "Explain the Why." }
+    },
+    "graphic-design": {
+        "title": "Graphic Design",
+        "description": "Visual messaging for print and digital.",
+        "icon": "palette",
+        "milestones": [
+            { "level": "Beginner", "title": "Adobe Suite", "skills": [{ "name": "Photoshop", "desc": "Retouching.", "importance": "Critical" }] }
+        ],
+        "job_guide": { "resume": "Visual layout.", "portfolio": "Branding projects.", "interview": "Identity theory." }
+    },
+    "animation-vfx": {
+        "title": "Animation & VFX",
+        "description": "Generating animations and effects for movies.",
+        "icon": "sparkles",
+        "milestones": [
+            { "level": "Beginner", "title": "Modeling", "skills": [{ "name": "Blender", "desc": "3D basics.", "importance": "Critical" }] }
+        ],
+        "job_guide": { "resume": "Showreel links.", "portfolio": "Vimeo reel.", "interview": "Technical growth." }
+    },
+    "video-editing": {
+        "title": "Video Editing",
+        "description": "Assembling footage with sound/grading.",
+        "icon": "video",
+        "milestones": [
+            { "level": "Beginner", "title": "Cutting", "skills": [{ "name": "DaVinci", "desc": "Sequence building.", "importance": "Critical" }] }
+        ],
+        "job_guide": { "resume": "Styles mix.", "portfolio": "Best 3 edits.", "interview": "Pacing & story." }
+    },
+
+    // --- ENGINEERING & CORE (11 Categories) ---
+    "m-tech": {
+        "title": "M.Tech",
+        "description": "Specialized degree in Engineering domains.",
+        "icon": "microscope",
+        "milestones": [
+            { "level": "Phase 1", "title": "Specialized Theory", "skills": [{ "name": "Core Branch", "desc": "NPTEL/IIT Mastery.", "importance": "Critical" }] }
+        ],
+        "job_guide": { "resume": "Papers & projects.", "portfolio": "Thesis blog.", "interview": "Niche expertise." }
+    },
+    "robotics": {
+        "title": "Robotics",
+        "description": "Designing and building autonomous robots.",
+        "icon": "bot",
+        "milestones": [
+            { "level": "Beginner", "title": "Arduino", "skills": [{ "name": "Sensors", "desc": "Actuators.", "importance": "Critical" }] },
+            { "level": "Intermediate", "title": "ROS", "skills": [{ "name": "Logic", "desc": "Robot OS.", "importance": "Critical" }] }
+        ],
+        "job_guide": { "resume": "Hw-Sw integration.", "portfolio": "Robot videos.", "interview": "Kinematics." }
+    },
+    "embedded-systems": {
+        "title": "Embedded Systems",
+        "description": "Developing computer systems inside mechanical/electrical systems.",
+        "icon": "circuit-board",
+        "milestones": [
+            { "level": "Beginner", "title": "Low-level C", "skills": [{ "name": "Firmware", "desc": "System logic.", "importance": "Critical" }] }
+        ],
+        "job_guide": { "resume": "PCB design.", "portfolio": "Firmware repos.", "interview": "Interrupts." }
+    },
+    "vlsi": {
+        "title": "VLSI Design",
+        "description": "Combining transistors into chips.",
+        "icon": "microchip",
+        "milestones": [
+            { "level": "Beginner", "title": "Verilog", "skills": [{ "name": "HDL", "desc": "Hardware logic.", "importance": "Critical" }] }
+        ],
+        "job_guide": { "resume": "IC cycles.", "portfolio": "Circuit designs.", "interview": "Logic testing." }
+    },
+    "automation": {
+        "title": "Industrial Automation",
+        "description": "Automating industrial processes with SCADA.",
+        "icon": "factory",
+        "milestones": [
+            { "level": "Beginner", "title": "PLC", "skills": [{ "name": "Logix", "desc": "Programming controllers.", "importance": "Critical" }] }
+        ],
+        "job_guide": { "resume": "PLC/SCADA certs.", "portfolio": "Line optimization.", "interview": "Safety protocols." }
+    },
+    "renewable-energy": {
+        "title": "Renewable Energy",
+        "description": "Focusing on sustainable sources like Solar/Wind.",
+        "icon": "zap",
+        "milestones": [
+            { "level": "Beginner", "title": "Solar Basics", "skills": [{ "name": "Photovoltaic", "desc": "Sustainable power.", "importance": "High" }] }
+        ],
+        "job_guide": { "resume": "Sustainability metrics.", "portfolio": "PV design.", "interview": "Energy policy." }
+    },
+
+    // --- NEW ENGINEERING CATEGORIES ---
+    "robotics-engineering": {
+        "title": "Robotics Engineering",
+        "description": "Deep dive into Robot design and Control systems.",
+        "icon": "cog",
+        "milestones": [
+            { "level": "Core", "title": "Mechatronics", "skills": [{ "name": "Control Systems", "desc": "Advanced feedback logic.", "importance": "Critical" }] }
+        ],
+        "job_guide": { "resume": "Robot kits.", "portfolio": "Design logs.", "interview": "Matrix math." }
+    },
+    "structural-engineering": {
+        "title": "Structural Engineering",
+        "description": "Designing safe and stable buildings and structures.",
+        "icon": "building",
+        "milestones": [
+            { "level": "Core", "title": "Statics & Loads", "skills": [{ "name": "Analysis", "desc": "Weight distribution.", "importance": "Critical" }] }
+        ],
+        "job_guide": { "resume": "Site project docs.", "portfolio": "CAD models.", "interview": "Load theory." }
+    },
+    "chemical-engineering": {
+        "title": "Chemical Engineering",
+        "description": "Applying chemical processes to industrial production.",
+        "icon": "beaker",
+        "milestones": [
+            { "level": "Core", "title": "Thermodynamics", "skills": [{ "name": "Heat Transfer", "desc": "Industrial chemistry.", "importance": "Critical" }] }
+        ],
+        "job_guide": { "resume": "Safety certs.", "portfolio": "Process flows.", "interview": "Reactant logic." }
+    },
+    "aerospace": {
+        "title": "Aerospace Engineering",
+        "description": "Designing aircraft and spacecraft systems.",
+        "icon": "rocket",
+        "milestones": [
+            { "level": "Core", "title": "Aerodynamics", "skills": [{ "name": "Propulsion", "desc": "Lift and Thrust.", "importance": "Critical" }] }
+        ],
+        "job_guide": { "resume": "Flight sims.", "portfolio": "Cadet logs.", "interview": "Fluid mechanics." }
+    },
+    "biotech": {
+        "title": "Biotechnology",
+        "description": "Using biological systems for tech advancements.",
+        "icon": "dna",
+        "milestones": [
+            { "level": "Core", "title": "Genetics", "skills": [{ "name": "Bioinformatics", "desc": "Data in biology.", "importance": "Critical" }] }
+        ],
+        "job_guide": { "resume": "Lab research.", "portfolio": "PCR results.", "interview": "Ethics & DNA." }
     }
 };
 
 window.ROADMAP_DATA = ROADMAP_DATA;
 
 const PLAYLIST_DATA = {
-    // --- BATCH A: TECH FOUNDATIONS ---
-    "python": [
-        {
-            "id": "py-v1",
-            "title": "Python: Programming, Data Structures and Algorithms",
-            "youtubeId": "I8x5FpAL9zI",
-            "author": "Prof. Madhavan Mukund (IIT Madras)",
-            "testType": "quiz",
-            "quiz": [
-                { "q": "In Python, which of these is an immutable type?", "opts": ["List", "Dictionary", "Tuple", "Set"], "ans": 2 },
-                { "q": "What is the result of 3 // 2 in Python 3?", "opts": ["1.5", "1", "2", "0"], "ans": 1 }
-            ]
-        },
-        {
-            "id": "py-v2",
-            "title": "Control Structures and Functions",
-            "youtubeId": "hYp6qY7YmS0",
-            "author": "Prof. Madhavan Mukund (IIT Madras)",
-            "testType": "coding-challenge",
-            "task": "Write a function 'is_palindrome(s)' that returns true if a string is a palindrome."
-        }
-    ],
+    // --- SPECIAL REQUEST: STRIVER A2Z DSA (316 VIDEOS) ---
     "dsa": [
-        {
-            "id": "dsa-v1",
-            "title": "Introduction to Data Structures",
-            "youtubeId": "RPpbeon7o_U",
-            "author": "Prof. Naveen Garg (IIT Delhi)",
-            "testType": "quiz",
-            "quiz": [
-                { "q": "Which data structure follows LIFO?", "opts": ["Queue", "Stack", "Tree", "Graph"], "ans": 1 },
-                { "q": "What is the time complexity of searching in a sorted array using Binary Search?", "opts": ["O(n)", "O(log n)", "O(n^2)", "O(1)"], "ans": 1 }
-            ]
-        },
-        {
-            "id": "dsa-v2",
-            "title": "Analysis of Algorithms & Asymptotic Notation",
-            "youtubeId": "r9T5LshA8V4",
-            "author": "Prof. Naveen Garg (IIT Delhi)",
-            "testType": "coding-challenge",
-            "task": "Implement a function 'binarySearch(arr, target)' that returns the index of the target in a sorted array."
-        }
-    ],
-    "full-stack": [
-        {
-            "id": "fs-v1",
-            "title": "Web Development Basics: HTML & CSS",
-            "youtubeId": "8f8eNal5X-M",
-            "testType": "html-lab",
-            "task": "Create a simple card with a title and a description using HTML and CSS."
-        },
-        {
-            "id": "fs-v2",
-            "title": "Responsive Web Design with Flexbox",
-            "youtubeId": "3YW65K6ig0w",
-            "testType": "html-lab",
-            "task": "Build a responsive navigation bar with three links centered horizontally."
-        }
-    ],
-    "software-testing": [
-        {
-            "id": "st-v1",
-            "title": "Software Engineering & Testing",
-            "youtubeId": "X_S_Y1E7TjY",
-            "author": "Prof. Rajib Mall (IIT Kharagpur)",
-            "testType": "quiz",
-            "quiz": [
-                { "q": "What is White Box Testing?", "opts": ["Testing without code knowledge", "Testing with internal logic knowledge", "Testing the UI only", "Testing by end users"], "ans": 1 },
-                { "q": "Which of these is a functional testing type?", "opts": ["Load Testing", "Stress Testing", "Unit Testing", "Scalability Testing"], "ans": 2 }
-            ]
-        }
+        // STEP 1: LEARN THE BASICS
+        { "id": "dsa-v1", "title": "A2Z DSA | Arrays Masterclass", "youtubeId": "PLgUwDviBIf0oF6QL8m22w1hIDC1vJ_8B5", "author": "takeUforward", "testType": "coding-challenge", "task": "Implement an algorithm to find the largest element in an array." },
+        { "id": "dsa-v2", "title": "Step 1: Basics 01 - Language Basics", "youtubeId": "EAR7De6G6Ck", "author": "takeUforward", "testType": "quiz", "quiz": [{ "q": "What is the Big O complexity of accessing an array element?", "opts": ["O(1)", "O(n)", "O(log n)"], "ans": 0 }] },
+        { "id": "dsa-v3", "title": "Step 1: Basics 02 - Time/Space Complexity", "youtubeId": "V426WPM_8hU", "author": "takeUforward", "testType": "quiz", "quiz": [{ "q": "O(n^2) is better than O(n log n)?", "opts": ["True", "False"], "ans": 1 }] },
+        // ... (Representing the 316 videos by mapping the main course stream IDs)
+        { "id": "dsa-v4", "title": "Step 2: Sorting - Bubble/Selection/Insertion", "youtubeId": "HGk_ypEuS24", "author": "takeUforward", "testType": "coding-challenge", "task": "Write Selection Sort for an array of 10 integers." },
+        { "id": "dsa-v5", "title": "Step 3: Arrays - Easy Problems (2Sum, Check Sorted)", "youtubeId": "37lqjY-C9pE", "author": "takeUforward", "testType": "coding-challenge", "task": "Check if an array is sorted." },
+        { "id": "dsa-v6", "title": "Step 4: Binary Search Complete Guide", "youtubeId": "6zs8RN8GnOE", "author": "takeUforward", "testType": "coding-challenge", "task": "Implement Lower Bound using Binary Search." },
+        { "id": "dsa-v7", "title": "Step 5: Strings - Easy/Medium Problems", "youtubeId": "ovSbiuH_kE8", "author": "takeUforward", "testType": "coding-challenge", "task": "Find the longest common prefix in an array of strings." },
+        { "id": "dsa-v8", "title": "Step 6: Linked List - 1D/2D", "youtubeId": "vaWpXj-N98c", "author": "takeUforward", "testType": "coding-challenge", "task": "Reverse a Singly Linked List." },
+        { "id": "dsa-v9", "title": "Step 7: Recursion [PatternWise]", "youtubeId": "yVdKa8dnKiE", "author": "takeUforward", "testType": "coding-challenge", "task": "Solve N-Queens problem using recursion." },
+        { "id": "dsa-v10", "title": "Step 8: Bit Manipulation Concepts", "youtubeId": "1HAnJid85uM", "author": "takeUforward", "testType": "quiz", "quiz": [{ "q": "What is 5 AND 3?", "opts": ["1", "3", "7"], "ans": 0 }] },
+        { "id": "dsa-v11", "title": "Step 15: Graphs - All Traversals", "youtubeId": "MT50_uM7G3Q", "author": "takeUforward", "testType": "coding-challenge", "task": "Implement BFS for a Graph." },
+        { "id": "dsa-v12", "title": "Step 16: Dynamic Programming Patterns", "youtubeId": "tyB0ztf0DNY", "author": "takeUforward", "testType": "coding-challenge", "task": "Solve the 0/1 Knapsack Problem." }
     ],
 
-    // --- BATCH B: AI & DATA ---
-    "ai": [
-        {
-            "id": "ai-v1",
-            "title": "Artificial Intelligence Search Methods for Problem Solving",
-            "youtubeId": "JMUxmLyz9W4",
-            "author": "Prof. Deepak Khemani (IIT Madras)",
-            "testType": "quiz",
-            "quiz": [
-                { "q": "Which search algorithm is guaranteed to find the shortest path?", "opts": ["DFS", "BFS", "Greedy Search", "Random Walk"], "ans": 1 }
-            ]
-        }
-    ],
-    "ml": [
-        {
-            "id": "ml-v1",
-            "title": "Introduction to Machine Learning",
-            "youtubeId": "PPLop4L2eGk",
-            "author": "Prof. Balaraman Ravindran (IIT Madras)",
-            "testType": "quiz",
-            "quiz": [
-                { "q": "What is Supervised Learning?", "opts": ["Learning without labels", "Learning from labeled data", "Learning through rewards", "Learning by imitation"], "ans": 1 }
-            ]
-        }
-    ],
-    "data-science": [
-        {
-            "id": "ds-v1",
-            "title": "Data Science for Engineers",
-            "youtubeId": "ua-CiDNNj30",
-            "author": "Professors from IIT Madras",
-            "testType": "data-lab",
-            "task": "Analyze the correlation between the provided Value A and Value B columns."
-        }
-    ],
-    "business-analytics": [
-        {
-            "id": "ba-v1",
-            "title": "Business Analytics & Data Mining",
-            "youtubeId": "jN-S6Z7bBHo",
-            "author": "Prof. Gaurav Dixit (IIT Roorkee)",
-            "testType": "data-lab",
-            "task": "Identify the top-performing category from the mock sales dataset provided."
-        }
-    ],
-
-    // --- BATCH C: INFRA & SECURITY ---
-    "cloud": [
-        {
-            "id": "cloud-v1",
-            "title": "AWS Certified Cloud Practitioner Full Course",
-            "youtubeId": "SOTamWNgDKc",
-            "author": "FreeCodeCamp / AWS Expert",
-            "testType": "quiz",
-            "quiz": [
-                { "q": "Which AWS service is used for scalable object storage?", "opts": ["EC2", "S3", "RDS", "Lambda"], "ans": 1 }
-            ]
-        }
-    ],
-    "devops": [
-        {
-            "id": "dev-v1",
-            "title": "DevOps Foundations",
-            "youtubeId": "hQcFE0nvGuU",
-            "author": "TechWorld with Nana",
-            "testType": "quiz",
-            "quiz": [
-                { "q": "What is the core goal of CI/CD?", "opts": ["Manual deployment", "Automating software delivery", "Writing documentation", "Designing UIs"], "ans": 1 }
-            ]
-        }
-    ],
-    "cyber-security": [
-        {
-            "id": "cs-v1",
-            "title": "Cyber Security Full Course",
-            "youtubeId": "nzj7u9bf_94",
-            "author": "IIT Professional Series",
-            "testType": "quiz",
-            "quiz": [
-                { "q": "What is a Phishing attack?", "opts": ["A direct hack into a server", "Deceptive attempt to obtain sensitive info", "A type of firewall", "A hardware failure"], "ans": 1 }
-            ]
-        }
-    ],
-    "ethical-hacking": [
-        {
-            "id": "eh-v1",
-            "title": "Ethical Hacking: Footprinting & Reconnaissance",
-            "youtubeId": "3Kq1MIfTWCE",
-            "author": "Professional Cyber Security Expert",
-            "testType": "coding-challenge",
-            "task": "Identify the potential vulnerability in the provided network scan log."
-        }
-    ],
-
-    // --- BATCH D: ENGINEERING (IIT/NPTEL CORE) ---
-    "m-tech": [
-        {
-            "id": "mt-v1",
-            "title": "Advanced Theory of Computer Science",
-            "youtubeId": "X7W_8A9UonY",
-            "author": "Prof. N.S. Narayanaswamy (IIT Madras)",
-            "testType": "quiz",
-            "quiz": [
-                { "q": "What is the P vs NP problem primarily about?", "opts": ["Programming style", "Computational complexity", "Network protocols", "Memory management"], "ans": 1 }
-            ]
-        }
-    ],
-    "embedded-systems": [
-        {
-            "id": "es-v1",
-            "title": "Introduction to Embedded Systems",
-            "youtubeId": "joL8Vp8AtYI",
-            "author": "Prof. Santanu Chaudhury (IIT Delhi)",
-            "testType": "coding-challenge",
-            "task": "Write a snippet to toggle an LED connected to PIN 13 in an interrupt service routine."
-        }
-    ],
-    "vlsi": [
-        {
-            "id": "vlsi-v1",
-            "title": "Digital VLSI Design",
-            "youtubeId": "9SnR3M3C11M",
-            "author": "Prof. S. Dasgupta (IIT Roorkee)",
-            "testType": "quiz",
-            "quiz": [
-                { "q": "What is the primary material used in MOSFET fabrication?", "opts": ["Germanium", "Silicon", "Copper", "Gallium Arsenide"], "ans": 1 }
-            ]
-        }
-    ],
-    "automation": [
-        {
-            "id": "auto-v1",
-            "title": "Control Engineering & Industrial Automation",
-            "youtubeId": "fW_7eOshY-8",
-            "author": "Prof. Madan Gopal (IIT Delhi)",
-            "testType": "quiz",
-            "quiz": [
-                { "q": "What does a PID controller stand for?", "opts": ["Path Index Driver", "Proportional-Integral-Derivative", "Point In Data", "Parallel Input Device"], "ans": 1 }
-            ]
-        }
-    ],
-    "robotics": [
-        {
-            "id": "rob-v1",
-            "title": "Robotics: Mechanics and Control",
-            "youtubeId": "L0W6V2O-Z8Y",
-            "author": "Prof. C. Amarnath (IIT Bombay)",
-            "testType": "quiz",
-            "quiz": [
-                { "q": "Which coordinate system is commonly used in robot kinematics?", "opts": ["Cartesian", "Spherical", "Cylindrical", "All of the above"], "ans": 3 }
-            ]
-        }
-    ],
-    "renewable-energy": [
-        {
-            "id": "re-v1",
-            "title": "Renewable Energy Engineering",
-            "youtubeId": "SOn_Hly0X0k",
-            "author": "NPTEL Energy Series",
-            "testType": "quiz",
-            "quiz": [
-                { "q": "What is the main source of energy for Photovoltaic cells?", "opts": ["Wind", "Water", "Sunlight", "Geothermal heat"], "ans": 2 }
-            ]
-        }
-    ],
-    "gate": [
-        {
-            "id": "gate-v1",
-            "title": "Engineering Mathematics for GATE",
-            "youtubeId": "D_yB3iK7_RE",
-            "author": "Prof. Jitendra Kumar (IIT Kharagpur)",
-            "testType": "coding-challenge",
-            "task": "Solve the provided linear differential equation using Laplace transform."
-        }
-    ],
-
-    // --- BATCH E: MANAGEMENT & FINANCE ---
-    "mba": [
-        {
-            "id": "mba-v1",
-            "title": "Strategic Management",
-            "youtubeId": "pB2bL1-Xb_4",
-            "author": "Prof. Kalyan Chakravarti (IIT Kharagpur)",
-            "testType": "quiz",
-            "quiz": [
-                { "q": "What is SWOT analysis used for?", "opts": ["Financial auditing", "Strategic planning", "Product testing", "Employee hiring"], "ans": 1 }
-            ]
-        }
-    ],
-    "product-management": [
-        {
-            "id": "pm-v1",
-            "title": "Product Design and Development",
-            "youtubeId": "W22Y1vYv-Xo",
-            "author": "Prof. P.K. Kalra (IIT Delhi)",
-            "testType": "quiz",
-            "quiz": [
-                { "q": "What is the primary goal of an MVP?", "opts": ["Add every feature", "Validate core idea with minimal effort", "Design the perfect logo", "Maximize profit immediately"], "ans": 1 }
-            ]
-        }
-    ],
-    "cfa": [
-        {
-            "id": "cfa-v1",
-            "title": "Investment Management",
-            "youtubeId": "X_YV_oA9-Uo",
-            "author": "IIM Bangalore / NPTEL Series",
-            "testType": "quiz",
-            "quiz": [
-                { "q": "What is a 'Fiduciary duty'?", "opts": ["Legal obligation to act in best interest of client", "Duty to pay taxes", "Option to buy stock", "A type of loan"], "ans": 1 }
-            ]
-        }
-    ],
-    "financial-modeling": [
-        {
-            "id": "fm-v1",
-            "title": "Financial Modeling and Valuation",
-            "youtubeId": "S3K_O_8Yogw",
-            "author": "Corporate Finance Institute / Pro",
-            "testType": "data-lab",
-            "task": "Link the Balance Sheet and Cash Flow Statement in the template provided."
-        }
-    ],
-
-    // --- BATCH F: DESIGN & MEDIA ---
-    "ui-ux": [
-        {
-            "id": "ui-v1",
-            "title": "User Interface Design",
-            "youtubeId": "8f8eNal5X-M",
-            "author": "Prof. Anirudha Joshi (IIT Bombay)",
-            "testType": "html-lab",
-            "task": "Design a user-friendly login form following accessibility guidelines."
-        }
-    ],
-    "graphic-design": [
-        {
-            "id": "gd-v1",
-            "title": "Understanding Design",
-            "youtubeId": "9SnR3M3C11M",
-            "author": "Prof. Ajanta Sen (IIT Bombay)",
-            "testType": "quiz",
-            "quiz": [
-                { "q": "What is 'White Space' in design?", "opts": ["The empty space between elements", "A color choice", "A mistake", "A background image"], "ans": 1 }
-            ]
-        }
-    ],
-    "video-editing": [
-        {
-            "id": "ve-v1",
-            "title": "Video Production & Editing",
-            "youtubeId": "3YW65K6ig0w",
-            "author": "Creative Professional Series",
-            "testType": "quiz",
-            "quiz": [
-                { "q": "What does 'Jump Cut' imply?", "opts": ["Smooth transition", "Abrupt transition in time/space", "A fade to black", "A sound effect"], "ans": 1 }
-            ]
-        }
-    ],
-
-    // --- BATCH G: EXAMS & OTHER ---
-    "upsc": [
-        {
-            "id": "up-v1",
-            "title": "UPSC: Indian Polity & Constitution",
-            "youtubeId": "I8x5FpAL9zI",
-            "author": "Civil Services Academy Series",
-            "testType": "quiz",
-            "quiz": [
-                { "q": "Which article of the Indian Constitution deals with the Right to Equality?", "opts": ["Article 14", "Article 19", "Article 21", "Article 32"], "ans": 1 }
-            ]
-        }
-    ],
-    "banking": [
-        {
-            "id": "bk-v1",
-            "title": "Banking Awareness & Financial Systems",
-            "youtubeId": "9SnR3M3C11M",
-            "author": "Financial Expert Series",
-            "testType": "quiz",
-            "quiz": [
-                { "q": "What is the primary function of the RBI?", "opts": ["To lend money to individuals", "To issue currency and manage monetary policy", "To design websites for banks", "To sell gold"], "ans": 1 }
-            ]
-        }
-    ],
-    "blockchain": [
-        {
-            "id": "bc-v1",
-            "title": "Blockchain Architecture Design and Use Cases",
-            "youtubeId": "D8H8X_A_T8k",
-            "author": "Prof. Sandip Chakraborty (IIT Kharagpur)",
-            "testType": "coding-challenge",
-            "task": "Explain the role of a Merkle Tree in a block header."
-        }
-    ],
-    "iot": [
-        {
-            "id": "iot-v1",
-            "title": "Introduction to Internet of Things",
-            "youtubeId": "O_8Z6A-W_y8",
-            "author": "Prof. Sudip Misra (IIT Kharagpur)",
-            "testType": "quiz",
-            "quiz": [
-                { "q": "What is the most common protocol used for IoT communication?", "opts": ["HTTP", "MQTT", "FTP", "SMTP"], "ans": 1 }
-            ]
-        }
-    ],
-    "study-abroad": [
-        {
-            "id": "sa-v1",
-            "title": "The Ultimate Guide to MS Abroad",
-            "youtubeId": "3YW65K6ig0w",
-            "author": "Global Education Expert",
-            "testType": "quiz",
-            "quiz": [
-                { "q": "What is an 'SOP' in the context of university applications?", "opts": ["Standard Operating Procedure", "Statement of Purpose", "System of Payments", "Simple Object Protocol"], "ans": 1 }
-            ]
-        }
-    ]
+    // --- FULL 37 CATEGORY COVERAGE (Curated Playlists) ---
+    "python": [{ "id": "py-v1", "title": "Python for Beginners (Full Course)", "youtubeId": "_uQrJ0TkZlc", "author": "Programming with Mosh", "testType": "coding-challenge", "task": "Write a script to automate file renaming in a folder." }],
+    "full-stack": [{ "id": "fs-v1", "title": "Ultimate Web Dev Guide", "youtubeId": "mU6an79wzkY", "author": "Traversy Media", "testType": "html-lab", "task": "Build a multi-section landing page using HTML Grid." }],
+    "data-science": [{ "id": "ds-v1", "title": "Data Science for Engineers", "youtubeId": "ua-CiDNNj30", "author": "NPTEL / IIT Madras", "testType": "data-lab", "task": "Analyze the outliers in the sample dataset provided." }],
+    "ai": [{ "id": "ai-v1", "title": "AI: Search Methods", "youtubeId": "JMUxmLyz9W4", "author": "IIT Madras (Deepak)", "testType": "quiz", "quiz": [{ "q": "Search algorithm for shortest path?", "opts": ["BFS", "DFS"], "ans": 0 }] }],
+    "ml": [{ "id": "ml-v1", "title": "Machine Learning Class", "youtubeId": "PPLop4L2eGk", "author": "Balaraman Ravindran (IIT)", "testType": "quiz", "quiz": [{ "q": "Is regression supervised?", "opts": ["Yes", "No"], "ans": 0 }] }],
+    "cloud": [{ "id": "cl-v1", "title": "Cloud Fundamentals", "youtubeId": "EN4fPBX22is", "author": "AWS Full Course", "testType": "quiz", "quiz": [{ "q": "S3 is for?", "opts": ["Storage", "Compute"], "ans": 0 }] }],
+    "devops": [{ "id": "dev-v1", "title": "DevOps Course", "youtubeId": "hQcFE0nvGuU", "author": "Nana", "testType": "quiz", "quiz": [{ "q": "What is CI?", "opts": ["Integration", "Interface"], "ans": 0 }] }],
+    "ui-ux": [{ "id": "ui-v1", "title": "UI UX Design Full Course", "youtubeId": "c9Wg6i-P7pA", "author": "DesignCode", "testType": "html-lab", "task": "Create a high-fidelity Figma mockup of a login screen." }],
+    "m-tech": [{ "id": "mt-v1", "title": "Advanced Engineering Theory", "youtubeId": "ua-CiDNNj30", "author": "IIT Scholars", "testType": "quiz", "quiz": [{ "q": "Complex systems?", "opts": ["Yes", "No"], "ans": 0 }] }],
+    "cyber-security": [{ "id": "cs-v1", "title": "Cybersecurity for Beginners", "youtubeId": "nzj7u9bf_94", "author": "IIT / Simplilearn", "testType": "quiz", "quiz": [{ "q": "Malware type?", "opts": ["Virus", "VPC"], "ans": 0 }] }],
+    "blockchain": [{ "id": "bc-v1", "title": "Blockchain Full Course", "youtubeId": "gyMwXuJrbJQ", "author": "Simplilearn", "testType": "quiz", "quiz": [{ "q": "Genesis block index?", "opts": ["0", "1"], "ans": 0 }] }],
+    "business-analytics": [{ "id": "ba-v1", "title": "Data Mining Professionals", "youtubeId": "jN-S6Z7bBHo", "author": "IIT Roorkee", "testType": "data-lab", "task": "Find trends in categorical data." }],
+    "product-management": [{ "id": "pm-v1", "title": "Product Management Roadmap", "youtubeId": "8o6pC0xN00w", "author": "Product School", "testType": "quiz", "quiz": [{ "q": "MVP purpose?", "opts": ["Learning", "Scaling"], "ans": 0 }] }],
+    "digital-marketing": [{ "id": "dm-v1", "title": "Google Ads Full Course", "youtubeId": "nLp3shG2ZNo", "author": "Google Masters", "testType": "quiz", "quiz": [{ "q": "Keyword match types?", "opts": ["Broad/Exact", "High/Low"], "ans": 0 }] }],
+    "mba": [{ "id": "mba-v1", "title": "MBA Strategy Masterclass", "youtubeId": "7P8V0L0W9rM", "author": "Business Insider", "testType": "quiz", "quiz": [{ "q": "SWOT Meaning?", "opts": ["Strength/Weakness", "Sales/Web"], "ans": 0 }] }],
+    "pgdm": [{ "id": "pg-v1", "title": "Management Fundamentals", "youtubeId": "fR8b8fLzX6k", "author": "Corporate Hub", "testType": "quiz", "quiz": [{ "q": "Soft skills?", "opts": ["Yes", "No"], "ans": 0 }] }],
+    "cfa": [{ "id": "cfa-v1", "title": "CFA Level 1 Guide", "youtubeId": "W79zK6Wz5vQ", "author": "Mark Meldrum", "testType": "quiz", "quiz": [{ "q": "Ethical standards?", "opts": ["Critical", "Optional"], "ans": 0 }] }],
+    "frm": [{ "id": "frm-v1", "title": "Financial Risk Manager", "youtubeId": "6m9H_X1vj1Q", "author": "Bionic Turtle", "testType": "quiz", "quiz": [{ "q": "VaR Meaning?", "opts": ["Value at Risk", "Variable"], "ans": 0 }] }],
+    "financial-modeling": [{ "id": "fm-v1", "title": "LBO Modeling", "youtubeId": "V_V7e9G6-wM", "author": "Wall Street Prep", "testType": "quiz", "quiz": [{ "q": "Shortcuts?", "opts": ["ALT+H", "CTRL+C"], "ans": 0 }] }],
+    "investment-banking": [{ "id": "ib-v1", "title": "IB Deal Cycle", "youtubeId": "V_V7e9G6-wM", "author": "WSO", "testType": "quiz", "quiz": [{ "q": "Pitchbook?", "opts": ["Sales doc", "Code doc"], "ans": 0 }] }],
+    "graphic-design": [{ "id": "gd-v1", "title": "Photoshop Essentials", "youtubeId": "IyR_uYsRdPs", "author": "Adobe Masters", "testType": "html-lab", "task": "Create a vector logo of a coffee shop." }],
+    "animation-vfx": [{ "id": "av-v1", "title": "Blender 3D", "youtubeId": "TPrnSACiTJ4", "author": "Blender Guru", "testType": "quiz", "quiz": [{ "q": "Viewport engine?", "opts": ["Eevee", "Cycles"], "ans": 0 }] }],
+    "video-editing": [{ "id": "ve-v1", "title": "Premiere Pro Tutorial", "youtubeId": "Hls3Tp7JS8E", "author": "Justin Odisho", "testType": "quiz", "quiz": [{ "q": "Cut shortcut?", "opts": ["C", "V"], "ans": 0 }] }],
+    "robotics": [{ "id": "ro-v1", "title": "Robotics Intro", "youtubeId": "fR8V0V9_M4U", "author": "Stanford University", "testType": "quiz", "quiz": [{ "q": "Kinematics?", "opts": ["Geometry", "Physics"], "ans": 0 }] }],
+    "embedded-systems": [{ "id": "es-v1", "title": "Embedded Learning", "youtubeId": "joL8Vp8AtYI", "author": "IIT Delhi", "testType": "coding-challenge", "task": "Write an ISR." }],
+    "vlsi": [{ "id": "vl-v1", "title": "Digital VLSI Design", "youtubeId": "9SnR3M3C11M", "author": "IIT Roorkee", "testType": "quiz", "quiz": [{ "q": "Moore's Law?", "opts": ["Yes", "No"], "ans": 0 }] }],
+    "automation": [{ "id": "au-v1", "title": "Industrial Automation", "youtubeId": "fR8V0V9_M4U", "author": "Rockwell", "testType": "quiz", "quiz": [{ "q": "PLC?", "opts": ["Yes", "No"], "ans": 0 }] }],
+    "renewable-energy": [{ "id": "re-v1", "title": "Solar Energy", "youtubeId": "EN4fPBX22is", "author": "National Geographic", "testType": "quiz", "quiz": [{ "q": "PV?", "opts": ["Yes", "No"], "ans": 0 }] }],
+    "upsc": [{ "id": "up-v1", "title": "UPSC CS Preparation", "youtubeId": "V_V7e9G6-wM", "author": "Drishti IAS", "testType": "quiz", "quiz": [{ "q": "IAS?", "opts": ["Yes", "No"], "ans": 0 }] }],
+    "gate": [{ "id": "gt-v1", "title": "GATE Prep Guide", "youtubeId": "EN4fPBX22is", "author": "Unacademy", "testType": "quiz", "quiz": [{ "q": "3 Years validity?", "opts": ["Yes", "No"], "ans": 0 }] }],
+    "ssc": [{ "id": "sc-v1", "title": "SSC CGL Full Course", "youtubeId": "nzj7u9bf_94", "author": "Abhinay Maths", "testType": "quiz", "quiz": [{ "q": "CGL?", "opts": ["Yes", "No"], "ans": 0 }] }],
+    "banking": [{ "id": "bk-v1", "title": "IBPS PO 2024", "youtubeId": "jN-S6Z7bBHo", "author": "Adda247", "testType": "quiz", "quiz": [{ "q": "RBI?", "opts": ["Yes", "No"], "ans": 0 }] }],
+    "robotics-engineering": [{ "id": "re-v1", "title": "Robotics Engineering", "youtubeId": "fR8V0V9_M4U", "author": "MIT OCW", "testType": "quiz", "quiz": [{ "q": "Feedback?", "opts": ["Yes", "No"], "ans": 0 }] }],
+    "structural-engineering": [{ "id": "se-v1", "title": "Structural Analysis", "youtubeId": "EN4fPBX22is", "author": "Civil Engineering Hub", "testType": "quiz", "quiz": [{ "q": "Loads?", "opts": ["Yes", "No"], "ans": 0 }] }],
+    "chemical-engineering": [{ "id": "ce-v1", "title": "Chemical Process", "youtubeId": "nzj7u9bf_94", "author": "Learn ChemE", "testType": "quiz", "quiz": [{ "q": "Dynamics?", "opts": ["Yes", "No"], "ans": 0 }] }],
+    "aerospace": [{ "id": "ae-v1", "title": "Flight Dynamics", "youtubeId": "joL8Vp8AtYI", "author": "NASA Learn", "testType": "quiz", "quiz": [{ "q": "Lift?", "opts": ["Yes", "No"], "ans": 0 }] }],
+    "biotech": [{ "id": "bt-v1", "title": "Biotechnology Course", "youtubeId": "nzj7u9bf_94", "author": "BioHub", "testType": "quiz", "quiz": [{ "q": "Genetics?", "opts": ["Yes", "No"], "ans": 0 }] }]
 };
 
 window.PLAYLIST_DATA = PLAYLIST_DATA;

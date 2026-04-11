@@ -3,7 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CareerRoadmap | Student Career Journey</title>
+    <title>Career Roadmap | Learn & Master</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200;300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    <script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                "primary": "#3b6852",
+                "primary-container": "#bceed2",
+                "on-primary-container": "#2d5a45"
+            }
+          }
+        }
+      }
+    </script>
     <meta name="description" content="A comprehensive student career roadmap from beginner to advanced professional.">
     <link rel="stylesheet" href="style.css">
     <!-- Lucide Icons -->
@@ -360,55 +377,124 @@
                 </div>
             </section>
 
-            <!-- Profile View (Instagram Style) -->
+            <!-- Profile View (Premium Design) -->
             <section id="profile-view" class="view-section">
-                <div class="ig-profile-container fade-in-stagger">
-                    <div class="ig-header">
-                        <i data-lucide="lock" style="width:16px;"></i>
-                        <h2 id="ig-username-header">User</h2>
-                    </div>
-
-                    <div class="ig-profile-info">
-                        <div class="ig-avatar-wrapper" id="profile-avatar-wrapper">
-                            <div class="ig-avatar" id="profile-avatar">J</div>
-                            <div class="ig-avatar-overlay">
-                                <i data-lucide="camera"></i>
+                <div class="max-w-screen-xl mx-auto py-8">
+                    <!-- Hero Profile Section -->
+                    <section class="flex flex-col md:flex-row items-center md:items-start gap-8 mb-12">
+                        <div class="relative">
+                            <div class="w-32 h-32 md:w-40 md:h-40 rounded-full border-4 border-[#e1e3de] overflow-hidden" id="profile-avatar-wrapper-new" style="cursor: pointer;">
+                                <div id="profile-avatar-new" class="w-full h-full flex items-center justify-center text-4xl font-bold bg-[#3b6852] text-white">U</div>
+                                <input type="file" id="direct-profile-photo-new" accept="image/*" style="display:none;">
                             </div>
-                            <!-- Hidden input for direct upload -->
-                            <input type="file" id="direct-profile-photo" accept="image/*" style="display:none;">
-                        </div>
-                        <div class="ig-stats">
-                            <div class="ig-stat-col">
-                                <span class="ig-stat-val" id="stats-quizzes">0</span>
-                                <span class="ig-stat-label">Tests</span>
-                            </div>
-                            <div class="ig-stat-col">
-                                <span class="ig-stat-val" id="stats-completed">0</span>
-                                <span class="ig-stat-label">Skills</span>
-                            </div>
-                            <div class="ig-stat-col">
-                                <span class="ig-stat-val" id="stats-level">Jr</span>
-                                <span class="ig-stat-label">Level</span>
+                            <div class="absolute bottom-1 right-1 bg-[#3b6852] text-white p-2 rounded-full shadow-lg">
+                                <span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">verified</span>
                             </div>
                         </div>
+                        <div class="flex-1 text-center md:text-left pt-4">
+                            <h1 class="text-4xl font-bold tracking-tight text-[#303330] mb-2" id="profile-name-val">User Name</h1>
+                            <p class="text-xl text-[#5d605c] font-medium tracking-wide mb-4" id="profile-title-val">Career Goal</p>
+                            <p class="text-sm text-gray-500 mb-4" id="profile-email-val">email@example.com</p>
+                            <div class="flex flex-wrap justify-center md:justify-start gap-3" id="profile-skills-tags">
+                                <!-- Dynamic Skill Tags -->
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Bento Grid Stats -->
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+                        <div class="bg-[#f4f4f0] p-8 rounded-[2rem] flex flex-col justify-between h-44 border border-[#e1e3de]">
+                            <span class="text-[#5d605c] font-medium text-sm tracking-widest uppercase">Skills Mastered</span>
+                            <div class="flex items-baseline gap-2">
+                                <span class="text-5xl font-bold text-[#3b6852]" id="stats-skills-val">0</span>
+                                <span class="text-[#5d605c] text-lg">total</span>
+                            </div>
+                        </div>
+                        <div class="bg-[#bceed2] p-8 rounded-[2rem] flex flex-col justify-between h-44">
+                            <span class="text-[#2d5a45] font-medium text-sm tracking-widest uppercase">Roadmap Progress</span>
+                            <div class="flex items-baseline gap-2">
+                                <span class="text-5xl font-bold text-[#2d5a45]" id="stats-progress-val">0%</span>
+                                <span class="material-symbols-outlined text-[#2d5a45]" style="font-variation-settings: 'FILL' 1;">trending_up</span>
+                            </div>
+                        </div>
+                        <div class="bg-[#e1e3de] p-8 rounded-[2rem] flex flex-col justify-between h-44">
+                            <span class="text-[#5d605c] font-medium text-sm tracking-widest uppercase">Certificates</span>
+                            <div class="flex items-baseline gap-2">
+                                <span class="text-5xl font-bold text-[#303330]" id="stats-badges-val">0</span>
+                                <span class="text-[#5d605c] text-sm font-medium ml-2">Active Earned</span>
+                            </div>
+                        </div>
                     </div>
 
-                    <div class="ig-bio">
-                        <strong id="profile-name">John Doe</strong>
-                        <p id="profile-email" style="color:var(--text-secondary); margin-bottom:4px;">john@example.com</p>
-                        <p id="profile-goal">Goal: Not Set</p>
-                    </div>
+                    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+                        <!-- Current Roadmap -->
+                        <div class="lg:col-span-8 space-y-8">
+                            <section class="bg-[#f4f4f0] rounded-[2.5rem] p-8 md:p-10 border border-[#e1e3de]">
+                                <div class="flex justify-between items-start mb-8">
+                                    <div>
+                                        <h2 class="text-2xl font-bold text-[#303330] mb-1">Current Roadmap</h2>
+                                        <p class="text-[#5d605c]" id="roadmap-title-card">No Active Roadmap</p>
+                                    </div>
+                                    <span class="bg-white text-[#3b6852] px-4 py-2 rounded-xl text-sm font-bold shadow-sm" id="roadmap-level-tag">Level 1</span>
+                                </div>
+                                <div class="space-y-6">
+                                    <div class="relative pt-1">
+                                        <div class="flex mb-2 items-center justify-between">
+                                            <div>
+                                                <span class="text-xs font-semibold inline-block py-1 px-2 uppercase rounded-full text-[#2d5a45] bg-[#bceed2]">
+                                                    Aggregated Progress
+                                                </span>
+                                            </div>
+                                            <div class="text-right">
+                                                <span class="text-xs font-semibold inline-block text-[#3b6852]" id="roadmap-status-text">
+                                                    Start learning to see progress
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div class="overflow-hidden h-3 mb-4 text-xs flex rounded-full bg-[#e1e3de]">
+                                            <div class="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-[#3b6852]" id="roadmap-progress-bar-fill" style="width:0%"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
 
-                    <button id="open-edit-profile-btn" class="ig-btn-edit">Edit Profile</button>
-                    
-                    <div class="ig-divider"></div>
+                            <!-- Recent Achievements -->
+                            <section>
+                                <h3 class="text-xl font-bold mb-6 px-4">Recent Achievements</h3>
+                                <div class="flex gap-4 overflow-x-auto pb-4 no-scrollbar px-4" id="achievements-carousel">
+                                    <!-- Badges will be injected here -->
+                                     <div class="flex-shrink-0 w-48 bg-white p-6 rounded-[2rem] text-center shadow-sm border border-[#e1e3de]">
+                                        <div class="w-20 h-20 bg-[#f4f4f0] rounded-full mx-auto mb-4 flex items-center justify-center">
+                                            <span class="material-symbols-outlined text-3xl text-gray-400">workspace_premium</span>
+                                        </div>
+                                        <h5 class="font-bold text-sm text-[#303330]">Locked</h5>
+                                        <p class="text-[10px] text-[#5d605c] uppercase tracking-widest mt-1">Complete a module</p>
+                                    </div>
+                                </div>
+                            </section>
+                        </div>
 
-                    <div class="ig-tabs">
-                        <div class="ig-tab active"><i data-lucide="grid"></i> BADGES</div>
-                    </div>
-
-                    <div class="ig-feed-grid" id="badges-container">
-                        <!-- Badges will be injected here -->
+                        <!-- Skill Radar / Right Column -->
+                        <aside class="lg:col-span-4 space-y-8">
+                            <section class="bg-[#f4f4f0] rounded-[2.5rem] p-8 border border-[#e1e3de]">
+                                <h3 class="text-xl font-bold mb-6">Skill Proficiency</h3>
+                                <div class="space-y-6" id="proficiency-skills-list">
+                                    <!-- Dynamic skill bars here -->
+                                    <p class="text-sm text-[#5d605c]">Take a module test to see your skill proficiency breakdown.</p>
+                                </div>
+                            </section>
+                            
+                            <div class="space-y-4">
+                                <button class="w-full py-4 bg-[#3b6852] text-white rounded-2xl font-bold flex items-center justify-center gap-3 hover:opacity-90 active:scale-[0.98] transition-all" id="open-edit-profile-btn-new">
+                                    <span class="material-symbols-outlined">edit</span>
+                                    Edit Profile
+                                </button>
+                                <button class="w-full py-4 bg-[#fa746f]/20 text-[#6e0a12] rounded-2xl font-bold flex items-center justify-center gap-3 hover:bg-[#fa746f]/30 active:scale-[0.98] transition-all" id="sign-out-btn-new">
+                                    <span class="material-symbols-outlined">logout</span>
+                                    Sign Out
+                                </button>
+                            </div>
+                        </aside>
                     </div>
                 </div>
             </section>
