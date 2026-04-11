@@ -21,6 +21,33 @@
         }
       }
     </script>
+    <style>
+        .anti-copy-badge {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #67040d;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 50px;
+            font-size: 14px;
+            font-weight: 600;
+            z-index: 10000;
+            display: none;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            animation: slideUp 0.3s ease-out;
+        }
+        @keyframes slideUp { from { bottom: 0; opacity: 0; } to { bottom: 30px; opacity: 1; } }
+
+        /* Additional Category Theme Gradients */
+        .theme-robotics { background: linear-gradient(135deg, #1c5a5f, #0c2b2e); }
+        .theme-engineering { background: linear-gradient(135deg, #5b3e2c, #2d1e15); }
+        .theme-aerospace { background: linear-gradient(135deg, #1e3a8a, #0f172a); }
+        .theme-biotech { background: linear-gradient(135deg, #065f46, #064e3b); }
+        .theme-upsc { background: linear-gradient(135deg, #92400e, #451a03); }
+        .theme-banking { background: linear-gradient(135deg, #3730a3, #1e1b4b); }
+    </style>
     <meta name="description" content="A comprehensive student career roadmap from beginner to advanced professional.">
     <link rel="stylesheet" href="style.css">
     <!-- Lucide Icons -->

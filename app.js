@@ -1205,14 +1205,26 @@ document.addEventListener('DOMContentLoaded', () => {
                 height: '100%',
                 width: '100%',
                 videoId: video.youtubeId,
-                playerVars: { 'autoplay': 1, 'modestbranding': 1, 'rel': 0 },
+                playerVars: { 
+                    'autoplay': 1, 
+                    'modestbranding': 1, 
+                    'rel': 0,
+                    'origin': window.location.origin
+                },
                 events: {
                     'onStateChange': onPlayerStateChange,
-                    'onReady': (e) => startAntiSkipMonitor()
+                    'onReady': (e) => startAntiSkipMonitor(),
+                    'onError': (e) => {
+                        console.error("YouTube Player Error:", e.data);
+                        alert("This video might be unavailable for embedding. We recommend searching the title on YouTube directly or trying the next lesson.");
+                    }
                 }
             });
         } else {
-            ytPlayer.loadVideoById(video.youtubeId);
+            ytPlayer.loadVideoById({
+                videoId: video.youtubeId,
+                origin: window.location.origin
+            });
             startAntiSkipMonitor();
         }
     }
