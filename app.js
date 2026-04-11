@@ -42,7 +42,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- State Management ---
     let currentPath = null;
-    let userData = { scores: {}, completedSkills: [], profile: {} };
+    let userData = { scores: {}, completedSkills: [], profile: {}, videoProgress: {} };
+    
+    // Video Player State
+    let ytPlayer = null;
+    let currentVideoIndex = 0;
+    let activePlaylist = [];
+    let maxTimeWatched = 0;
+    let antiSkipInterval = null;
+    let isQuizActive = false;
 
     // --- Initialization ---
     function init() {
@@ -51,6 +59,8 @@ document.addEventListener('DOMContentLoaded', () => {
         setupTestModalListeners();
         setupProfileEditListeners();
         setupDiagnosticListeners();
+        initVideoPlayerListeners();
+        setupAntiCopyRestrictions();
     }
 
     function checkAuth() {
@@ -64,11 +74,13 @@ document.addEventListener('DOMContentLoaded', () => {
                         if (!userData.scores) userData.scores = {};
                         if (!userData.completedSkills) userData.completedSkills = [];
                         if (!userData.profile) userData.profile = { name: user.displayName || 'User', email: user.email, goal: 'Not Set', photoURL: user.photoURL || '' };
+                        if (!userData.videoProgress) userData.videoProgress = {};
                     } else {
                         userData = {
                             scores: {},
                             completedSkills: [],
-                            profile: { name: user.displayName || 'User', email: user.email, goal: 'Not Set', photoURL: user.photoURL || '' }
+                            profile: { name: user.displayName || 'User', email: user.email, goal: 'Not Set', photoURL: user.photoURL || '' },
+                            videoProgress: {}
                         };
                         await setDoc(doc(db, 'users', user.uid), userData);
                     }
@@ -470,6 +482,16 @@ document.addEventListener('DOMContentLoaded', () => {
         roadmapEmptyState.style.display = 'none';
         roadmapActiveContent.style.display = 'block';
         switchView('roadmap-container');
+
+        // VIDEO PLAYER ENTRY: Show play button if playlist exists
+        const playerBtn = document.getElementById('open-course-player');
+        if (typeof PLAYLIST_DATA !== 'undefined' && PLAYLIST_DATA[pathKey]) {
+            playerBtn.style.display = 'block';
+            playerBtn.onclick = () => openCoursePlayer(pathKey);
+        } else {
+            playerBtn.style.display = 'none';
+        }
+
         window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
@@ -1021,6 +1043,237 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     }
+
+    // =============================================
+    // VIDEO PLAYER ENGINE
+    // =============================================
+
+    function initVideoPlayerListeners() {
+        document.getElementById('player-back-btn').addEventListener('click', () => {
+            if (ytPlayer && ytPlayer.pauseVideo) ytPlayer.pauseVideo();
+            clearInterval(antiSkipInterval);
+            switchView('roadmap-container');
+        });
+
+        document.getElementById('start-video-quiz-btn').addEventListener('click', () => {
+            const video = activePlaylist[currentVideoIndex];
+            startVideoLessonQuiz(video.quiz);
+        });
+    }
+
+    function openCoursePlayer(pathKey) {
+        currentPath = pathKey;
+        activePlaylist = PLAYLIST_DATA[pathKey] || [];
+        if (activePlaylist.length === 0) return;
+
+        document.getElementById('player-course-title').textContent = ROADMAP_DATA[pathKey].title;
+        switchView('video-player-view');
+        
+        // Find first unwatched video
+        const progress = userData.videoProgress[pathKey] || { lastPassedIndex: -1 };
+        currentVideoIndex = Math.min(progress.lastPassedIndex + 1, activePlaylist.length - 1);
+        
+        renderPlaylist();
+        loadVideo(currentVideoIndex);
+    }
+
+    function renderPlaylist() {
+        const container = document.getElementById('playlist-items');
+        const badge = document.getElementById('player-progress-badge');
+        container.innerHTML = '';
+
+        const progress = userData.videoProgress[currentPath] || { lastPassedIndex: -1 };
+        const completedCount = progress.lastPassedIndex + 1;
+        badge.textContent = `${completedCount}/${activePlaylist.length} Watched`;
+
+        activePlaylist.forEach((video, index) => {
+            const isCompleted = index <= progress.lastPassedIndex;
+            const isCurrent = index === currentVideoIndex;
+            const isLocked = index > progress.lastPassedIndex + 1;
+
+            const item = document.createElement('div');
+            item.className = `playlist-item ${isCompleted ? 'completed' : ''} ${isCurrent ? 'active' : ''} ${isLocked ? 'locked' : ''}`;
+            
+            item.innerHTML = `
+                <div class="item-index">${isCompleted ? '✓' : index + 1}</div>
+                <div class="item-info">
+                    <div class="item-title">${video.title}</div>
+                    <div class="item-status">${isLocked ? 'Locked' : isCompleted ? 'Completed' : 'Current Lesson'}</div>
+                </div>
+                ${isLocked ? '<i data-lucide="lock" style="width:16px; opacity:0.5;"></i>' : ''}
+            `;
+
+            if (!isLocked) {
+                item.onclick = () => {
+                    currentVideoIndex = index;
+                    renderPlaylist();
+                    loadVideo(index);
+                };
+            }
+            container.appendChild(item);
+        });
+        lucide.createIcons();
+    }
+
+    function loadVideo(index) {
+        const video = activePlaylist[index];
+        document.getElementById('current-video-title').textContent = video.title;
+        document.getElementById('video-quiz-overlay').style.display = 'none';
+        
+        maxTimeWatched = 0;
+        clearInterval(antiSkipInterval);
+
+        if (!ytPlayer) {
+            ytPlayer = new YT.Player('youtube-player', {
+                height: '100%',
+                width: '100%',
+                videoId: video.youtubeId,
+                playerVars: { 'autoplay': 1, 'modestbranding': 1, 'rel': 0 },
+                events: {
+                    'onStateChange': onPlayerStateChange,
+                    'onReady': (e) => startAntiSkipMonitor()
+                }
+            });
+        } else {
+            ytPlayer.loadVideoById(video.youtubeId);
+            startAntiSkipMonitor();
+        }
+    }
+
+    function onPlayerStateChange(event) {
+        if (event.data === YT.PlayerState.ENDED) {
+            document.getElementById('video-quiz-overlay').style.display = 'flex';
+            clearInterval(antiSkipInterval);
+        }
+    }
+
+    function startAntiSkipMonitor() {
+        antiSkipInterval = setInterval(() => {
+            if (ytPlayer && ytPlayer.getCurrentTime) {
+                const currentTime = ytPlayer.getCurrentTime();
+                if (currentTime > maxTimeWatched + 2) {
+                    ytPlayer.seekTo(maxTimeWatched);
+                } else {
+                    maxTimeWatched = Math.max(maxTimeWatched, currentTime);
+                }
+            }
+        }, 1000);
+    }
+
+    // =============================================
+    // VIDEO QUIZ & RESTRICTIONS
+    // =============================================
+
+    function setupAntiCopyRestrictions() {
+        const blockAction = (e) => {
+            if (isQuizActive) {
+                e.preventDefault();
+                showAntiCopyWarning();
+            }
+        };
+
+        document.addEventListener('copy', blockAction);
+        document.addEventListener('paste', blockAction);
+        document.addEventListener('contextmenu', blockAction);
+        document.addEventListener('keydown', (e) => {
+            if (isQuizActive && (e.ctrlKey || e.metaKey) && (e.key === 'c' || e.key === 'v')) {
+                e.preventDefault();
+                showAntiCopyWarning();
+            }
+        });
+    }
+
+    function showAntiCopyWarning() {
+        let badge = document.querySelector('.anti-copy-badge');
+        if (!badge) {
+            badge = document.createElement('div');
+            badge.className = 'anti-copy-badge';
+            badge.textContent = '🔒 Copy/Paste Restricted During Test';
+            document.body.appendChild(badge);
+        }
+        badge.style.display = 'block';
+        setTimeout(() => badge.style.display = 'none', 3000);
+    }
+
+    function startVideoLessonQuiz(quizQuestions) {
+        isQuizActive = true;
+        
+        // Reuse existing Module Test Modal
+        const milestone = activePlaylist[currentVideoIndex];
+        activeTestState = { 
+            pathKey: currentPath, 
+            milestoneIndex: currentVideoIndex, 
+            questions: quizQuestions, 
+            currentQ: 0, 
+            score: 0, 
+            selectedOpt: null,
+            isLessonQuiz: true 
+        };
+
+        document.getElementById('test-modal-title').textContent = `Lesson Assessment: ${milestone.title}`;
+        document.getElementById('test-intro-desc').textContent = "Complete this quick test to unlock the next lesson. Academic integrity rules apply.";
+        document.getElementById('test-q-count').textContent = quizQuestions.length;
+
+        // Modify result btn for lessons
+        document.getElementById('apply-schedule-btn').innerHTML = '<i data-lucide="check-circle"></i> Complete Lesson';
+
+        document.getElementById('test-intro-state').style.display = 'block';
+        document.getElementById('test-question-state').style.display = 'none';
+        document.getElementById('test-result-state').style.display = 'none';
+        document.getElementById('module-test-modal').style.display = 'flex';
+        
+        // Hide overlay once quiz starts
+        document.getElementById('video-quiz-overlay').style.display = 'none';
+        lucide.createIcons();
+    }
+
+    // Override the "Apply Schedule" button logic to handle lesson completion
+    const originalApplyBtn = document.getElementById('apply-schedule-btn');
+    const newApplyBtn = originalApplyBtn.cloneNode(true);
+    originalApplyBtn.parentNode.replaceChild(newApplyBtn, originalApplyBtn);
+
+    newApplyBtn.addEventListener('click', async () => {
+        if (activeTestState.isLessonQuiz) {
+            const pct = Math.round((activeTestState.score / activeTestState.questions.length) * 100);
+            
+            if (pct >= 80) {
+                // Unlock logic
+                const progress = userData.videoProgress[currentPath] || { lastPassedIndex: -1 };
+                if (currentVideoIndex > progress.lastPassedIndex) {
+                    progress.lastPassedIndex = currentVideoIndex;
+                    userData.videoProgress[currentPath] = progress;
+                    
+                    if (currentUser) {
+                        await updateDoc(doc(db, 'users', currentUser.uid), {
+                            videoProgress: userData.videoProgress
+                        });
+                    }
+                }
+                
+                document.getElementById('module-test-modal').style.display = 'none';
+                isQuizActive = false;
+                renderPlaylist(); // Update locked/completed icons
+                
+                // Move to next video if available
+                if (currentVideoIndex < activePlaylist.length - 1) {
+                    currentVideoIndex++;
+                    renderPlaylist();
+                    loadVideo(currentVideoIndex);
+                } else {
+                    alert("Congratulations! You've completed all videos in this course!");
+                    switchView('roadmap-container');
+                }
+            } else {
+                document.getElementById('module-test-modal').style.display = 'none';
+                isQuizActive = false;
+                alert("You need at least 80% to pass. Please re-watch the video and try again!");
+            }
+        } else {
+            // Original Roadmap Logic
+            document.getElementById('module-test-modal').style.display = 'none';
+            if (currentPath) showRoadmap(currentPath);
+        }
+    });
 
     // Export for empty state visibility
     window.app.showHome = () => switchView('path-selection');

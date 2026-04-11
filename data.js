@@ -400,3 +400,54 @@ const ROADMAP_DATA = {
 };
 
 window.ROADMAP_DATA = ROADMAP_DATA;
+
+const PLAYLIST_DATA = {
+    "data-science": [
+        {
+            "id": "ds-v1",
+            "title": "Introduction to Data Science",
+            "youtubeId": "ua-CiDNNj30",
+            "quiz": [
+                { "q": "What is the main goal of Data Science?", "opts": ["To fix computers", "To extract insights from data", "To build websites", "To play games"], "ans": 1 },
+                { "q": "Which language is most popular in Data Science?", "opts": ["C++", "Java", "Python", "Ruby"], "ans": 2 },
+                { "q": "What does a data scientist do with raw data?", "opts": ["Delete it", "Clean and analyze it", "Print it out", "Ignore it"], "ans": 1 }
+            ]
+        },
+        {
+            "id": "ds-v2",
+            "title": "Data Science Lifecycle",
+            "youtubeId": "X3paOmcrTjQ",
+            "quiz": [
+                { "q": "What is the first step in the data science lifecycle?", "opts": ["Data Cleaning", "Problem Definition", "Model Building", "Deployment"], "ans": 1 },
+                { "q": "Why is data cleaning important?", "opts": ["To make it smaller", "To ensure accuracy and reliability", "To change the results", "To hide errors"], "ans": 1 },
+                { "q": "Which phase comes after Data Exploration?", "opts": ["Data Collection", "Feature Engineering", "Deployment", "None of these"], "ans": 1 }
+            ]
+        }
+    ],
+    "ai": [
+        {
+            "id": "ai-v1",
+            "title": "What is Artificial Intelligence?",
+            "youtubeId": "JMUxmLyz9W4",
+            "quiz": [
+                { "q": "What is AI?", "opts": ["A type of robot", "Simulation of human intelligence by machines", "A video game", "A hardware component"], "ans": 1 },
+                { "q": "What is the 'Narrow AI'?", "opts": ["AI that can do everything", "AI designed for a specific task", "AI with a small brain", "Old AI from the 60s"], "ans": 1 },
+                { "q": "Which of these is an example of AI?", "opts": ["A calculator", "Voice assistant like Alexa", "A microwave", "A flashlight"], "ans": 1 }
+            ]
+        }
+    ],
+    "full-stack": [
+        {
+            "id": "fs-v1",
+            "title": "What is Full Stack Development?",
+            "youtubeId": "8f8eNal5X-M",
+            "quiz": [
+                { "q": "What does 'Full Stack' mean?", "opts": ["Only Frontend", "Only Backend", "Both Frontend and Backend", "Database only"], "ans": 2 },
+                { "q": "Which of these is a Frontend technology?", "opts": ["SQL", "Node.js", "React", "Python"], "ans": 2 },
+                { "q": "What is the purpose of the Backend?", "opts": ["To design buttons", "To handle logic and data", "To display colors", "To make it pretty"], "ans": 1 }
+            ]
+        }
+    ]
+};
+
+window.PLAYLIST_DATA = PLAYLIST_DATA;
