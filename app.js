@@ -42,7 +42,25 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- State Management ---
     let currentPath = null;
-    let userData = { scores: {}, completedSkills: [], profile: {}, videoProgress: {} };
+    let userData = { 
+        scores: {}, 
+        completedSkills: [], 
+        profile: {}, 
+        videoProgress: {},
+        timeSpent: 0, // In minutes
+        problemsSolved: 0
+    };
+    
+    // Timer for time spent tracking
+    setInterval(() => {
+        if (currentUser) {
+            userData.timeSpent = (userData.timeSpent || 0) + 1;
+            // Background sync every 5 mins or on view switch
+            if (userData.timeSpent % 5 === 0) {
+                updateDoc(doc(db, 'users', currentUser.uid), { timeSpent: userData.timeSpent });
+            }
+        }
+    }, 60000);
     
     // Video Player State
     let ytPlayer = null;
@@ -99,19 +117,15 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function updateProfileUI() {
+        if (!userData || !userData.profile) return;
         const { name, email, goal, photoURL } = userData.profile;
         const nameVal = name || 'User';
         
-        // Legacy IDs (keeping for backward compatibility if needed)
-        const legacyName = document.getElementById('profile-name');
-        if (legacyName) legacyName.textContent = nameVal;
-        
-        const legacyUserHeader = document.getElementById('ig-username-header');
-        if (legacyUserHeader) legacyUserHeader.textContent = nameVal;
-
-        // New Design IDs
-        const newName = document.getElementById('profile-name-val');
-        if (newName) newName.textContent = nameVal;
+        // Update all name placeholders
+        ['profile-name', 'ig-username-header', 'profile-name-val'].forEach(id => {
+            const el = document.getElementById(id);
+            if (el) el.textContent = nameVal;
+        });
 
         const newTitle = document.getElementById('profile-title-val');
         if (newTitle) newTitle.textContent = goal || 'Career Goal Not Set';
@@ -119,15 +133,21 @@ document.addEventListener('DOMContentLoaded', () => {
         const newEmail = document.getElementById('profile-email-val');
         if (newEmail) newEmail.textContent = email || 'No Email Linked';
         
-        // Avatar Logic
+        // Avatar Logic - Fix for persistent display
         const avatarImg = document.getElementById('profile-avatar-img');
         const avatarInitials = document.getElementById('profile-avatar-initials');
         
         if (avatarImg && avatarInitials) {
-            if (photoURL) {
+            if (photoURL && photoURL.startsWith('http')) {
                 avatarImg.src = photoURL;
-                avatarImg.style.display = 'block';
-                avatarInitials.style.display = 'none';
+                avatarImg.onload = () => {
+                    avatarImg.style.display = 'block';
+                    avatarInitials.style.display = 'none';
+                };
+                avatarImg.onerror = () => {
+                    avatarImg.style.display = 'none';
+                    avatarInitials.style.display = 'flex';
+                };
             } else {
                 avatarImg.style.display = 'none';
                 avatarInitials.style.display = 'flex';
@@ -135,10 +155,10 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
         
-        // Populate Skill Tags (Top 3 completed skills)
+        // Populate Skill Tags
         const tagsContainer = document.getElementById('profile-skills-tags');
         if (tagsContainer) {
-            const topSkills = userData.completedSkills.slice(0, 3);
+            const topSkills = userData.completedSkills?.slice(0, 3) || [];
             if (topSkills.length > 0) {
                 tagsContainer.innerHTML = topSkills.map(s => `<span class="px-4 py-1.5 bg-[#e1e3de] text-[#5d605c] rounded-full text-sm font-medium">${s}</span>`).join('');
             } else {
@@ -205,7 +225,6 @@ document.addEventListener('DOMContentLoaded', () => {
         'software-testing':  { gradient: 'linear-gradient(135deg, #0a2a0a, #2e7d32)', icon: 'badge-check', tag: 'Tech · QA' },
         'dsa':               { gradient: 'linear-gradient(135deg, #1a0a2e, #7c3aed)', icon: 'binary', tag: 'Tech · CS' },
         'python':            { gradient: 'linear-gradient(135deg, #1a3020, #4caf50)', icon: 'code-2', tag: 'Tech · Programming' },
-        'data-analytics':    { gradient: 'linear-gradient(135deg, #162032, #1976d2)', icon: 'bar-chart-2', tag: 'Tech · Analytics' },
         'ethical-hacking':   { gradient: 'linear-gradient(135deg, #0d0d0d, #43a047)', icon: 'terminal', tag: 'Tech · Security' },
         'iot':               { gradient: 'linear-gradient(135deg, #142030, #00acc1)', icon: 'radio', tag: 'Tech · IoT' },
         'mba':               { gradient: 'linear-gradient(135deg, #1a1200, #c0912a)', icon: 'briefcase', tag: 'Business · MBA' },
@@ -213,12 +232,6 @@ document.addEventListener('DOMContentLoaded', () => {
         'business-analytics':{ gradient: 'linear-gradient(135deg, #12171a, #0288d1)', icon: 'trending-up', tag: 'Business · Analytics' },
         'product-management':{ gradient: 'linear-gradient(135deg, #1a0a1a, #8e24aa)', icon: 'package', tag: 'Business · Product' },
         'digital-marketing': { gradient: 'linear-gradient(135deg, #1a0a0a, #e91e63)', icon: 'megaphone', tag: 'Business · Marketing' },
-        'mtech':             { gradient: 'linear-gradient(135deg, #0a1a1a, #00897b)', icon: 'flask-conical', tag: 'Engineering · M.Tech' },
-        'robotics':          { gradient: 'linear-gradient(135deg, #0d1117, #388e3c)', icon: 'bot', tag: 'Engineering · Robotics' },
-        'embedded':          { gradient: 'linear-gradient(135deg, #1a1200, #ef6c00)', icon: 'circuit-board', tag: 'Engineering · Embedded' },
-        'vlsi':              { gradient: 'linear-gradient(135deg, #1a0a2e, #5e35b1)', icon: 'cpu', tag: 'Engineering · VLSI' },
-        'industrial-auto':   { gradient: 'linear-gradient(135deg, #1a1a0a, #afb42b)', icon: 'settings-2', tag: 'Engineering · Auto' },
-        'renewable-energy':  { gradient: 'linear-gradient(135deg, #0a1a0a, #d84315)', icon: 'sun', tag: 'Engineering · Energy' },
         'cfa':               { gradient: 'linear-gradient(135deg, #0a0a1a, #1565c0)', icon: 'landmark', tag: 'Finance · CFA' },
         'frm':               { gradient: 'linear-gradient(135deg, #1a0d0a, #bf360c)', icon: 'shield-alert', tag: 'Finance · FRM' },
         'financial-modeling':{ gradient: 'linear-gradient(135deg, #0a1a12, #2e7d32)', icon: 'calculator', tag: 'Finance · Modeling' },
@@ -233,6 +246,12 @@ document.addEventListener('DOMContentLoaded', () => {
         'banking-exams':     { gradient: 'linear-gradient(135deg, #0a1a1a, #006064)', icon: 'piggy-bank', tag: 'Exam · Banking' },
         'ms-abroad':         { gradient: 'linear-gradient(135deg, #0d1a0d, #1b5e20)', icon: 'globe', tag: 'Study Abroad · MS' },
         'mba-abroad':        { gradient: 'linear-gradient(135deg, #1a0a08, #bf360c)', icon: 'plane', tag: 'Study Abroad · MBA' },
+        'm-tech':            { gradient: 'linear-gradient(135deg, #0a1a1a, #00897b)', icon: 'flask-conical', tag: 'Engineering · M.Tech' },
+        'robotics':          { gradient: 'linear-gradient(135deg, #0d1117, #388e3c)', icon: 'bot', tag: 'Engineering · Robotics' },
+        'embedded-systems':  { gradient: 'linear-gradient(135deg, #1a1200, #ef6c00)', icon: 'circuit-board', tag: 'Engineering · Embedded' },
+        'vlsi':              { gradient: 'linear-gradient(135deg, #1a0a2e, #5e35b1)', icon: 'cpu', tag: 'Engineering · VLSI' },
+        'automation':        { gradient: 'linear-gradient(135deg, #1a1a0a, #afb42b)', icon: 'settings-2', tag: 'Engineering · Auto' },
+        'renewable-energy':  { gradient: 'linear-gradient(135deg, #0a1a0a, #d84315)', icon: 'sun', tag: 'Engineering · Energy' },
     };
 
     function renderPathSelection(filter = '') {
@@ -355,9 +374,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function getQuizQuestions(pathKey, milestoneIndex) {
         const bank = QUIZ_BANK[pathKey];
-        if (bank && bank[milestoneIndex]) return bank[milestoneIndex];
-        const level = ROADMAP_DATA[pathKey]?.milestones[milestoneIndex]?.level || 'Intermediate';
-        return GENERIC_QUIZ(level);
+        let originalQuestions = [];
+        const milestoneLevel = ROADMAP_DATA[pathKey]?.milestones[milestoneIndex]?.level || 'Intermediate';
+
+        if (bank && bank[milestoneIndex]) {
+            originalQuestions = [...bank[milestoneIndex]];
+        } else {
+            originalQuestions = [...GENERIC_QUIZ(milestoneLevel)];
+        }
+
+        // 5. Dynamic Question Logic: Shuffle and take 5
+        const shuffled = originalQuestions.sort(() => 0.5 - Math.random());
+        return shuffled.slice(0, 5);
     }
 
     // =============================================
@@ -849,10 +877,21 @@ document.addEventListener('DOMContentLoaded', () => {
         const progressValEl = document.getElementById('stats-progress-val');
         if (progressValEl) progressValEl.textContent = `${totalProgressPct}%`;
 
-        // 3. Certificates (Badges)
-        const badgeCount = completedCount; // Simplified: 1 skill = 1 badge feel
+        // 3. Certificates (Badges) - Simplified
+        const badgeCount = Math.floor((userData.problemsSolved || 0) / 5) + (userData.completedSkills?.length || 0); 
         const badgesValEl = document.getElementById('stats-badges-val');
         if (badgesValEl) badgesValEl.textContent = badgeCount;
+        
+        // 6. Detailed Progress (User Req #6)
+        const timeSpentEl = document.getElementById('stats-time-val');
+        const probSolvedEl = document.getElementById('stats-problems-val');
+        
+        if (timeSpentEl) {
+            const hrs = Math.floor(userData.timeSpent / 60);
+            const mins = userData.timeSpent % 60;
+            timeSpentEl.textContent = hrs > 0 ? `${hrs}h ${mins}m` : `${mins}m`;
+        }
+        if (probSolvedEl) probSolvedEl.textContent = userData.problemsSolved || 0;
 
         // 4. Current Roadmap Card
         const titleCardEl = document.getElementById('roadmap-title-card');
@@ -864,7 +903,6 @@ document.addEventListener('DOMContentLoaded', () => {
             const pathData = ROADMAP_DATA[currentPath];
             if (titleCardEl) titleCardEl.textContent = pathData.title;
             
-            // Calculate level (Basic simplified leveling)
             const level = totalProgressPct >= 80 ? 'Expert' : totalProgressPct >= 40 ? 'Intermediate' : 'Beginner';
             if (levelTagEl) levelTagEl.textContent = level;
             
@@ -874,10 +912,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (titleCardEl) titleCardEl.textContent = 'Select a path to begin';
         }
 
-        // 5. Skill Proficiency Bars
         renderSkillProficiency();
-
-        // 6. Achievements Carousel
         renderAchievementsCarousel();
     }
 
@@ -983,9 +1018,17 @@ document.addEventListener('DOMContentLoaded', () => {
             btn.innerHTML = '<i data-lucide="loader-2" class="spin"></i> Processing...';
             lucide.createIcons();
             
-            const email = document.getElementById('email').value;
+            const email = document.getElementById('email').value.trim();
             const password = document.getElementById('password').value;
             
+            // 2. Correct Email Checking
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                alert("Please enter a valid email address.");
+                btn.innerHTML = originalText;
+                return;
+            }
+
             try {
                 if (isRegistering) {
                     await createUserWithEmailAndPassword(auth, email, password);
@@ -993,7 +1036,17 @@ document.addEventListener('DOMContentLoaded', () => {
                     await signInWithEmailAndPassword(auth, email, password);
                 }
             } catch (error) {
-                alert(error.message);
+                // 1. Better Auth Feedback
+                let message = "An error occurred. Please try again.";
+                switch (error.code) {
+                    case 'auth/user-not-found': message = "No account found with this email."; break;
+                    case 'auth/wrong-password': message = "Incorrect password. Please try again."; break;
+                    case 'auth/invalid-email': message = "The email address is invalid."; break;
+                    case 'auth/email-already-in-use': message = "An account already exists with this email."; break;
+                    case 'auth/weak-password': message = "Password should be at least 6 characters."; break;
+                    case 'auth/invalid-credential': message = "Invalid email or password."; break;
+                }
+                alert(message);
             } finally {
                 btn.innerHTML = originalText;
             }
@@ -1005,7 +1058,7 @@ document.addEventListener('DOMContentLoaded', () => {
             try {
                 await signInWithPopup(auth, googleProvider);
             } catch (error) {
-                alert(error.message);
+                alert("Google sign-in failed. Please try again.");
                 googleLogin.innerHTML = 'Continue with Google';
                 lucide.createIcons();
             }
@@ -1226,8 +1279,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 videoId: video.youtubeId,
                 playerVars: { 
                     'autoplay': 1, 
+                    'controls': 1,
+                    'rel': 0, // Show related videos only from the same channel
                     'modestbranding': 1, 
-                    'rel': 0,
+                    'iv_load_policy': 3, // Disable annotations
+                    'enablejsapi': 1,
                     'origin': window.location.origin
                 },
                 events: {
@@ -1413,7 +1469,13 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         if (passed) {
-            activeTestState.score = activeTestState.questions.length || 1; // Simulation pass
+            userData.problemsSolved = (userData.problemsSolved || 0) + 1;
+            activeTestState.score = activeTestState.questions.length || 1;
+            
+            if (currentUser) {
+                updateDoc(doc(db, 'users', currentUser.uid), { problemsSolved: userData.problemsSolved });
+            }
+            
             showTestResults();
         } else {
             alert("Your solution is incomplete or incorrect. Please try again!");
@@ -1432,13 +1494,15 @@ document.addEventListener('DOMContentLoaded', () => {
             if (pct >= 80) {
                 // Unlock logic
                 const progress = userData.videoProgress[currentPath] || { lastPassedIndex: -1 };
-                if (currentVideoIndex > progress.lastPassedIndex) {
+                if (currentVideoIndex > (progress.lastPassedIndex || -1)) {
                     progress.lastPassedIndex = currentVideoIndex;
                     userData.videoProgress[currentPath] = progress;
+                    userData.problemsSolved = (userData.problemsSolved || 0) + 1;
                     
                     if (currentUser) {
                         await updateDoc(doc(db, 'users', currentUser.uid), {
-                            videoProgress: userData.videoProgress
+                            videoProgress: userData.videoProgress,
+                            problemsSolved: userData.problemsSolved
                         });
                     }
                 }

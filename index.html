@@ -430,7 +430,7 @@
                     </section>
 
                     <!-- Bento Grid Stats -->
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
                         <div class="bg-[#f4f4f0] p-8 rounded-[2rem] flex flex-col justify-between h-44 border border-[#e1e3de]">
                             <span class="text-[#5d605c] font-medium text-sm tracking-widest uppercase">Skills Mastered</span>
                             <div class="flex items-baseline gap-2">
@@ -439,17 +439,24 @@
                             </div>
                         </div>
                         <div class="bg-[#bceed2] p-8 rounded-[2rem] flex flex-col justify-between h-44">
-                            <span class="text-[#2d5a45] font-medium text-sm tracking-widest uppercase">Roadmap Progress</span>
+                            <span class="text-[#2d5a45] font-medium text-sm tracking-widest uppercase">Progress</span>
                             <div class="flex items-baseline gap-2">
                                 <span class="text-5xl font-bold text-[#2d5a45]" id="stats-progress-val">0%</span>
-                                <span class="material-symbols-outlined text-[#2d5a45]" style="font-variation-settings: 'FILL' 1;">trending_up</span>
+                                <span class="material-symbols-outlined text-[#2d5a45]">trending_up</span>
                             </div>
                         </div>
-                        <div class="bg-[#e1e3de] p-8 rounded-[2rem] flex flex-col justify-between h-44">
-                            <span class="text-[#5d605c] font-medium text-sm tracking-widest uppercase">Certificates</span>
+                         <div class="bg-[#e1e3de] p-8 rounded-[2rem] flex flex-col justify-between h-44 border border-[#e1e3de]">
+                            <span class="text-[#5d605c] font-medium text-sm tracking-widest uppercase">Time Learnt</span>
                             <div class="flex items-baseline gap-2">
-                                <span class="text-5xl font-bold text-[#303330]" id="stats-badges-val">0</span>
-                                <span class="text-[#5d605c] text-sm font-medium ml-2">Active Earned</span>
+                                <span class="text-4xl font-bold text-[#303330]" id="stats-time-val">0m</span>
+                                <span class="material-symbols-outlined text-[#5d605c]">schedule</span>
+                            </div>
+                        </div>
+                        <div class="bg-[#d2dcf4] p-8 rounded-[2rem] flex flex-col justify-between h-44 border border-[#cad5f0]">
+                            <span class="text-[#3c4e77] font-medium text-sm tracking-widest uppercase">Problems Solved</span>
+                            <div class="flex items-baseline gap-2">
+                                <span class="text-5xl font-bold text-[#3c4e77]" id="stats-problems-val">0</span>
+                                <span class="material-symbols-outlined text-[#3c4e77]">task_alt</span>
                             </div>
                         </div>
                     </div>
