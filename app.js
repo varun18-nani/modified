@@ -1816,15 +1816,19 @@ document.addEventListener('DOMContentLoaded', () => {
                 playerVars: { 
                     'autoplay': 1, 
                     'controls': 1,
-                    'rel': 0, // Show related videos only from the same channel
+                    'rel': 0,
                     'modestbranding': 1, 
-                    'iv_load_policy': 3, // Disable annotations
+                    'iv_load_policy': 3,
                     'enablejsapi': 1,
                     'origin': window.location.origin
                 },
                 events: {
                     'onStateChange': onPlayerStateChange,
-                    'onReady': (e) => startAntiSkipMonitor(),
+                    'onReady': (e) => {
+                        e.target.setPlaybackRate(1);
+                        startAntiSkipMonitor();
+                    },
+                    'onPlaybackRateChange': onPlaybackRateChange,
                     'onError': (e) => {
                         console.error("YouTube Player Error:", e.data);
                         alert("This video might be unavailable for embedding. We recommend searching the title on YouTube directly or trying the next lesson.");
@@ -1836,8 +1840,57 @@ document.addEventListener('DOMContentLoaded', () => {
                 videoId: video.youtubeId,
                 origin: window.location.origin
             });
+            ytPlayer.setPlaybackRate(1);
             startAntiSkipMonitor();
         }
+    }
+
+    function onPlaybackRateChange(event) {
+        const rate = event.data;
+        if (rate > 1.25) {
+            // Enforce max speed — reset to 1.25x
+            ytPlayer.setPlaybackRate(1.25);
+            showSpeedWarning();
+        }
+    }
+
+    function showSpeedWarning() {
+        let toast = document.getElementById('speed-warning-toast');
+        if (!toast) {
+            toast = document.createElement('div');
+            toast.id = 'speed-warning-toast';
+            toast.style.cssText = `
+                position: fixed;
+                bottom: 80px;
+                left: 50%;
+                transform: translateX(-50%);
+                background: linear-gradient(135deg, #7c2d12, #991b1b);
+                color: white;
+                padding: 14px 28px;
+                border-radius: 50px;
+                font-size: 14px;
+                font-weight: 600;
+                z-index: 99999;
+                display: none;
+                box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+                border: 1px solid rgba(255,255,255,0.15);
+                white-space: nowrap;
+                animation: slideUpToast 0.3s ease-out;
+            `;
+            document.head.insertAdjacentHTML('beforeend', `
+                <style>
+                    @keyframes slideUpToast {
+                        from { bottom: 50px; opacity: 0; }
+                        to { bottom: 80px; opacity: 1; }
+                    }
+                </style>
+            `);
+            document.body.appendChild(toast);
+        }
+        toast.innerHTML = '🚫 Speed limited to 1.25x — please watch attentively!';
+        toast.style.display = 'block';
+        clearTimeout(toast._hideTimer);
+        toast._hideTimer = setTimeout(() => toast.style.display = 'none', 3500);
     }
 
     function onPlayerStateChange(event) {
@@ -1850,11 +1903,17 @@ document.addEventListener('DOMContentLoaded', () => {
     function startAntiSkipMonitor() {
         antiSkipInterval = setInterval(() => {
             if (ytPlayer && ytPlayer.getCurrentTime) {
+                // Anti-skip: prevent seeking forward
                 const currentTime = ytPlayer.getCurrentTime();
                 if (currentTime > maxTimeWatched + 2) {
                     ytPlayer.seekTo(maxTimeWatched);
                 } else {
                     maxTimeWatched = Math.max(maxTimeWatched, currentTime);
+                }
+                // Speed enforcement safety net: clamp to max 1.25x
+                if (ytPlayer.getPlaybackRate && ytPlayer.getPlaybackRate() > 1.25) {
+                    ytPlayer.setPlaybackRate(1.25);
+                    showSpeedWarning();
                 }
             }
         }, 1000);
