@@ -363,6 +363,325 @@ document.addEventListener('DOMContentLoaded', () => {
         ]
     };
 
+    // Extend QUIZ_BANK with all additional courses
+    Object.assign(QUIZ_BANK, {
+        'ai': [
+            [
+                { q: "The primary goal of AI is?", opts: ["Speed up CPUs", "Simulate human-like intelligence", "Compress files", "Store data cheaply"], ans: 1 },
+                { q: "BFS explores graph nodes?", opts: ["Deepest nodes first", "Level by level (nearest first)", "Randomly", "Alphabetically"], ans: 1 },
+                { q: "A* search algorithm uses?", opts: ["Random sampling", "A heuristic to guide search toward goal", "Pure gradient descent", "Brute force enumeration"], ans: 1 },
+                { q: "Linear algebra is important in AI for?", opts: ["Database schema design", "Representing data as tensors/matrices", "Network routing tables", "OS kernel design"], ans: 1 },
+                { q: "Which is NOT an AI subfield?", opts: ["Machine Learning", "Natural Language Processing", "Accounting Software", "Computer Vision"], ans: 2 }
+            ],[
+                { q: "Neural networks are inspired by?", opts: ["Computer circuits", "The human brain's neurons", "Database join tables", "File systems"], ans: 1 },
+                { q: "Backpropagation is used to?", opts: ["Pass data forward", "Update weights via error gradient", "Generate outputs", "Preprocess raw data"], ans: 1 },
+                { q: "CNNs are best suited for?", opts: ["Sequential text data", "Image recognition tasks", "Time-series forecasting", "Tabular structured data"], ans: 1 },
+                { q: "RNNs are best suited for?", opts: ["Static image classification", "Sequential/time-series data", "Unsupervised clustering", "Dimensionality reduction"], ans: 1 },
+                { q: "Transfer learning means?", opts: ["Moving files between servers", "Reusing a pre-trained model on a new task", "Always training from scratch", "Transferring GPU to CPU workloads"], ans: 1 }
+            ],[
+                { q: "Transformer architecture relies on?", opts: ["Convolution layers only", "Attention mechanisms", "Recurrent connections", "Decision tree ensembles"], ans: 1 },
+                { q: "GPT stands for?", opts: ["General Processing Tool", "Generative Pre-trained Transformer", "Graph Processing Technique", "Graded Prediction Tree"], ans: 1 },
+                { q: "Fine-tuning an LLM means?", opts: ["Always training from scratch", "Adapting a pre-trained model to a specific task", "Deleting model weights", "Only scaling model size"], ans: 1 },
+                { q: "Prompt engineering involves?", opts: ["Writing hardware firmware", "Crafting inputs to guide LLM outputs effectively", "Designing semiconductor chips", "Curating giant training datasets"], ans: 1 },
+                { q: "Responsible AI requires?", opts: ["Maximizing profit at all costs", "Fairness, transparency, and accountability", "Ignoring detected bias", "Using only open-source models"], ans: 1 }
+            ]
+        ],
+        'ml': [
+            [
+                { q: "Supervised learning requires?", opts: ["Only unlabeled data", "Labeled input-output pairs", "Pure reinforcement signals", "Random sampling"], ans: 1 },
+                { q: "Linear regression predicts?", opts: ["Categorical class labels", "Continuous numeric values", "Data clusters", "Discrete probabilities only"], ans: 1 },
+                { q: "Training data is used to?", opts: ["Evaluate the final model", "Fit/learn the model parameters", "Store data in cloud", "Visualize outputs"], ans: 1 },
+                { q: "Logistic regression is used for?", opts: ["Only regression tasks", "Binary classification", "Clustering tasks", "Dimensionality reduction"], ans: 1 },
+                { q: "Overfitting occurs when?", opts: ["Model is too simple", "Model memorizes training data but fails on new data", "Model has zero parameters", "Model trains on no data"], ans: 1 }
+            ],[
+                { q: "XGBoost uses?", opts: ["Simple decision trees only", "Gradient Boosting", "K-Nearest Neighbors", "Plain Linear Regression"], ans: 1 },
+                { q: "Random Forest improves over a single Decision Tree by?", opts: ["Using only one tree", "Averaging many trees to reduce variance", "Removing most features", "Using only linear models"], ans: 1 },
+                { q: "Feature engineering involves?", opts: ["Automating entire ML pipelines", "Creating useful features from raw data to improve model performance", "Selecting the model architecture", "Deploying a model to production"], ans: 1 },
+                { q: "K-Fold cross-validation splits data into?", opts: ["2 equal halves always", "K equal subsets for iterative validation", "Training data only", "K independent models"], ans: 1 },
+                { q: "Imbalanced dataset means?", opts: ["All classes are equal in size", "One class dominates/outnumbers others significantly", "Dataset has no missing values", "Dataset is fully clean"], ans: 1 }
+            ],[
+                { q: "MLOps stands for?", opts: ["Machine Learning Operations", "Multi-Layer Optimization System", "Model Load Operations", "Modular Logic Operations"], ans: 0 },
+                { q: "Docker helps ML deployment by?", opts: ["Training models faster on GPU", "Packaging models with all dependencies for consistent deployment", "Auto-tuning hyperparameters", "Automatically cleaning data"], ans: 1 },
+                { q: "Model drift means?", opts: ["Model continuously improving by itself", "Model performance degrading due to changing real-world data", "Model retraining automatically", "Model migrating to a new cloud region"], ans: 1 },
+                { q: "FastAPI is used in ML for?", opts: ["Training neural networks", "Serving model predictions as REST APIs", "Data preprocessing pipelines", "Feature selection"], ans: 1 },
+                { q: "MLflow is used for?", opts: ["Building neural networks from scratch", "Tracking ML experiments and managing models", "Deploying web applications", "Encrypting model weight files"], ans: 1 }
+            ]
+        ],
+        'cloud': [
+            [
+                { q: "Cloud computing delivers IT services via?", opts: ["Only local hardware", "The internet on-demand", "USB drives", "Physical store media"], ans: 1 },
+                { q: "IaaS stands for?", opts: ["Internet as a Service", "Infrastructure as a Service", "Integration as a Service", "Intelligence as a Service"], ans: 1 },
+                { q: "AWS IAM manages?", opts: ["Storing objects in buckets", "Users, access, and permissions", "Running containers at scale", "Caching application data"], ans: 1 },
+                { q: "VPC in AWS stands for?", opts: ["Virtual Private Cloud", "Virtual Proxy Connection", "Variable Public Container", "Verified Protocol Cluster"], ans: 0 },
+                { q: "AWS global locations are organized into?", opts: ["Data zones only", "Regions and Availability Zones", "Cloud server farms", "Edge nodes only"], ans: 1 }
+            ],[
+                { q: "EC2 in AWS provides?", opts: ["Object storage", "Virtual compute (server) instances", "DNS resolution services", "Email delivery services"], ans: 1 },
+                { q: "AWS S3 stores data as?", opts: ["Relational database tables", "Objects inside named buckets", "Traditional file directories", "In-memory cached blocks"], ans: 1 },
+                { q: "AWS Lambda enables?", opts: ["Relational database management", "Running code without managing servers (serverless)", "CDN distribution only", "Log monitoring and alerting"], ans: 1 },
+                { q: "Auto Scaling in AWS automatically?", opts: ["Provisions servers manually", "Adjusts compute capacity based on load", "Backs up data to S3", "Calculates monthly billing only"], ans: 1 },
+                { q: "AWS CloudFront is a?", opts: ["Relational database", "Content Delivery Network (CDN)", "Kubernetes cluster manager", "Identity and access provider"], ans: 1 }
+            ],[
+                { q: "Terraform is used for?", opts: ["Unit testing code quality", "Infrastructure as Code (IaC) provisioning", "Training ML models", "Monitoring application metrics"], ans: 1 },
+                { q: "'terraform apply' does?", opts: ["Only shows the execution plan", "Creates or updates real infrastructure", "Only validates syntax", "Rolls back previous changes"], ans: 1 },
+                { q: "Security Groups in AWS are?", opts: ["Stateless packet filters", "Stateful virtual firewall rules for EC2", "IAM permission boundaries", "VPC route table entries"], ans: 1 },
+                { q: "AWS Shared Responsibility Model means?", opts: ["AWS handles all security", "Customer and AWS share security responsibilities", "Customer is solely responsible", "Auditors are the only responsible party"], ans: 1 },
+                { q: "CloudWatch is used for?", opts: ["S3 storage lifecycle", "Monitoring metrics, logs, and triggering alarms", "DNS domain resolution", "EC2 instance provisioning only"], ans: 1 }
+            ]
+        ],
+        'cyber-security': [
+            [
+                { q: "Phishing attacks are?", opts: ["Network scanning techniques", "Deceptive messages tricking users into revealing sensitive data", "Hardware exploit methods", "Port forwarding attacks"], ans: 1 },
+                { q: "A firewall's role is to?", opts: ["Encrypt all data at rest", "Filter incoming and outgoing network traffic", "Detect viruses in all files", "Assign dynamic IP addresses"], ans: 1 },
+                { q: "TCP/IP provides?", opts: ["Storage protocols for data at rest", "Rules for network communication", "File encryption algorithms", "User authentication methods"], ans: 1 },
+                { q: "A VPN does what?", opts: ["Provides antivirus protection", "Creates an encrypted tunnel over the internet", "Scans for open ports on networks", "Manages web server traffic routing"], ans: 1 },
+                { q: "IP addressing is handled at which OSI layer?", opts: ["Transport layer", "Network layer", "Application layer", "Data Link layer"], ans: 1 }
+            ],[
+                { q: "Nmap is used for?", opts: ["Encrypting network traffic", "Network scanning and host/port discovery", "Firewall rule management", "Server performance monitoring"], ans: 1 },
+                { q: "Metasploit Framework is?", opts: ["A network monitoring dashboard", "A penetration testing and exploit framework", "A cloud security service", "An enterprise antivirus engine"], ans: 1 },
+                { q: "SQL Injection attacks target?", opts: ["The OSI network layer", "Databases through malformed user input", "The OS kernel directly", "GPU video memory"], ans: 1 },
+                { q: "XSS (Cross-Site Scripting) attacks?", opts: ["Inject SQL queries into databases", "Inject malicious scripts into web pages viewed by users", "Exploit OS kernel vulnerabilities", "Brute-force encrypted passwords"], ans: 1 },
+                { q: "Kali Linux is?", opts: ["A gaming operating system", "A security-focused Linux distribution for penetration testing", "A production database server OS", "A Windows alternative OS"], ans: 1 }
+            ],[
+                { q: "SIEM stands for?", opts: ["Security Information and Event Management", "Simple Intrusion Event Monitor", "Secure Internet Email Module", "System Integrity Error Module"], ans: 0 },
+                { q: "First step in incident response is?", opts: ["Immediate eradication", "Identification and detection of the incident", "Full system recovery", "Immediate containment"], ans: 1 },
+                { q: "Zero Trust security assumes?", opts: ["All internal users are fully trusted", "No user or device is trusted by default — always verify", "Cloud services are already fully secure", "Passwords alone are sufficient"], ans: 1 },
+                { q: "Digital forensics involves?", opts: ["Designing secure network topologies", "Recovering and analyzing digital evidence after incidents", "Writing new firewall security rules", "Social media profile monitoring"], ans: 1 },
+                { q: "CEH stands for?", opts: ["Certified Ethical Hacker", "Core Enterprise Hacking", "Cyber Engineering Hierarchy", "Certified Expert Hacker"], ans: 0 }
+            ]
+        ],
+        'devops': [
+            [
+                { q: "DevOps combines?", opts: ["Development and Operations teams", "Design and Operations teams", "Data Science and Operations", "Deployment scripts and Objects"], ans: 0 },
+                { q: "Shell scripting is key in DevOps for?", opts: ["UI and frontend design", "Automating repetitive system and deployment tasks", "Database schema design", "Mobile app development"], ans: 1 },
+                { q: "Git is a?", opts: ["Centralized relational database", "Distributed version control system", "Build automation framework", "Cloud infrastructure provider"], ans: 1 },
+                { q: "SSH is used for?", opts: ["Encrypted file storage only", "Secure remote access to servers", "Container image building", "Running CD pipelines"], ans: 1 },
+                { q: "A pull request in Git is?", opts: ["Downloading code from a remote repo", "Proposing code changes for review and merging", "Permanently deleting a feature branch", "Rolling back the last commit"], ans: 1 }
+            ],[
+                { q: "CI/CD stands for?", opts: ["Continuous Integration/Continuous Delivery", "Core Interface/Code Delivery", "Cloud Infra/Code Deploy", "Client Integration/Code Dispatch"], ans: 0 },
+                { q: "GitHub Actions automates?", opts: ["Code storage and backup only", "Workflows like build, test, deploy triggered by code events", "Manual code review assignments", "Project milestone tracking only"], ans: 1 },
+                { q: "A Docker container is?", opts: ["A full virtual machine", "A lightweight, isolated process with its own filesystem", "A dedicated build server", "A single source code repository"], ans: 1 },
+                { q: "Docker Compose is used to?", opts: ["Orchestrate large Kubernetes clusters", "Define and run multi-container Docker apps locally", "Build single Docker images faster", "Monitor live container health metrics"], ans: 1 },
+                { q: "A CI/CD artifact is?", opts: ["A raw source code file", "A pipeline build output (e.g. JAR, Docker image) to be deployed", "A monitoring alert notification", "A project team member"], ans: 1 }
+            ],[
+                { q: "Kubernetes is used for?", opts: ["Source code version management", "Container orchestration and management at scale", "Log file aggregation only", "Network security policy enforcement"], ans: 1 },
+                { q: "The smallest deployable unit in Kubernetes is?", opts: ["A cluster", "A Pod (one or more containers sharing network/storage)", "A service endpoint", "A persistent volume"], ans: 1 },
+                { q: "Helm in Kubernetes is a?", opts: ["Alternative container runtime", "Package manager for Kubernetes apps (charts)", "Network traffic monitoring tool", "Security vulnerability scanner"], ans: 1 },
+                { q: "Prometheus is primarily used for?", opts: ["Building Docker container images", "Collecting and storing time-series metrics with alerting", "Running CI/CD pipelines", "Conducting automated code reviews"], ans: 1 },
+                { q: "SRE (Site Reliability Engineering) focuses on?", opts: ["Only developing new product features", "Reliability, performance, and scalability of production systems", "UI/UX design and prototyping", "Database administration only"], ans: 1 }
+            ]
+        ],
+        'blockchain': [
+            [
+                { q: "Blockchain is best described as?", opts: ["A centralized database system", "A distributed, immutable ledger", "A cloud storage service", "A scripting language"], ans: 1 },
+                { q: "Proof of Work is a?", opts: ["SHA-256 hashing algorithm", "Consensus mechanism for block validation", "Smart contract token standard", "Wallet authentication protocol"], ans: 1 },
+                { q: "A public key in blockchain is?", opts: ["A private wallet password", "Shareable address to receive cryptocurrency", "The unique blockchain network ID", "A block mining reward value"], ans: 1 },
+                { q: "SHA-256 in Bitcoin is used for?", opts: ["Compressing transaction data", "Cryptographic hashing of block data", "Routing payment transactions", "Validating block size only"], ans: 1 },
+                { q: "Ethereum adds to Bitcoin by supporting?", opts: ["Only peer-to-peer payments", "Smart contracts and decentralized applications", "Only Proof-of-Work mining", "A centralized ledger model"], ans: 1 }
+            ],[
+                { q: "Solidity is used to?", opts: ["Write Python automation scripts", "Write smart contracts on the Ethereum blockchain", "Build web frontend UIs", "Mine Ethereum cryptocurrency"], ans: 1 },
+                { q: "ERC-20 is a standard for?", opts: ["Hardware cold wallets", "Fungible tokens on Ethereum network", "Non-fungible tokens (NFTs) only", "A blockchain consensus mechanism"], ans: 1 },
+                { q: "Hardhat is a?", opts: ["Blockchain transaction explorer", "Ethereum development and testing environment", "Cryptocurrency exchange platform", "DeFi yield farming protocol"], ans: 1 },
+                { q: "Gas fees on Ethereum are?", opts: ["Physical energy consumption costs", "Payment for computational work done on the network", "Token price fluctuation measures", "Mining hardware difficulty ratings"], ans: 1 },
+                { q: "OpenZeppelin provides?", opts: ["Blockchain hardware wallet devices", "Audited, reusable smart contract security libraries", "Live crypto price feed data", "Frontend wallet interface templates"], ans: 1 }
+            ],[
+                { q: "Web3.js is used to?", opts: ["Build Express.js web servers", "Interact with the Ethereum blockchain from JavaScript", "Automatically mine cryptocurrency", "Create offline cold storage wallets"], ans: 1 },
+                { q: "MetaMask is?", opts: ["Ethereum mining software", "A browser extension wallet for Ethereum DApps", "A smart contract programming language", "A full Ethereum network node"], ans: 1 },
+                { q: "DeFi stands for?", opts: ["Decentralized Finance", "Digital Financial Interface", "Distributed File Index", "Defined Fixed Income instrument"], ans: 0 },
+                { q: "IPFS in Web3 is for?", opts: ["On-chain smart contract execution", "Decentralized peer-to-peer file storage", "Block consensus voting", "Token minting and issuance"], ans: 1 },
+                { q: "Layer-2 solutions aim to?", opts: ["Completely replace Layer-1 blockchains", "Improve scalability while inheriting L1 security", "Issue only new types of tokens", "Increase base transaction gas costs"], ans: 1 }
+            ]
+        ],
+        'ui-ux': [
+            [
+                { q: "CRAP design principles stand for?", opts: ["Color, Ratio, Art, Position", "Contrast, Repetition, Alignment, Proximity", "Clear, Readable, Artistic, Plain", "Centered, Rounded, Aesthetic, Plain"], ans: 1 },
+                { q: "Visual hierarchy means?", opts: ["Placing elements randomly", "Guiding the eye using visual weight, size, and contrast", "Adding many colors everywhere", "Reducing image file sizes"], ans: 1 },
+                { q: "Accessibility in design means?", opts: ["Making designs very colorful", "Ensuring designs work for users with disabilities (WCAG)", "Reducing all assets to small file sizes", "Adding many micro-animations"], ans: 1 },
+                { q: "A wireframe is?", opts: ["The final high-fidelity colored mockup", "A low-fidelity structural layout without styling", "A fully coded interactive prototype", "A brand color guide document"], ans: 1 },
+                { q: "Kerning in typography specifically adjusts?", opts: ["The space between lines (leading)", "Space between individual character pairs", "The overall font weight/boldness", "Capitalization of letters"], ans: 1 }
+            ],[
+                { q: "Figma is primarily a?", opts: ["Backend code editor", "Collaborative design and prototyping tool", "Database management system", "Video production editor"], ans: 1 },
+                { q: "Auto Layout in Figma enables?", opts: ["Automated color management", "Flexible, responsive component design", "Custom icon exporting", "Batch export settings"], ans: 1 },
+                { q: "A design system includes?", opts: ["Only icon assets", "Reusable components, design tokens, and usage guidelines", "Marketing campaigns and copy", "Backend API reference documentation"], ans: 1 },
+                { q: "A Figma component is?", opts: ["A full page layout section", "A reusable UI element with overrideable instances", "A raw imported image file", "A font typeface file"], ans: 1 },
+                { q: "Interaction design focuses on?", opts: ["Color palette selection only", "Defining how users interact with a product", "Typography hierarchy only", "Writing and compiling code"], ans: 1 }
+            ],[
+                { q: "Usability testing involves?", opts: ["Only developer peer code review", "Real users attempting tasks on the actual product", "Automated regression test scripts only", "Designer preference voting sessions"], ans: 1 },
+                { q: "Heuristic evaluation checks?", opts: ["User emotional responses to color", "Adherence to established usability principles (Nielsen's 10)", "Current SEO keyword ranking", "Print color accuracy"], ans: 1 },
+                { q: "Card sorting determines?", opts: ["User color scheme preferences", "Optimal information architecture and navigation structure", "Preferred font sizes for legibility", "Ideal animation timing"], ans: 1 },
+                { q: "A/B testing in UX compares?", opts: ["Two audiences seeing identical designs", "Two design variations to find which performs better", "Two competing brands", "Old brand vs new rebranding"], ans: 1 },
+                { q: "The ultimate goal of UX design is?", opts: ["Making interfaces visually beautiful only", "Creating meaningful, efficient, and usable experiences for users", "Building RESTful backend APIs", "Writing all marketing copy"], ans: 1 }
+            ]
+        ],
+        'upsc': [
+            [
+                { q: "UPSC CSE recruits for?", opts: ["State civil services only", "Central civil services (IAS, IPS, IFS, etc.)", "Military officer positions", "Banking sector roles"], ans: 1 },
+                { q: "UPSC Prelims has how many papers?", opts: ["1", "2", "3", "4"], ans: 1 },
+                { q: "Article 14 of Indian Constitution guarantees?", opts: ["Freedom of speech", "Equality before the law", "Free compulsory education", "Right to life"], ans: 1 },
+                { q: "Indian National Congress was founded in?", opts: ["1857", "1885", "1905", "1916"], ans: 1 },
+                { q: "Tropic of Cancer passes through how many Indian states?", opts: ["6", "8", "7", "9"], ans: 1 }
+            ],[
+                { q: "UPSC Mains GS papers total?", opts: ["2", "4", "6", "8"], ans: 1 },
+                { q: "GS Paper 4 in Mains covers?", opts: ["Ancient History", "Ethics, Integrity & Aptitude", "Indian Economy", "Science & Tech"], ans: 1 },
+                { q: "Parliament consists of?", opts: ["Lok Sabha only", "Rajya Sabha only", "President + Lok Sabha + Rajya Sabha", "Supreme Court + Parliament"], ans: 2 },
+                { q: "NITI Aayog replaced Planning Commission in?", opts: ["2013", "2014", "2015", "2016"], ans: 2 },
+                { q: "Which is a Directive Principle (DPSP)?", opts: ["Right to vote", "Equal pay for equal work", "Freedom of speech", "Right to free education"], ans: 1 }
+            ],[
+                { q: "The UPSC interview is also called?", opts: ["Viva Voce / Personality Test", "Written Test Round 3", "Group Discussion round", "Aptitude Assessment"], ans: 0 },
+                { q: "DAF in UPSC stands for?", opts: ["Detailed Application Form", "Data Analysis Format", "Document Acceptance Form", "Draft Assessment File"], ans: 0 },
+                { q: "Maximum UPSC CSE attempts for General category?", opts: ["3", "4", "6", "Unlimited"], ans: 2 },
+                { q: "IFS (via UPSC CSE) refers to?", opts: ["Indian Finance Service", "Indian Foreign Service", "Indian Forest Service", "Indian Federal Service"], ans: 1 },
+                { q: "UPSC notification is published in?", opts: ["Times of India", "Gazette of India / UPSC website", "Ministry of Education portal", "PMO website"], ans: 1 }
+            ]
+        ],
+        'gate': [
+            [
+                { q: "GATE stands for?", opts: ["Graduate Aptitude Test in Engineering", "Graduate Admission Test for Excellence", "General Aptitude Technology Exam", "Graduate Applications & Technical Exam"], ans: 0 },
+                { q: "GATE score is valid for?", opts: ["1 year", "2 years", "3 years", "5 years"], ans: 2 },
+                { q: "Engineering Mathematics in GATE includes?", opts: ["Fluid mechanics only", "Linear algebra, calculus, discrete maths", "Engineering history", "Soft skills"], ans: 1 },
+                { q: "GATE is conducted by?", opts: ["UGC only", "IISc + 7 IITs on annual rotation", "Ministry of Education", "NTA"], ans: 1 },
+                { q: "Negative marking for 1-mark MCQ in GATE?", opts: ["None", "1/4 mark", "1/3 mark", "1/2 mark"], ans: 2 }
+            ],[
+                { q: "PSU recruitment uses GATE score for?", opts: ["Interview shortlisting only", "Shortlisting and/or final selection", "Replacing written tests only", "No relation"], ans: 1 },
+                { q: "General Aptitude weightage in GATE?", opts: ["5 marks", "15 marks", "20 marks", "30 marks"], ans: 1 },
+                { q: "Which is NOT a CS GATE topic?", opts: ["DBMS", "Theory of Computation", "Clinical Cardiology", "Operating Systems"], ans: 2 },
+                { q: "NAT questions in GATE require?", opts: ["Picking from 4 choices", "Typing the exact numerical answer", "Always 2-mark responses", "Negative marking like MCQ"], ans: 1 },
+                { q: "In CS GATE, highest combined weightage is?", opts: ["General Aptitude", "Programming, DS & Algorithms", "Compiler Design alone", "Computer Organisation alone"], ans: 1 }
+            ],[
+                { q: "GATE total exam duration?", opts: ["1 hour", "2 hours", "3 hours", "4 hours"], ans: 2 },
+                { q: "GATE score maximum is?", opts: ["100", "150", "1000", "500"], ans: 2 },
+                { q: "A good GATE CS rank for top IITs M.Tech is?", opts: ["Under 5000", "Under 2000", "Under 200", "Under 50"], ans: 1 },
+                { q: "PSU jobs via GATE in CS mostly come from?", opts: ["Power sector PSUs", "IT/Tech PSUs (BSNL, ECIL, DRDO, BARC)", "Railways only", "Defence manufacturing only"], ans: 1 },
+                { q: "GATE allows a candidate to appear in?", opts: ["1 paper", "2 papers (core + aptitude counted separately)", "3 different papers", "Unlimited papers"], ans: 0 }
+            ]
+        ],
+        'banking-exams': [
+            [
+                { q: "Repo Rate is the rate at which?", opts: ["Banks lend to the public", "RBI lends short-term funds to banks", "Govt borrows from RBI", "Banks lend to each other overnight"], ans: 1 },
+                { q: "IBPS stands for?", opts: ["International Bank of Personnel Selection", "Institute of Banking Personnel Selection", "Indian Banking & Placement Services", "Integrated Banking Process System"], ans: 1 },
+                { q: "CRR stands for?", opts: ["Cash Reserve Ratio", "Credit Rating Ratio", "Central Repo Rate", "Current Remittance Rate"], ans: 0 },
+                { q: "SLR stands for?", opts: ["Statutory Liquidity Ratio", "Structured Loan Ratio", "Standard Lending Rate", "Sovereign Liquidity Ratio"], ans: 0 },
+                { q: "Data Interpretation in banking tests?", opts: ["Vocabulary skills", "Quantitative reasoning and pattern recognition", "General knowledge of history", "Political awareness"], ans: 1 }
+            ],[
+                { q: "NABARD funds?", opts: ["Urban industries", "Agriculture and rural development", "Import/Export firms", "Defence sector"], ans: 1 },
+                { q: "Good CIBIL score for loan approval?", opts: ["300-500", "550-650", "750-900", "100-300"], ans: 2 },
+                { q: "KYC stands for?", opts: ["Know Your Credit", "Know Your Customer", "Key Yield Calculation", "Know Your Company"], ans: 1 },
+                { q: "Base Rate is the?", opts: ["Maximum lending rate", "Minimum rate below which banks cannot lend", "RBI's overnight repo rate", "Annual inflation rate"], ans: 1 },
+                { q: "PMJDY aims to?", opts: ["Provide free education", "Ensure universal banking access for unbanked sections", "Provide free healthcare", "Subsidize housing loans"], ans: 1 }
+            ],[
+                { q: "Group Discussion in banking tests?", opts: ["Technical finance skills only", "Communication, reasoning, team collaboration", "Math ability only", "Computer proficiency only"], ans: 1 },
+                { q: "NACH mandate is used for?", opts: ["Stock market trading", "Automated recurring payments (EMIs, SIPs)", "Foreign currency exchange", "Insurance claims"], ans: 1 },
+                { q: "RBI was established in?", opts: ["1935", "1947", "1950", "1960"], ans: 0 },
+                { q: "Probationary Officer (PO) in a bank is?", opts: ["Temporary role with no growth", "Entry-level officer with defined management growth path", "Purely clerical support post", "A contractual part-time role"], ans: 1 },
+                { q: "Primary role of a commercial bank?", opts: ["Policy making for economy", "Accepting deposits and providing credit/loans", "Printing currency notes", "Regulating all other banks"], ans: 1 }
+            ]
+        ],
+        'cfa': [
+            [
+                { q: "CFA Code of Ethics requires?", opts: ["Maximizing short-term returns always", "Acting with integrity and in clients' best interests", "Following employer instructions at all times", "Prioritizing personal financial gain"], ans: 1 },
+                { q: "Time Value of Money states?", opts: ["Money always loses value", "A dollar today is worth more than a future dollar", "Future money is worth more than today's", "Value of money is always constant"], ans: 1 },
+                { q: "DCF stands for?", opts: ["Direct Cost Framework", "Discounted Cash Flow", "Dynamic Capital Fund", "Debt Coverage Factor"], ans: 1 },
+                { q: "Beta in finance measures?", opts: ["Dividend yield of a stock", "A stock's systematic (market) risk", "Bond credit quality", "Portfolio total return"], ans: 1 },
+                { q: "CFA Level 1 primarily tests?", opts: ["Portfolio management execution", "Knowledge and understanding of investment tools", "Applied valuation models", "Portfolio strategy and synthesis"], ans: 1 }
+            ],[
+                { q: "P/E Ratio stands for?", opts: ["Profit/Equity", "Price-to-Earnings Ratio", "Portfolio/Equity", "Projected/Expected Returns"], ans: 1 },
+                { q: "Bond duration measures?", opts: ["Credit quality rating", "Bond price sensitivity to interest rate changes", "Currency exchange risk", "Quarterly dividend yield"], ans: 1 },
+                { q: "Intrinsic value in equity is?", opts: ["Current market trading price", "Estimated fundamental value from analysis", "Balance sheet book value only", "Stock dividend yield"], ans: 1 },
+                { q: "FCFF stands for?", opts: ["Financial Cash From Funds", "Free Cash Flow to the Firm", "Forward Cash Flow Fund", "Fixed Capital Flow Factor"], ans: 1 },
+                { q: "CFA Level 2 focuses on?", opts: ["Basic accounting only", "Application of investment tools and asset valuation", "Portfolio management strategy", "Behavioral finance exclusively"], ans: 1 }
+            ],[
+                { q: "An IPS (Investment Policy Statement) defines?", opts: ["Annual market predictions", "Client objectives, risk tolerance and investment constraints", "Analyst qualifications", "Regulatory filings"], ans: 1 },
+                { q: "Strategic asset allocation means?", opts: ["Picking individual stocks frequently", "Setting long-term target weights across asset classes", "Market timing decisions", "Concentrating in one sector"], ans: 1 },
+                { q: "GIPS stands for?", opts: ["Global Investment Performance Standards", "General Income Profit System", "Global Index Pricing Standard", "Gross Income Performance Statement"], ans: 0 },
+                { q: "Behavioral finance studies?", opts: ["Only fully rational investor behavior", "Psychological biases influencing investor behavior", "Only algorithmic trading strategies", "Tax planning for portfolios"], ans: 1 },
+                { q: "Private wealth management primarily serves?", opts: ["Only institutional funds", "Individual high-net-worth clients' financial planning", "Hedge funds exclusively", "Government bond investors only"], ans: 1 }
+            ]
+        ],
+        'digital-marketing': [
+            [
+                { q: "SEO stands for?", opts: ["Social Engagement Output", "Search Engine Optimization", "Site Error Override", "Search Event Operations"], ans: 1 },
+                { q: "CTR means?", opts: ["Content Transfer Rate", "Click-Through Rate", "Customer Tracking Report", "Campaign Total Revenue"], ans: 1 },
+                { q: "On-page SEO involves?", opts: ["Building backlinks only", "Optimizing title tags, meta descriptions, and content", "Only running paid search ads", "Managing email campaigns"], ans: 1 },
+                { q: "Keyword difficulty indicates?", opts: ["How hard the keyword is to type", "How competitive a keyword is to rank for organically", "Page loading time for a term", "Total number of search results"], ans: 1 },
+                { q: "Google Analytics tracks?", opts: ["Only paid traffic data", "Visitor behavior, traffic sources, and conversions", "Only email campaign stats", "Social media follower counts"], ans: 1 }
+            ],[
+                { q: "Google Ads billing model is?", opts: ["Monthly flat subscription fee", "Pay-Per-Click (PPC) — pay per user click", "Annual contract commitment only", "Revenue sharing commission"], ans: 1 },
+                { q: "A/B testing in marketing compares?", opts: ["Two teams' performance", "Two content versions to find the better performer", "Two different target markets", "Two competing brands only"], ans: 1 },
+                { q: "Meta Ads Manager is used to?", opts: ["Build and host websites", "Create and manage paid ads on Facebook/Instagram", "Manage email marketing campaigns", "Track organic SEO rankings"], ans: 1 },
+                { q: "ROI in marketing stands for?", opts: ["Rate of Interest", "Return on Investment", "Revenue Over Impressions", "Reach of Influence"], ans: 1 },
+                { q: "Conversion rate is?", opts: ["Impressions divided by spend", "Desired actions completed / Total visitors × 100", "Total clicks per advertising cost", "Total reach / Frequency"], ans: 1 }
+            ],[
+                { q: "Email open rate formula is?", opts: ["Clicks / Total Sent", "Emails Opened / Emails Delivered × 100", "Replies / Opens", "Unsubscribes / Total Sent"], ans: 1 },
+                { q: "Marketing automation tools enable?", opts: ["Only manual one-off ad creation", "Automated triggered personalized campaigns at scale", "Physical direct mail only", "Inbound phone call routing"], ans: 1 },
+                { q: "HubSpot is?", opts: ["A social media platform", "A CRM and marketing automation platform", "A search engine alternative", "An email provider only"], ans: 1 },
+                { q: "Attribution modeling in marketing shows?", opts: ["Only last-click credit", "How different touchpoints contribute to conversions", "Only mobile traffic sources", "Total advertising spend breakdown"], ans: 1 },
+                { q: "Google Analytics 4 (GA4) uses?", opts: ["Session-based tracking only", "An event-driven data model", "Cookie-only tracking", "Manual data upload"], ans: 1 }
+            ]
+        ],
+        'product-management': [
+            [
+                { q: "A Product Manager does NOT primarily?", opts: ["Define product strategy", "Write production code", "Prioritize the backlog", "Understand user needs"], ans: 1 },
+                { q: "User stories follow the format?", opts: ["As a [user], I want [feature], so that [benefit]", "Feature: [name], Priority: [level]", "Task: [action], Owner: [name]", "Test: [scenario], Result: [pass/fail]"], ans: 0 },
+                { q: "Jobs-to-be-done framework focuses on?", opts: ["Job titles of target users", "The underlying goal the user is trying to accomplish", "Company org chart design", "Sprint planning ceremonies"], ans: 1 },
+                { q: "Product vision is a?", opts: ["Detailed technical specification", "Long-term aspiration for where the product is heading", "Marketing headline only", "Quarterly revenue target"], ans: 1 },
+                { q: "User research is done to?", opts: ["Create the visual UI design", "Validate assumptions and deeply understand user needs", "Define sprint goals for all teams", "Manage the development team"], ans: 1 }
+            ],[
+                { q: "PRD stands for?", opts: ["Product Roadmap Draft", "Product Requirements Document", "Project Release Date", "Product Review Decision"], ans: 1 },
+                { q: "In Scrum, the Product Owner?", opts: ["Manages daily dev team work", "Prioritizes the product backlog", "Facilitates the daily standup", "Performs QA testing"], ans: 1 },
+                { q: "RICE prioritization formula is?", opts: ["Reach × Impact × Confidence / Effort", "Revenue × Impact × Cost / Efficiency", "Risk × Implementation × Cost / Effort", "Reach × Iterability × Confidence / Evaluation"], ans: 0 },
+                { q: "North Star Metric represents?", opts: ["Total company revenue only", "The single metric that best captures core user value delivered", "Number of features shipped per sprint", "Total bug count across product"], ans: 1 },
+                { q: "MVP (Minimum Viable Product) is?", opts: ["A fully-featured first release", "The smallest product to test a core hypothesis", "A minimum-budget product", "A static prototype only"], ans: 1 }
+            ],[
+                { q: "Go-to-market strategy defines?", opts: ["How to architect the product", "How to launch and reach the target market", "What the technical architecture is", "Which development methodology to use"], ans: 1 },
+                { q: "Product-market fit means?", opts: ["Product is present in all markets", "Product strongly satisfies the target market's needs", "Product is always profitable immediately", "Product has the most features"], ans: 1 },
+                { q: "Churn rate measures?", opts: ["Number of new users acquired", "Rate at which users stop using the product", "Overall revenue growth rate", "Feature delivery completion rate"], ans: 1 },
+                { q: "A PM interview 'design a product' question expects?", opts: ["Low-level technical code design", "Structured user-centric product thinking", "Detailed financial projections", "A complete marketing plan"], ans: 1 },
+                { q: "Growth hacking in product means?", opts: ["Illegally accessing user data", "Creative, data-driven strategies to grow the user base rapidly", "Building features faster only", "Reducing all security measures"], ans: 1 }
+            ]
+        ],
+        'financial-modeling': [
+            [
+                { q: "Excel's VLOOKUP requires the lookup column to be?", opts: ["Sorted in descending order", "Sorted ascending or use exact match (FALSE)", "Formatted as CSV", "Pre-filtered"], ans: 1 },
+                { q: "Which statement shows profitability over time?", opts: ["Balance Sheet", "Income Statement (P&L)", "Cash Flow Statement", "Statement of Changes in Equity"], ans: 1 },
+                { q: "EBITDA stands for?", opts: ["Earnings Before Interest, Taxes, Depreciation, Amortization", "Estimated Budget Including Total Depreciation Amounts", "External Business Investment Through Debt Arrangement", "Equity Before Interest Taxes Due Amount"], ans: 0 },
+                { q: "Working capital = ?", opts: ["Total Assets - Total Liabilities", "Current Assets - Current Liabilities", "Revenue - COGS", "Fixed Assets - Long-term Debt"], ans: 1 },
+                { q: "A model's assumptions section contains?", opts: ["Historical actuals only", "Input variables that drive the model's projected outputs", "Final exported PDF reports", "Change log and audit records"], ans: 1 }
+            ],[
+                { q: "The 3 statements are linked because?", opts: ["They are fully independent", "Net income → retained earnings; Cash from CF → Balance Sheet", "They only share revenue line", "They share the same column format"], ans: 1 },
+                { q: "CapEx stands for?", opts: ["Capital Expenditure (long-term asset investment)", "Cash and Payroll Expenses", "Current Account Position Exchange", "Cost and Profit Examination"], ans: 0 },
+                { q: "Depreciation on the Income Statement?", opts: ["Increases total revenue", "Reduces pre-tax income as a non-cash expense", "Directly increases total assets", "Reduces total equity directly"], ans: 1 },
+                { q: "Revenue drivers in a model are?", opts: ["Audit adjustments only", "Key assumptions like price × volume that forecast revenue", "Fixed historical data always", "Unchanging constants"], ans: 1 },
+                { q: "Scenario analysis tests?", opts: ["Only the base case", "How outputs shift under different assumption sets (bull/base/bear)", "Historical accounting accuracy only", "Foreign currency risk only"], ans: 1 }
+            ],[
+                { q: "DCF Terminal Value (Gordon Growth Model) is?", opts: ["FCF / (WACC - g) in the terminal year", "FCF × exit EBITDA multiple only", "Net income × P/E in terminal year", "Revenue × target margin"], ans: 0 },
+                { q: "LBO stands for?", opts: ["Leveraged Buyout", "Long Bond Offer", "Liquid Balance Option", "Levered Business Operation"], ans: 0 },
+                { q: "Primary sources of LBO return are?", opts: ["Dividends paid only", "Debt paydown, EBITDA growth, and multiple expansion", "Tax refunds only", "Interest income earned only"], ans: 1 },
+                { q: "WACC stands for?", opts: ["Weighted Average Cost of Capital", "Working Asset Cash Conversion", "Weekly Adjusted Capital Cost", "Weighted Amortization Capital Calculation"], ans: 0 },
+                { q: "M&A deal accretion means?", opts: ["Deal reduces acquirer's EPS post-close", "Deal increases acquirer's EPS post-acquisition", "Deal is completely cash-neutral", "Deal destroys shareholder value"], ans: 1 }
+            ]
+        ],
+        'investment-banking': [
+            [
+                { q: "Investment banks primarily provide?", opts: ["Retail savings accounts", "Capital raising and M&A advisory services", "Life insurance products", "Pension fund management"], ans: 1 },
+                { q: "An IPO is when?", opts: ["A company issues new bonds", "A company lists its shares publicly for the first time", "A company acquires a competitor", "A company announces a dividend"], ans: 1 },
+                { q: "Buy-side refers to?", opts: ["Investment banks only", "Firms that invest capital (PE, hedge funds, mutual funds)", "Regulators and compliance", "Retail brokers only"], ans: 1 },
+                { q: "Sell-side refers to?", opts: ["Retail investors only", "Firms that sell/issue securities (IBanks, brokers)", "Only portfolio managers", "Only government entities"], ans: 1 },
+                { q: "Bulge bracket banks are?", opts: ["Small boutique advisory firms", "Large global full-service investment banks", "Only regional mid-size banks", "Central banks like the Fed"], ans: 1 }
+            ],[
+                { q: "In M&A, an acquisition premium is paid over the target's?", opts: ["Book value only", "Current market price — to incentivize shareholders to sell", "Historical revenue figures", "Bond credit rating"], ans: 1 },
+                { q: "A fairness opinion in M&A is?", opts: ["A marketing document for the deal", "An independent assessment that deal price is fair to shareholders", "A regulatory government approval", "An early term sheet in the deal"], ans: 1 },
+                { q: "A pitch book in IB is?", opts: ["An employee training manual", "A presentation prepared to win a client mandate", "A mandatory SEC regulatory filing", "A syndicated market data report"], ans: 1 },
+                { q: "An LBO uses?", opts: ["Only equity to acquire the target", "Mostly debt financing to acquire a company", "No external financing at all", "Government grants and subsidies"], ans: 1 },
+                { q: "Comparable company analysis (comps) values by?", opts: ["Internal DCF projections only", "Benchmarking against similar publicly traded companies", "Historical acquisition cost only", "Patent and IP value only"], ans: 1 }
+            ],[
+                { q: "Origination in IB means?", opts: ["Executing existing trades", "Sourcing and developing new client relationships and deals", "Processing financial settlements", "Writing regulatory filings"], ans: 1 },
+                { q: "Syndication in IB means?", opts: ["Executive team restructuring", "Distributing securities to a group of underwriters/investors", "Internal team collaboration", "Mandatory regulatory compliance reporting"], ans: 1 },
+                { q: "A typical IB analyst (Analyst level) works approximately?", opts: ["40 hours/week", "60 hours/week", "80-100+ hours/week", "25 hours/week"], ans: 2 },
+                { q: "A 'tombstone' in IB is?", opts: ["A failed deal announcement", "A public advertisement celebrating a completed transaction", "A candidate rejection letter", "A deal risk assessment report"], ans: 1 },
+                { q: "IB technical interviews test?", opts: ["Personality and leadership only", "Accounting, valuation, and deal mechanics knowledge", "Coding and software skills", "Marketing and branding knowledge"], ans: 1 }
+            ]
+        ]
+    });
+
     // Generic fallback questions for any course
     const GENERIC_QUIZ = level => [
         { q: `What is the most important skill at the ${level} stage?`, opts: ["Speed", "Deep understanding of fundamentals", "Memorization", "Copying code"], ans: 1 },
@@ -624,58 +943,216 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // =============================================
-    // ADAPTIVE SCHEDULE GENERATOR
+    // ADAPTIVE SCHEDULE GENERATOR — Day-by-Day
     // =============================================
     function renderAdaptiveSchedule(pathKey, milestones, scores) {
         const container = document.getElementById('schedule-weeks');
-        const subtitle = document.querySelector('.schedule-subtitle');
+        const subtitleEl = document.querySelector('.schedule-subtitle');
         container.innerHTML = '';
 
         const hasAnyScore = Object.keys(scores).length > 0;
+        const dailyHours = userData.dailyHours || 2; // default 2 hrs/day
+        const pathData = ROADMAP_DATA[pathKey];
+        const dailyTopics = pathData.dailyTopics || {};
+
         if (!hasAnyScore) {
-            subtitle.textContent = 'Complete module tests to unlock your personalized AI-powered learning schedule.';
-            container.innerHTML = `<div style="color: var(--text-secondary); font-size: 0.88rem; padding: 10px 0;">
-                No tests completed yet. Take the first module test to generate your schedule! 🚀
-            </div>`;
+            subtitleEl.textContent = 'Complete a module test to generate your personalized day-by-day roadmap!';
+            container.innerHTML = `
+                <div class="schedule-setup-card">
+                    <div style="font-size:2rem; margin-bottom:12px;">⏱️</div>
+                    <h4 style="margin:0 0 8px; font-size:1rem;">Set Your Daily Study Hours</h4>
+                    <p style="font-size:0.85rem; color:var(--text-secondary); margin-bottom:16px;">How many hours per day can you dedicate?</p>
+                    <div class="hours-selector" id="hours-selector-setup">
+                        ${[1,1.5,2,3,4].map(h => `<button class="hours-btn ${h===dailyHours?'active':''}" data-hours="${h}">${h}h/day</button>`).join('')}
+                    </div>
+                    <p style="margin-top:16px; font-size:0.85rem; color:var(--text-secondary);">Take the first module test to unlock your roadmap 🚀</p>
+                </div>
+            `;
+            setupHoursSelector('#hours-selector-setup');
             return;
         }
 
-        subtitle.textContent = 'Based on your test performance, here is your optimal learning pace:';
+        subtitleEl.textContent = '';
+        subtitleEl.innerHTML = '';
 
-        let weekNum = 1;
-        milestones.forEach((milestone, index) => {
-            const score = scores[index];
+        // Build the header control bar
+        const headerBar = document.createElement('div');
+        headerBar.className = 'schedule-header-bar';
+        headerBar.innerHTML = `
+            <div class="schedule-meta-strip">
+                <span class="schedule-meta-item"><span>📅</span> Day-by-Day Plan</span>
+                <span class="schedule-meta-item"><span>⏱️</span> <strong>${dailyHours}h/day</strong></span>
+                <span class="schedule-meta-item">Based on your quiz scores</span>
+            </div>
+            <div class="hours-selector" id="hours-selector-inline">
+                ${[1,1.5,2,3,4].map(h => `<button class="hours-btn ${h===dailyHours?'active':''}" data-hours="${h}">${h}h/day</button>`).join('')}
+            </div>
+        `;
+        container.appendChild(headerBar);
+        setupHoursSelector('#hours-selector-inline', pathKey, milestones, scores);
 
-            // Determine weeks needed and status
-            let weeksNeeded, status, statusLabel, pace;
+        // Generate and render the day schedule
+        const dayPlan = buildDayPlan(pathKey, milestones, scores, dailyHours);
+        renderDayPlan(container, dayPlan, scores);
+    }
+
+    function buildDayPlan(pathKey, milestones, scores, dailyHours) {
+        const pathData = ROADMAP_DATA[pathKey];
+        const dailyTopics = pathData.dailyTopics || {};
+        const plan = [];
+        let dayNumber = 1;
+        let missedHours = 0; // catch-up hours from missed days
+
+        milestones.forEach((milestone, moduleIdx) => {
+            const score = scores[moduleIdx];
+            const baseHours = milestone.hoursNeeded || 10;
+
+            // Adjust based on performance
+            let totalHours;
+            let status, statusLabel;
             if (score === undefined) {
-                weeksNeeded = 1; status = 'upcoming'; statusLabel = 'Upcoming';
-                pace = 'Not started';
+                totalHours = baseHours;
+                status = 'upcoming';
+                statusLabel = 'Upcoming';
             } else if (score >= 80) {
-                weeksNeeded = 1; status = 'on-track'; statusLabel = 'On Track 🏆';
-                pace = '1 week — Excellent pace!';
+                totalHours = Math.ceil(baseHours * 0.6); // 60% — already strong
+                status = 'on-track';
+                statusLabel = '🏆 Excellent';
             } else if (score >= 60) {
-                weeksNeeded = 2; status = 'review'; statusLabel = 'Review Mode 📈';
-                pace = '2 weeks — Review recommended';
+                totalHours = Math.ceil(baseHours * 1.2); // 120% — some review
+                status = 'review';
+                statusLabel = '📈 Review';
             } else {
-                weeksNeeded = 3; status = 'revisit'; statusLabel = 'Intensive 🔄';
-                pace = '3 weeks — Module revisit needed';
+                totalHours = Math.ceil(baseHours * 1.8); // 180% — intensive
+                status = 'revisit';
+                statusLabel = '🔄 Intensive';
             }
 
-            const weekLabel = weeksNeeded === 1
-                ? `Week ${weekNum}`
-                : `Week ${weekNum}–${weekNum + weeksNeeded - 1}`;
+            // Get topic list for this module
+            const topics = dailyTopics[moduleIdx] || 
+                milestone.skills.map(s => s.name);
 
-            container.innerHTML += `
-                <div class="week-card status-${status}">
-                    <div class="week-label">${weekLabel} · Module ${index + 1}</div>
-                    <div class="week-topic">${milestone.title}</div>
-                    <div class="week-meta">${milestone.level} · ${milestone.skills.length} skills</div>
-                    <div class="week-meta" style="margin-top: 4px;">⏱ ${pace}</div>
-                    <span class="week-status-tag">${statusLabel}</span>
+            // Distribute topics across days for this module
+            const hoursPerDay = dailyHours;
+            const moduleDays = Math.ceil(totalHours / hoursPerDay);
+
+            // Spread topics evenly across days
+            const topicsPerDay = topics.length > 0 
+                ? Math.max(1, Math.ceil(topics.length / moduleDays))
+                : 1;
+
+            for (let d = 0; d < moduleDays; d++) {
+                const dayTopics = topics.slice(d * topicsPerDay, (d + 1) * topicsPerDay);
+                const catchUp = missedHours > 0 && d === 0;
+                const catchUpNote = catchUp ? `+${missedHours}h catch-up from previous day` : null;
+
+                plan.push({
+                    day: dayNumber++,
+                    moduleIdx,
+                    moduleTitle: milestone.title,
+                    moduleLevel: milestone.level,
+                    status,
+                    statusLabel,
+                    score,
+                    topics: dayTopics.length > 0 ? dayTopics : [`Practice ${milestone.title}`],
+                    hoursToday: hoursPerDay + (catchUp ? missedHours : 0),
+                    catchUpNote,
+                    isModuleStart: d === 0,
+                    isModuleEnd: d === moduleDays - 1,
+                    totalModuleDays: moduleDays,
+                    dayOfModule: d + 1
+                });
+                missedHours = 0;
+            }
+        });
+
+        return plan;
+    }
+
+    function renderDayPlan(container, plan, scores) {
+        if (!plan || plan.length === 0) return;
+
+        let currentModule = -1;
+
+        plan.forEach((day, idx) => {
+            // Module separator
+            if (day.moduleIdx !== currentModule) {
+                currentModule = day.moduleIdx;
+                const sep = document.createElement('div');
+                sep.className = `module-separator status-${day.status}`;
+                sep.innerHTML = `
+                    <div class="module-sep-title">
+                        <span class="module-sep-num">Module ${day.moduleIdx + 1}</span>
+                        <span class="module-sep-name">${day.moduleTitle}</span>
+                        <span class="module-sep-level">${day.moduleLevel}</span>
+                        ${day.score !== undefined ? `<span class="module-sep-score" style="background:${day.score>=80?'var(--success)':day.score>=60?'var(--warning)':'var(--danger)'}20; color:${day.score>=80?'var(--success)':day.score>=60?'var(--warning)':'var(--danger)'}">Score: ${day.score}%</span>` : '<span class="module-sep-score" style="background:rgba(150,150,150,0.1);">Not tested</span>'}
+                        <span class="module-sep-tag">${day.statusLabel}</span>
+                    </div>
+                `;
+                container.appendChild(sep);
+            }
+
+            const card = document.createElement('div');
+            card.className = `day-card status-${day.status} ${day.isModuleStart ? 'module-start' : ''} ${day.isModuleEnd ? 'module-end' : ''}`;
+
+            const catchUpHtml = day.catchUpNote
+                ? `<div class="catchup-banner"><span>🔄</span> <em>${day.catchUpNote}</em></div>`
+                : '';
+
+            const topicsHtml = day.topics.map(t =>
+                `<span class="day-topic-chip">${t}</span>`
+            ).join('');
+
+            card.innerHTML = `
+                <div class="day-card-left">
+                    <div class="day-number">Day ${day.day}</div>
+                    <div class="day-of-module">${day.dayOfModule}/${day.totalModuleDays}</div>
+                </div>
+                <div class="day-card-body">
+                    ${catchUpHtml}
+                    <div class="day-topics-wrap">${topicsHtml}</div>
+                    <div class="day-footer">
+                        <span class="day-hours">⏱ ${day.hoursToday}h today</span>
+                        ${day.isModuleEnd ? '<span class="day-test-badge">🧪 Take Module Test</span>' : ''}
+                    </div>
                 </div>
             `;
-            weekNum += weeksNeeded;
+            container.appendChild(card);
+        });
+
+        // Summary
+        const totalDays = plan[plan.length - 1]?.day || 0;
+        const summary = document.createElement('div');
+        summary.className = 'schedule-summary-card';
+        summary.innerHTML = `
+            <div class="summary-icon">🎓</div>
+            <div class="summary-text">
+                <strong>Course completion estimate: ${totalDays} days</strong>
+                <span>at ${userData.dailyHours || 2}h/day</span>
+            </div>
+            <div class="summary-miss-note">Missed a day? Your tasks automatically carry over to the next day.</div>
+        `;
+        container.appendChild(summary);
+    }
+
+    function setupHoursSelector(selector, pathKey, milestones, scores) {
+        const container = document.querySelector(selector);
+        if (!container) return;
+        container.querySelectorAll('.hours-btn').forEach(btn => {
+            btn.addEventListener('click', async () => {
+                const hours = parseFloat(btn.dataset.hours);
+                userData.dailyHours = hours;
+                // Persist
+                if (currentUser) {
+                    updateDoc(doc(db, 'users', currentUser.uid), { dailyHours: hours }).catch(e => console.error(e));
+                }
+                // Re-render schedule
+                if (currentPath) {
+                    const pData = ROADMAP_DATA[currentPath];
+                    const pScores = userData.scores[currentPath] || {};
+                    renderAdaptiveSchedule(currentPath, pData.milestones, pScores);
+                }
+            });
         });
     }
 
@@ -1010,9 +1487,40 @@ document.addEventListener('DOMContentLoaded', () => {
             window.scrollTo({ top: 0, behavior: 'smooth' });
         });
 
+        // --- Auth State ---
+        let isRegistering = false;
+
+        // Helper: show inline auth error
+        function showAuthError(msg) {
+            const el = document.getElementById('auth-error-msg');
+            if (el) { el.textContent = msg; el.style.display = 'block'; }
+        }
+        function clearAuthError() {
+            const el = document.getElementById('auth-error-msg');
+            if (el) { el.textContent = ''; el.style.display = 'none'; }
+        }
+
+        // Helper: robust email validation
+        function isValidEmail(email) {
+            // Must have exactly one @, no consecutive dots, valid TLD of 2+ chars
+            const re = /^[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}$/;
+            if (!re.test(email)) return false;
+            const [local, domain] = email.split('@');
+            if (local.startsWith('.') || local.endsWith('.')) return false;
+            if (domain.startsWith('.') || domain.endsWith('.')) return false;
+            if (local.includes('..') || domain.includes('..')) return false;
+            const domainParts = domain.split('.');
+            // TLD must be at least 2 chars and domain must have at least one label before TLD
+            if (domainParts.length < 2) return false;
+            const tld = domainParts[domainParts.length - 1];
+            if (tld.length < 2) return false;
+            return true;
+        }
+
         // --- Auth Listeners ---
         loginForm.addEventListener('submit', async (e) => {
             e.preventDefault();
+            clearAuthError();
             const btn = loginForm.querySelector('.btn-primary');
             const originalText = btn.innerHTML;
             btn.innerHTML = '<i data-lucide="loader-2" class="spin"></i> Processing...';
@@ -1021,12 +1529,26 @@ document.addEventListener('DOMContentLoaded', () => {
             const email = document.getElementById('email').value.trim();
             const password = document.getElementById('password').value;
             
-            // 2. Correct Email Checking
-            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            if (!emailRegex.test(email)) {
-                alert("Please enter a valid email address.");
+            // Validate email format
+            if (!isValidEmail(email)) {
+                showAuthError('⚠️ Please enter a valid email address (e.g. user@gmail.com).');
                 btn.innerHTML = originalText;
                 return;
+            }
+
+            // Sign-up extra validations
+            if (isRegistering) {
+                const name = document.getElementById('fullname').value.trim();
+                if (!name) {
+                    showAuthError('⚠️ Please enter your full name.');
+                    btn.innerHTML = originalText;
+                    return;
+                }
+                if (password.length < 6) {
+                    showAuthError('⚠️ Password must be at least 6 characters.');
+                    btn.innerHTML = originalText;
+                    return;
+                }
             }
 
             try {
@@ -1035,32 +1557,40 @@ document.addEventListener('DOMContentLoaded', () => {
                 } else {
                     await signInWithEmailAndPassword(auth, email, password);
                 }
+                clearAuthError();
             } catch (error) {
-                // 1. Better Auth Feedback
-                let message = "An error occurred. Please try again.";
+                let message = 'An error occurred. Please try again.';
                 switch (error.code) {
-                    case 'auth/user-not-found': message = "No account found with this email."; break;
-                    case 'auth/wrong-password': message = "Incorrect password. Please try again."; break;
-                    case 'auth/invalid-email': message = "The email address is invalid."; break;
-                    case 'auth/email-already-in-use': message = "An account already exists with this email."; break;
-                    case 'auth/weak-password': message = "Password should be at least 6 characters."; break;
-                    case 'auth/invalid-credential': message = "Invalid email or password."; break;
+                    case 'auth/user-not-found':
+                    case 'auth/wrong-password':
+                    case 'auth/invalid-credential':
+                        message = '❌ Invalid email or password. Please check and try again.'; break;
+                    case 'auth/invalid-email':
+                        message = '⚠️ The email address is not valid.'; break;
+                    case 'auth/email-already-in-use':
+                        message = '⚠️ An account already exists with this email. Please sign in.'; break;
+                    case 'auth/weak-password':
+                        message = '⚠️ Password must be at least 6 characters.'; break;
+                    case 'auth/too-many-requests':
+                        message = '🔒 Too many failed attempts. Please wait and try again.'; break;
+                    case 'auth/network-request-failed':
+                        message = '🌐 Network error. Please check your connection.'; break;
                 }
-                alert(message);
+                showAuthError(message);
             } finally {
                 btn.innerHTML = originalText;
             }
         });
 
         googleLogin.addEventListener('click', async () => {
+            clearAuthError();
             googleLogin.innerHTML = '<i data-lucide="loader-2" class="spin"></i> Connecting...';
             lucide.createIcons();
             try {
                 await signInWithPopup(auth, googleProvider);
             } catch (error) {
-                alert("Google sign-in failed. Please try again.");
-                googleLogin.innerHTML = 'Continue with Google';
-                lucide.createIcons();
+                showAuthError('Google sign-in failed. Please try again.');
+                googleLogin.innerHTML = `<svg viewBox="0 0 24 24" width="18" height="18"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.1c-.22-.66-.35-1.36-.35-2.1s.13-1.44.35-2.1V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l3.66-2.84z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z" fill="#EA4335"/></svg> Continue with Google`;
             }
         });
 
@@ -1081,24 +1611,30 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         const toggleRegister = document.getElementById('toggle-register');
-        let isRegistering = false;
         toggleRegister.addEventListener('click', (e) => {
             e.preventDefault();
             isRegistering = !isRegistering;
+            clearAuthError();
             const header = loginView.querySelector('.login-header h2');
             const desc = loginView.querySelector('.login-header p');
-            const submitBtn = loginView.querySelector('.btn-primary');
+            const submitBtn = loginForm.querySelector('.btn-primary');
+            const nameGroup = document.getElementById('name-group');
+            const nameInput = document.getElementById('fullname');
             
             if (isRegistering) {
                 header.textContent = 'Create Account';
                 desc.textContent = 'Join the career roadmap community';
                 submitBtn.textContent = 'Sign Up';
                 toggleRegister.textContent = 'Already have an account? Sign in';
+                if (nameGroup) nameGroup.style.display = 'block';
+                if (nameInput) nameInput.setAttribute('required', 'required');
             } else {
                 header.textContent = 'Welcome Back';
                 desc.textContent = 'Start your career journey with us';
                 submitBtn.textContent = 'Sign In';
                 toggleRegister.textContent = "Don't have an account? Create an account";
+                if (nameGroup) nameGroup.style.display = 'none';
+                if (nameInput) nameInput.removeAttribute('required');
             }
         });
     }
