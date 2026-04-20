@@ -2034,6 +2034,22 @@ document.addEventListener('DOMContentLoaded', () => {
             const video = activePlaylist[currentVideoIndex];
             startVideoLessonQuiz(video);
         });
+
+        // Error Fallback Listeners
+        document.getElementById('watch-on-youtube-btn').addEventListener('click', () => {
+            const video = activePlaylist[currentVideoIndex];
+            if (video) {
+                window.open(`https://www.youtube.com/watch?v=${video.youtubeId}`, '_blank');
+            }
+        });
+
+        document.getElementById('error-skip-to-quiz').addEventListener('click', () => {
+            const video = activePlaylist[currentVideoIndex];
+            document.getElementById('video-error-overlay').style.display = 'none';
+            if (video) {
+                startVideoLessonQuiz(video);
+            }
+        });
     }
 
     function openCoursePlayer(pathKey) {
@@ -2090,10 +2106,14 @@ document.addEventListener('DOMContentLoaded', () => {
         lucide.createIcons();
     }
 
-    function loadVideo(index) {
         const video = activePlaylist[index];
         document.getElementById('current-video-title').textContent = video.title;
         document.getElementById('video-quiz-overlay').style.display = 'none';
+        document.getElementById('video-error-overlay').style.display = 'none';
+        
+        // Ensure player is visible
+        const playerEl = document.getElementById('youtube-player');
+        if (playerEl) playerEl.style.visibility = 'visible';
         
         maxTimeWatched = 0;
         clearInterval(antiSkipInterval);
@@ -2121,7 +2141,14 @@ document.addEventListener('DOMContentLoaded', () => {
                     'onPlaybackRateChange': onPlaybackRateChange,
                     'onError': (e) => {
                         console.error("YouTube Player Error:", e.data);
-                        alert("This video might be unavailable for embedding. We recommend searching the title on YouTube directly or trying the next lesson.");
+                        // 101 or 150 = Embedding restricted
+                        if (e.data === 101 || e.data === 150) {
+                            document.getElementById('video-error-overlay').style.display = 'flex';
+                            const playerEl = document.getElementById('youtube-player');
+                            if (playerEl) playerEl.style.visibility = 'hidden';
+                        } else {
+                            alert("This video might be unavailable. We recommend searching the title on YouTube directly or trying the next lesson.");
+                        }
                     }
                 }
             });

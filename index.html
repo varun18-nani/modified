@@ -566,6 +566,21 @@
                                     <button class="btn-primary" id="start-video-quiz-btn">Take Lesson Quiz</button>
                                 </div>
                             </div>
+                            <div class="video-overlay" id="video-error-overlay" style="display: none; background: rgba(10, 10, 12, 0.95); backdrop-filter: blur(8px);">
+                                <div class="overlay-content">
+                                    <i data-lucide="alert-triangle" style="width: 48px; height: 48px; color: var(--danger); margin-bottom: 15px;"></i>
+                                    <h3 style="color: white; margin-bottom: 10px;">Embedding Restricted</h3>
+                                    <p style="color: var(--text-secondary); margin-bottom: 20px;">The owner of this video restricts playback on external sites. Watch it on YouTube and then come back to finish your assessment!</p>
+                                    <div style="display: flex; gap: 12px; justify-content: center;">
+                                        <button class="btn-primary" id="watch-on-youtube-btn" style="background: rgba(255,255,255,0.1); border: 1px solid var(--glass-border);">
+                                            <i data-lucide="external-link" style="width: 16px; margin-right: 8px;"></i> Watch on YouTube
+                                        </button>
+                                        <button class="btn-primary" id="error-skip-to-quiz">
+                                            Unlock Assessment
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
 
                         <div class="video-info">
