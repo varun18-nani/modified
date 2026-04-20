@@ -245,7 +245,56 @@ def reset_user_data(user_id: str):
     return {"success": True, "message": f"All data for {user_id} cleared."}
 
 # =============================================
-# FRONTEND SERVING (MUST BE AT THE END)
+# OTP PASSWORD RESET (Simulated)
 # =============================================
+
+import random
+
+# Store OTPs in memory for simulation (email -> {"otp": "123456", "expires": datetime})
+SIMULATED_OTPS = {}
+
+class OTPRequestPayload(BaseModel):
+    email: str
+
+class OTPVerifyPayload(BaseModel):
+    email: str
+    otp: str
+    new_password: str
+
+@app.post("/api/auth/otp/send")
+def send_otp(payload: OTPRequestPayload):
+    """Simulate sending an OTP to the user's email."""
+    # In a real app, integrate SMTP/SendGrid here
+    # generate 6 digit OTP
+    otp = str(random.randint(100000, 999999))
+    expires = datetime.utcnow() + timedelta(minutes=10)
+    
+    SIMULATED_OTPS[payload.email] = {"otp": otp, "expires": expires}
+    print(f"\n[SIMULATE EMAIL] To: {payload.email} | Subject: Password Reset OTP | Code: {otp}\n")
+    
+    return {"success": True, "message": f"OTP successfully sent to {payload.email}"}
+
+@app.post("/api/auth/otp/reset")
+def reset_password(payload: OTPVerifyPayload):
+    """Verify OTP and simulate password update."""
+    record = SIMULATED_OTPS.get(payload.email)
+    
+    if not record:
+        raise HTTPException(status_code=400, detail="No OTP requested for this email.")
+    if datetime.utcnow() > record["expires"]:
+        del SIMULATED_OTPS[payload.email]
+        raise HTTPException(status_code=400, detail="OTP has expired.")
+    if record["otp"] != payload.otp:
+        raise HTTPException(status_code=400, detail="Invalid OTP entered.")
+    
+    # In a real app, use firebase-admin to actually update the password:
+    # auth.update_user(uid, password=payload.new_password)
+    print(f"\n[SIMULATE FIREBASE] User password for {payload.email} updated to {payload.new_password}\n")
+    
+    # Cleanup OTP
+    del SIMULATED_OTPS[payload.email]
+    
+    return {"success": True, "message": "Password successfully reset. Please log in with your new password."}
+
 FRONTEND_DIR = os.path.dirname(os.path.dirname(__file__))
 app.mount("/", StaticFiles(directory=FRONTEND_DIR, html=True), name="static")

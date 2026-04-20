@@ -1,4 +1,4 @@
-import { auth, db, storage, googleProvider, signInWithPopup, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut, onAuthStateChanged, doc, setDoc, getDoc, updateDoc, ref, uploadBytes, getDownloadURL } from './firebase-config.js';
+import { auth, db, storage, googleProvider, signInWithPopup, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut, onAuthStateChanged, doc, setDoc, getDoc, updateDoc, ref, uploadBytes, getDownloadURL, sendPasswordResetEmail } from './firebase-config.js';
 
 let currentUser = null;
 
@@ -1661,9 +1661,21 @@ document.addEventListener('DOMContentLoaded', () => {
         let isRegistering = false;
 
         // Helper: show inline auth error
-        function showAuthError(msg) {
+        function showAuthError(msg, type = 'error') {
             const el = document.getElementById('auth-error-msg');
-            if (el) { el.textContent = msg; el.style.display = 'block'; }
+            if (el) { 
+                el.textContent = msg; 
+                el.style.display = 'block'; 
+                if (type === 'success') {
+                    el.style.color = '#15803d';
+                    el.style.backgroundColor = 'rgba(34,197,94,0.12)';
+                    el.style.borderColor = 'rgba(34,197,94,0.4)';
+                } else {
+                    el.style.color = '#ef4444';
+                    el.style.backgroundColor = 'rgba(239,68,68,0.12)';
+                    el.style.borderColor = 'rgba(239,68,68,0.4)';
+                }
+            }
         }
         function clearAuthError() {
             const el = document.getElementById('auth-error-msg');
@@ -1751,6 +1763,111 @@ document.addEventListener('DOMContentLoaded', () => {
                 btn.innerHTML = originalText;
             }
         });
+
+        const forgotPasswordLink = document.getElementById('forgot-password');
+        const fpModal = document.getElementById('forgot-password-modal');
+        const closeFpModal = document.getElementById('close-fp-modal');
+        const fpErrorMsg = document.getElementById('fp-error-msg');
+        const fpSuccessMsg = document.getElementById('fp-success-msg');
+        const fpStep1 = document.getElementById('fp-step-1');
+        const fpStep2 = document.getElementById('fp-step-2');
+        
+        function showFPMessage(msg, type='error') {
+            if (type === 'error') {
+                fpErrorMsg.textContent = msg;
+                fpErrorMsg.style.display = 'block';
+                fpSuccessMsg.style.display = 'none';
+            } else {
+                fpSuccessMsg.textContent = msg;
+                fpSuccessMsg.style.display = 'block';
+                fpErrorMsg.style.display = 'none';
+            }
+        }
+
+        if (forgotPasswordLink && fpModal) {
+            forgotPasswordLink.addEventListener('click', (e) => {
+                e.preventDefault();
+                fpErrorMsg.style.display = 'none';
+                fpSuccessMsg.style.display = 'none';
+                fpStep1.style.display = 'block';
+                fpStep2.style.display = 'none';
+                fpModal.style.display = 'flex';
+                
+                const currentEmail = document.getElementById('email').value.trim();
+                if (currentEmail) document.getElementById('fp-email').value = currentEmail;
+            });
+
+            closeFpModal.addEventListener('click', () => {
+                fpModal.style.display = 'none';
+            });
+
+            document.getElementById('fp-send-otp-btn').addEventListener('click', async () => {
+                const email = document.getElementById('fp-email').value.trim();
+                if (!isValidEmail(email)) {
+                    showFPMessage('⚠️ Please enter a valid email address.');
+                    return;
+                }
+                const btn = document.getElementById('fp-send-otp-btn');
+                const prevHtml = btn.innerHTML;
+                btn.innerHTML = '<i data-lucide="loader-2" class="spin"></i> Sending...';
+                try {
+                    const res = await fetch('http://localhost:8000/api/auth/otp/send', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ email })
+                    });
+                    const data = await res.json();
+                    if (data.success) {
+                        showFPMessage('✅ OTP sent successfully. Please check your inbox.', 'success');
+                        fpStep1.style.display = 'none';
+                        fpStep2.style.display = 'block';
+                    } else {
+                        showFPMessage('❌ ' + (data.detail || 'Failed to send OTP.'));
+                    }
+                } catch (err) {
+                    showFPMessage('❌ Network error. Make sure the Python backend is running.');
+                } finally {
+                    btn.innerHTML = prevHtml;
+                }
+            });
+
+            document.getElementById('fp-reset-btn').addEventListener('click', async () => {
+                const email = document.getElementById('fp-email').value.trim();
+                const otp = document.getElementById('fp-otp').value.trim();
+                const newPassword = document.getElementById('fp-new-password').value;
+                const confirmPassword = document.getElementById('fp-confirm-password').value;
+
+                if (otp.length !== 6) return showFPMessage('⚠️ OTP must be exactly 6 digits.');
+                if (newPassword.length < 6) return showFPMessage('⚠️ Password must be at least 6 characters.');
+                if (newPassword !== confirmPassword) return showFPMessage('⚠️ Passwords do not match.');
+
+                const btn = document.getElementById('fp-reset-btn');
+                const prevHtml = btn.innerHTML;
+                btn.innerHTML = '<i data-lucide="loader-2" class="spin"></i> Resetting...';
+                
+                try {
+                    const res = await fetch('http://localhost:8000/api/auth/otp/reset', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ email, otp, new_password: newPassword })
+                    });
+                    const data = await res.json();
+                    if (data.success || res.ok) {
+                        showFPMessage('✅ Password reset securely. You can now log in.', 'success');
+                        setTimeout(() => {
+                            fpModal.style.display = 'none';
+                            document.getElementById('password').value = '';
+                        }, 2500);
+                    } else {
+                        showFPMessage('❌ ' + (data.detail || 'Failed to reset password.'));
+                    }
+                } catch (err) {
+                    showFPMessage('❌ Network error. Make sure the Python backend is running.');
+                } finally {
+                    btn.innerHTML = prevHtml;
+                }
+            });
+        }
 
         googleLogin.addEventListener('click', async () => {
             clearAuthError();
