@@ -2115,7 +2115,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
         lucide.createIcons();
     }
-
+    function loadVideo(index) {
         const video = activePlaylist[index];
         document.getElementById('current-video-title').textContent = video.title;
         document.getElementById('video-quiz-overlay').style.display = 'none';
