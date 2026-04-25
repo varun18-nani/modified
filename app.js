@@ -1,4 +1,4 @@
-import { auth, db, storage, googleProvider, signInWithPopup, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut, onAuthStateChanged, doc, setDoc, getDoc, updateDoc, ref, uploadBytes, getDownloadURL, sendPasswordResetEmail } from './firebase-config.js';
+import { api } from './backend-api.js';
 
 let currentUser = null;
 
@@ -55,9 +55,8 @@ document.addEventListener('DOMContentLoaded', () => {
     setInterval(() => {
         if (currentUser) {
             userData.timeSpent = (userData.timeSpent || 0) + 1;
-            // Background sync every 5 mins or on view switch
             if (userData.timeSpent % 5 === 0) {
-                updateDoc(doc(db, 'users', currentUser.uid), { timeSpent: userData.timeSpent });
+                api.updateProfile({ time_spent: userData.timeSpent });
             }
         }
     }, 60000);
@@ -82,45 +81,19 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function checkAuth() {
-        onAuthStateChanged(auth, async (user) => {
+        api.onAuthStateChanged(async (user) => {
             if (user) {
-                currentUser = user;
-                try {
-                    const snap = await getDoc(doc(db, 'users', user.uid));
-                    if (snap.exists()) {
-                        userData = snap.data();
-                        if (!userData.scores) userData.scores = {};
-                        if (!userData.completedSkills) userData.completedSkills = [];
-                        if (!userData.profile) userData.profile = {};
-                        if (!userData.videoProgress) userData.videoProgress = {};
-                        // Always sync latest auth data into profile
-                        let profileUpdated = false;
-                        if (!userData.profile.name) { userData.profile.name = user.displayName || 'User'; profileUpdated = true; }
-                        if (!userData.profile.email) { userData.profile.email = user.email; profileUpdated = true; }
-                        if (!userData.profile.goal) { userData.profile.goal = 'Not Set'; profileUpdated = true; }
-                        // Sync Google/provider photo if profile has no custom photo
-                        if (!userData.profile.photoURL && user.photoURL) {
-                            userData.profile.photoURL = user.photoURL;
-                            profileUpdated = true;
-                        }
-                        if (profileUpdated) {
-                            await updateDoc(doc(db, 'users', user.uid), { profile: userData.profile });
-                        }
-                    } else {
-                        userData = {
-                            scores: {},
-                            completedSkills: [],
-                            profile: { name: user.displayName || 'User', email: user.email, goal: 'Not Set', photoURL: user.photoURL || '' },
-                            videoProgress: {}
-                        };
-                        await setDoc(doc(db, 'users', user.uid), userData);
-                    }
-                    updateProfileUI();
-                    showDashboard();
-                } catch (e) {
-                    console.error("Error fetching user data:", e);
-                    showDashboard();
-                }
+                currentUser = user; // user object from api.js already contains progress data
+                userData = {
+                    scores: user.scores || {},
+                    completedSkills: user.completedSkills || [],
+                    profile: user.profile || {},
+                    videoProgress: user.videoProgress || {},
+                    timeSpent: user.stats.time_spent || 0,
+                    problemsSolved: user.stats.problems_solved || 0
+                };
+                updateProfileUI();
+                showDashboard();
             } else {
                 currentUser = null;
                 userData = { scores: {}, completedSkills: [], profile: {} };
@@ -132,7 +105,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function updateProfileUI() {
         if (!userData || !userData.profile) return;
         const { name, email, goal } = userData.profile;
-        // Fallback: use Firestore photoURL, then Firebase Auth photoURL, then empty
+        // Fallback: use profile photoURL, then empty
         const photoURL = userData.profile.photoURL || (currentUser && currentUser.photoURL) || '';
         const nameVal = name || 'User';
         
@@ -908,9 +881,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         if (currentUser) {
-            updateDoc(doc(db, 'users', currentUser.uid), {
-                [`scores.${pathKey}`]: userData.scores[pathKey]
-            }).catch(e => console.error(e));
+            api.saveScore(pathKey, 0, pct).catch(e => console.error(e));
         }
 
         document.getElementById('diag-message').textContent = message;
@@ -1328,7 +1299,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 userData.dailyHours = hours;
                 // Persist
                 if (currentUser) {
-                    updateDoc(doc(db, 'users', currentUser.uid), { dailyHours: hours }).catch(e => console.error(e));
+                    api.updateProfile({ dailyHours: hours }).catch(e => console.error(e));
                 }
                 // Re-render schedule
                 if (currentPath) {
@@ -1412,13 +1383,11 @@ document.addEventListener('DOMContentLoaded', () => {
         const { pathKey, milestoneIndex, questions, score } = activeTestState;
         const pct = Math.round((score / questions.length) * 100);
 
-        // Save score to Firebase
+        // Save score to Database
         if (!userData.scores[pathKey]) userData.scores[pathKey] = {};
         userData.scores[pathKey][milestoneIndex] = pct;
         if (currentUser) {
-            updateDoc(doc(db, 'users', currentUser.uid), {
-                [`scores.${pathKey}`]: userData.scores[pathKey]
-            }).catch(e => console.error("Error saving score:", e));
+            api.saveScore(pathKey, milestoneIndex, pct).catch(e => console.error("Error saving score:", e));
         }
 
         // Update result UI
@@ -1759,9 +1728,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
             try {
                 if (isRegistering) {
-                    await createUserWithEmailAndPassword(auth, email, password);
+                    await api.register(email, password, fullName);
+                    await api.login(email, password);
                 } else {
-                    await signInWithEmailAndPassword(auth, email, password);
+                    await api.login(email, password);
                 }
                 clearAuthError();
             } catch (error) {
@@ -1906,12 +1876,12 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         signOutBtn.addEventListener('click', async () => {
-            await signOut(auth);
+            await api.logout();
         });
 
         // --- Sidebar Listeners ---
         sidebarSignOutBtn.addEventListener('click', async () => {
-            await signOut(auth);
+            await api.logout();
         });
 
         navItems.forEach(item => {
@@ -1956,7 +1926,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function setupProfileEditListeners() {
         // New Design Listeners
         const signOutBtnNew = document.getElementById('sign-out-btn-new');
-        if (signOutBtnNew) signOutBtnNew.onclick = () => signOut(auth);
+        if (signOutBtnNew) signOutBtnNew.onclick = () => api.logout();
 
         const openEditBtnNew = document.getElementById('open-edit-profile-btn-new');
         if (openEditBtnNew) {
@@ -1990,11 +1960,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (loadingOverlay) loadingOverlay.style.display = 'flex';
                 
                 try {
-                    const storageRef = ref(storage, `profile_photos/${currentUser.uid}`);
-                    await uploadBytes(storageRef, file);
-                    const photoURL = await getDownloadURL(storageRef);
-                    userData.profile = { ...userData.profile, photoURL };
-                    await updateDoc(doc(db, 'users', currentUser.uid), { profile: userData.profile });
+                    const res = await api.uploadAvatar(file);
+                    userData.profile = { ...userData.profile, photoURL: res.photoURL };
                     updateProfileUI();
                 } catch (err) {
                     console.error(err);
@@ -2019,7 +1986,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const goal = document.getElementById('edit-profile-goal').value;
             userData.profile = { ...userData.profile, name, goal };
             if (currentUser) {
-                await updateDoc(doc(db, 'users', currentUser.uid), { profile: userData.profile });
+                await api.updateProfile(userData.profile);
             }
             updateProfileUI();
             document.getElementById('profile-edit-modal').style.display = 'none';
@@ -2424,7 +2391,7 @@ document.addEventListener('DOMContentLoaded', () => {
             activeTestState.score = activeTestState.questions.length || 1;
             
             if (currentUser) {
-                updateDoc(doc(db, 'users', currentUser.uid), { problemsSolved: userData.problemsSolved });
+                api.updateProfile({ problemsSolved: userData.problemsSolved });
             }
             
             showTestResults();
@@ -2451,7 +2418,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     userData.problemsSolved = (userData.problemsSolved || 0) + 1;
                     
                     if (currentUser) {
-                        await updateDoc(doc(db, 'users', currentUser.uid), {
+                        await api.updateProfile({
                             videoProgress: userData.videoProgress,
                             problemsSolved: userData.problemsSolved
                         });

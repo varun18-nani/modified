@@ -1,16 +1,26 @@
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, Depends, HTTPException, status, File, UploadFile
+from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
-from pydantic import BaseModel
-from typing import Dict, Any, List, Optional
-import json
-import os
+from sqlalchemy.orm import Session
+from jose import JWTError, jwt
 from datetime import datetime, timedelta
-import uuid
+import os
+import shutil
+from uuid import UUID
 
-app = FastAPI(title="Career Roadmap API", version="1.0.0")
+from . import models, schemas, auth, database
+from .database import engine, get_db
 
-# Allow frontend (file:// or localhost) to call the API
+# Create database tables
+models.Base.metadata.create_all(bind=engine)
+
+app = FastAPI(title="Career Roadmap API", version="2.0.0")
+
+# Security
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl="api/auth/token")
+
+# CORS
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -19,282 +29,245 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-@app.middleware("http")
-async def add_security_headers(request, call_next):
-    response = await call_next(request)
-    response.headers["Cross-Origin-Opener-Policy"] = "same-origin-allow-popups"
-    return response
-
-DATA_DIR = os.path.join(os.path.dirname(__file__), "data")
-os.makedirs(DATA_DIR, exist_ok=True)
-
-
-# =============================================
-# HELPERS
-# =============================================
-
-def get_user_dir(user_id: str) -> str:
-    path = os.path.join(DATA_DIR, user_id)
-    os.makedirs(path, exist_ok=True)
-    return path
-
-def read_json(filepath: str, default=None):
-    if os.path.exists(filepath):
-        with open(filepath, "r") as f:
-            return json.load(f)
-    return default if default is not None else {}
-
-def write_json(filepath: str, data):
-    with open(filepath, "w") as f:
-        json.dump(data, f, indent=2)
-
+# Helper to get current user from token
+async def get_current_user(token: str = Depends(oauth2_scheme), db: Session = Depends(get_db)):
+    credentials_exception = HTTPException(
+        status_code=status.HTTP_401_UNAUTHORIZED,
+        detail="Could not validate credentials",
+        headers={"WWW-Authenticate": "Bearer"},
+    )
+    try:
+        payload = jwt.decode(token, auth.SECRET_KEY, algorithms=[auth.ALGORITHM])
+        email: str = payload.get("sub")
+        if email is None:
+            raise credentials_exception
+        token_data = schemas.TokenData(email=email)
+    except JWTError:
+        raise credentials_exception
+    user = db.query(models.User).filter(models.User.email == token_data.email).first()
+    if user is None:
+        raise credentials_exception
+    return user
 
 # =============================================
-# MODELS
+# AUTH ENDPOINTS
 # =============================================
 
-class TestScorePayload(BaseModel):
-    user_id: str
-    course_id: str
-    module_index: int
-    score: int  # 0-100
+@app.post("/api/auth/register", response_model=schemas.UserProfile)
+def register_user(user: schemas.UserCreate, db: Session = Depends(get_db)):
+    db_user = db.query(models.User).filter(models.User.email == user.email).first()
+    if db_user:
+        raise HTTPException(status_code=400, detail="Email already registered")
+    
+    hashed_password = auth.get_password_hash(user.password)
+    new_user = models.User(
+        email=user.email,
+        password_hash=hashed_password,
+        full_name=user.full_name
+    )
+    db.add(new_user)
+    db.commit()
+    db.refresh(new_user)
+    return new_user
 
-class ScheduleEntry(BaseModel):
-    module_index: int
-    title: str
-    level: str
-    weeks: int
-    start_date: str   # ISO date string
-    end_date: str
-    status: str       # on-track | review | revisit | upcoming
-    status_label: str
-    pace: str
-    skills: List[str]
-
-class SchedulePayload(BaseModel):
-    user_id: str
-    course_id: str
-    schedule: List[ScheduleEntry]
-
-class ProfilePayload(BaseModel):
-    user_id: str
-    name: Optional[str] = None
-    email: Optional[str] = None
-    career_goal: Optional[str] = None
-
+@app.post("/api/auth/token", response_model=schemas.Token)
+async def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends(), db: Session = Depends(get_db)):
+    user = db.query(models.User).filter(models.User.email == form_data.username).first()
+    if not user or not auth.verify_password(form_data.password, user.password_hash):
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Incorrect email or password",
+            headers={"WWW-Authenticate": "Bearer"},
+        )
+    access_token_expires = timedelta(minutes=auth.ACCESS_TOKEN_EXPIRE_MINUTES)
+    access_token = auth.create_access_token(
+        data={"sub": user.email}, expires_delta=access_token_expires
+    )
+    return {"access_token": access_token, "token_type": "bearer"}
 
 # =============================================
-# ROOT
+# USER PROFILE & PROGRESS
 # =============================================
 
-@app.get("/api")
-def root():
-    return {"message": "Career Roadmap API is running 🚀", "version": "1.0.0"}
+@app.get("/api/user/profile", response_model=schemas.UserProfile)
+async def read_user_profile(current_user: models.User = Depends(get_current_user)):
+    return current_user
 
+@app.patch("/api/user/profile", response_model=schemas.UserProfile)
+async def update_user_profile(
+    profile_update: schemas.UserUpdate, 
+    current_user: models.User = Depends(get_current_user),
+    db: Session = Depends(get_db)
+):
+    if profile_update.full_name is not None:
+        current_user.full_name = profile_update.full_name
+    if profile_update.career_goal is not None:
+        current_user.career_goal = profile_update.career_goal
+    if profile_update.photo_url is not None:
+        current_user.photo_url = profile_update.photo_url
+    if profile_update.time_spent is not None:
+        current_user.time_spent = profile_update.time_spent
+    if profile_update.problems_solved is not None:
+        current_user.problems_solved = profile_update.problems_solved
+    
+    db.commit()
+    db.refresh(current_user)
+    return current_user
+
+@app.get("/api/user/progress")
+async def get_user_progress(
+    current_user: models.User = Depends(get_current_user),
+    db: Session = Depends(get_db)
+):
+    scores = db.query(models.TestScore).filter(models.TestScore.user_id == current_user.id).all()
+    schedules = db.query(models.Schedule).filter(models.Schedule.user_id == current_user.id).all()
+    
+    # Structure data for frontend compatibility
+    score_map = {}
+    for s in scores:
+        if s.course_id not in score_map:
+            score_map[s.course_id] = {}
+        score_map[s.course_id][str(s.module_index)] = s.score
+        
+    schedule_list = []
+    for sch in schedules:
+        items = db.query(models.ScheduleItem).filter(models.ScheduleItem.schedule_id == sch.id).all()
+        schedule_list.append({
+            "course_id": sch.course_id,
+            "items": items
+        })
+
+    total_tests = len(scores)
+    avg_score = 0
+    if total_tests > 0:
+        avg_score = round(sum(s.score for s in scores) / total_tests)
+
+    return {
+        "user_id": str(current_user.id),
+        "profile": {
+            "name": current_user.full_name,
+            "email": current_user.email,
+            "goal": current_user.career_goal,
+            "photoURL": current_user.photo_url
+        },
+        "stats": {
+            "total_tests_taken": total_tests,
+            "average_score": avg_score,
+            "time_spent": current_user.time_spent,
+            "problems_solved": current_user.problems_solved,
+            "member_level": "Senior" if total_tests > 10 else "Intermediate" if total_tests > 5 else "Junior"
+        },
+        "scores": score_map,
+        "schedules": schedule_list
+    }
+
+@app.post("/api/upload")
+async def upload_file(
+    file: UploadFile = File(...),
+    current_user: models.User = Depends(get_current_user),
+    db: Session = Depends(get_db)
+):
+    upload_dir = os.path.join(FRONTEND_DIR, "uploads")
+    if not os.path.exists(upload_dir):
+        os.makedirs(upload_dir)
+    
+    file_path = os.path.join(upload_dir, f"{current_user.id}_{file.filename}")
+    with open(file_path, "wb") as buffer:
+        shutil.copyfileobj(file.file, buffer)
+    
+    photo_url = f"/uploads/{current_user.id}_{file.filename}"
+    current_user.photo_url = photo_url
+    db.commit()
+    
+    return {"photoURL": photo_url}
 
 # =============================================
 # TEST SCORES
 # =============================================
 
 @app.post("/api/test/save")
-def save_test_score(payload: TestScorePayload):
-    """Save a module test score for a user and course."""
-    user_dir = get_user_dir(payload.user_id)
-    filepath = os.path.join(user_dir, "test_scores.json")
-    scores = read_json(filepath, {})
-
-    if payload.course_id not in scores:
-        scores[payload.course_id] = {}
-
-    scores[payload.course_id][str(payload.module_index)] = payload.score
-    write_json(filepath, scores)
-
-    return {
-        "success": True,
-        "user_id": payload.user_id,
-        "course_id": payload.course_id,
-        "module_index": payload.module_index,
-        "score": payload.score,
-        "saved_at": datetime.utcnow().isoformat()
-    }
-
-
-@app.get("/api/test/{user_id}/{course_id}")
-def get_test_scores(user_id: str, course_id: str):
-    """Retrieve all test scores for a user+course combo."""
-    user_dir = get_user_dir(user_id)
-    filepath = os.path.join(user_dir, "test_scores.json")
-    all_scores = read_json(filepath, {})
-    course_scores = all_scores.get(course_id, {})
-    # Convert keys to integers for frontend convenience
-    return {
-        "user_id": user_id,
-        "course_id": course_id,
-        "scores": {int(k): v for k, v in course_scores.items()}
-    }
-
+async def save_test_score(
+    score_data: schemas.TestScoreCreate,
+    current_user: models.User = Depends(get_current_user),
+    db: Session = Depends(get_db)
+):
+    # Check if exists, update or create
+    existing = db.query(models.TestScore).filter(
+        models.TestScore.user_id == current_user.id,
+        models.TestScore.course_id == score_data.course_id,
+        models.TestScore.module_index == score_data.module_index
+    ).first()
+    
+    if existing:
+        existing.score = score_data.score
+        existing.created_at = datetime.utcnow()
+    else:
+        new_score = models.TestScore(
+            user_id=current_user.id,
+            course_id=score_data.course_id,
+            module_index=score_data.module_index,
+            score=score_data.score
+        )
+        db.add(new_score)
+    
+    db.commit()
+    return {"success": True}
 
 # =============================================
 # SCHEDULE
 # =============================================
 
 @app.post("/api/schedule/save")
-def save_schedule(payload: SchedulePayload):
-    """Save the AI-generated adaptive schedule for a user+course."""
-    user_dir = get_user_dir(payload.user_id)
-    filepath = os.path.join(user_dir, "schedules.json")
-    schedules = read_json(filepath, {})
-
-    schedules[payload.course_id] = [entry.dict() for entry in payload.schedule]
-    write_json(filepath, schedules)
-
-    return {
-        "success": True,
-        "user_id": payload.user_id,
-        "course_id": payload.course_id,
-        "modules_scheduled": len(payload.schedule),
-        "saved_at": datetime.utcnow().isoformat()
-    }
-
-
-@app.get("/api/schedule/{user_id}/{course_id}")
-def get_schedule(user_id: str, course_id: str):
-    """Retrieve the saved adaptive schedule for a user+course."""
-    user_dir = get_user_dir(user_id)
-    filepath = os.path.join(user_dir, "schedules.json")
-    schedules = read_json(filepath, {})
-    schedule = schedules.get(course_id, [])
-    return {
-        "user_id": user_id,
-        "course_id": course_id,
-        "schedule": schedule
-    }
-
-
-# =============================================
-# PROFILE & PROGRESS
-# =============================================
-
-@app.post("/api/user/profile")
-def save_profile(payload: ProfilePayload):
-    """Save or update user profile data."""
-    user_dir = get_user_dir(payload.user_id)
-    filepath = os.path.join(user_dir, "profile.json")
-    profile = read_json(filepath, {})
-    if payload.name:
-        profile["name"] = payload.name
-    if payload.email:
-        profile["email"] = payload.email
-    if payload.career_goal:
-        profile["career_goal"] = payload.career_goal
-    profile["updated_at"] = datetime.utcnow().isoformat()
-    write_json(filepath, profile)
-    return {"success": True, "profile": profile}
-
-
-@app.get("/api/user/{user_id}/profile")
-def get_profile(user_id: str):
-    user_dir = get_user_dir(user_id)
-    filepath = os.path.join(user_dir, "profile.json")
-    return read_json(filepath, {"user_id": user_id})
-
-
-@app.get("/api/user/{user_id}/progress")
-def get_user_progress(user_id: str):
-    """Full progress summary: all scores, all schedules, profile."""
-    user_dir = get_user_dir(user_id)
-
-    scores = read_json(os.path.join(user_dir, "test_scores.json"), {})
-    schedules = read_json(os.path.join(user_dir, "schedules.json"), {})
-    profile = read_json(os.path.join(user_dir, "profile.json"), {})
-
-    # Compute stats
-    total_tests = sum(len(v) for v in scores.values())
-    total_courses_started = len(scores)
-    avg_score = 0
-    all_scores_flat = [s for course in scores.values() for s in course.values()]
-    if all_scores_flat:
-        avg_score = round(sum(all_scores_flat) / len(all_scores_flat))
-
-    return {
-        "user_id": user_id,
-        "profile": profile,
-        "stats": {
-            "total_tests_taken": total_tests,
-            "courses_started": total_courses_started,
-            "average_score": avg_score,
-            "member_level": "Senior" if total_tests > 10 else "Intermediate" if total_tests > 5 else "Junior"
-        },
-        "scores": scores,
-        "schedules": schedules
-    }
-
-
-# =============================================
-# CLEAR / RESET (for dev/testing)
-# =============================================
-
-@app.delete("/api/user/{user_id}/reset")
-def reset_user_data(user_id: str):
-    """Clear all data for a user (dev only)."""
-    user_dir = get_user_dir(user_id)
-    for fname in ["test_scores.json", "schedules.json", "profile.json"]:
-        fpath = os.path.join(user_dir, fname)
-        if os.path.exists(fpath):
-            os.remove(fpath)
-    return {"success": True, "message": f"All data for {user_id} cleared."}
-
-# =============================================
-# OTP PASSWORD RESET (Simulated)
-# =============================================
-
-import random
-
-# Store OTPs in memory for simulation (email -> {"otp": "123456", "expires": datetime})
-SIMULATED_OTPS = {}
-
-class OTPRequestPayload(BaseModel):
-    email: str
-
-class OTPVerifyPayload(BaseModel):
-    email: str
-    otp: str
-    new_password: str
-
-@app.post("/api/auth/otp/send")
-def send_otp(payload: OTPRequestPayload):
-    """Simulate sending an OTP to the user's email."""
-    # In a real app, integrate SMTP/SendGrid here
-    # generate 6 digit OTP
-    otp = str(random.randint(100000, 999999))
-    expires = datetime.utcnow() + timedelta(minutes=10)
+async def save_schedule(
+    schedule_data: schemas.ScheduleCreate,
+    current_user: models.User = Depends(get_current_user),
+    db: Session = Depends(get_db)
+):
+    # Remove old schedule for this course
+    old_sch = db.query(models.Schedule).filter(
+        models.Schedule.user_id == current_user.id,
+        models.Schedule.course_id == schedule_data.course_id
+    ).first()
+    if old_sch:
+        db.query(models.ScheduleItem).filter(models.ScheduleItem.schedule_id == old_sch.id).delete()
+        db.delete(old_sch)
     
-    SIMULATED_OTPS[payload.email] = {"otp": otp, "expires": expires}
-    print(f"\n[SIMULATE EMAIL] To: {payload.email} | Subject: Password Reset OTP | Code: {otp}\n")
+    new_sch = models.Schedule(
+        user_id=current_user.id,
+        course_id=schedule_data.course_id
+    )
+    db.add(new_sch)
+    db.commit()
+    db.refresh(new_sch)
     
-    return {"success": True, "message": f"OTP successfully sent to {payload.email}"}
+    for item in schedule_data.items:
+        db_item = models.ScheduleItem(
+            schedule_id=new_sch.id,
+            module_index=item.module_index,
+            title=item.title,
+            level=item.level,
+            weeks=item.weeks,
+            start_date=item.start_date,
+            end_date=item.end_date,
+            status=item.status,
+            status_label=item.status_label,
+            pace=item.pace,
+            skills=item.skills
+        )
+        db.add(db_item)
+    
+    db.commit()
+    return {"success": True}
 
-@app.post("/api/auth/otp/reset")
-def reset_password(payload: OTPVerifyPayload):
-    """Verify OTP and simulate password update."""
-    record = SIMULATED_OTPS.get(payload.email)
-    
-    if not record:
-        raise HTTPException(status_code=400, detail="No OTP requested for this email.")
-    if datetime.utcnow() > record["expires"]:
-        del SIMULATED_OTPS[payload.email]
-        raise HTTPException(status_code=400, detail="OTP has expired.")
-    if record["otp"] != payload.otp:
-        raise HTTPException(status_code=400, detail="Invalid OTP entered.")
-    
-    # In a real app, use firebase-admin to actually update the password:
-    # auth.update_user(uid, password=payload.new_password)
-    print(f"\n[SIMULATE FIREBASE] User password for {payload.email} updated to {payload.new_password}\n")
-    
-    # Cleanup OTP
-    del SIMULATED_OTPS[payload.email]
-    
-    return {"success": True, "message": "Password successfully reset. Please log in with your new password."}
+# Root and Static files
+@app.get("/api")
+def root():
+    return {"message": "Career Roadmap PostgreSQL API is running 🚀", "version": "2.0.0"}
 
 FRONTEND_DIR = os.path.dirname(os.path.dirname(__file__))
+uploads_dir = os.path.join(FRONTEND_DIR, "uploads")
+if not os.path.exists(uploads_dir):
+    os.makedirs(uploads_dir)
+
+app.mount("/uploads", StaticFiles(directory=uploads_dir), name="uploads")
 app.mount("/", StaticFiles(directory=FRONTEND_DIR, html=True), name="static")
