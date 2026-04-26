@@ -23,6 +23,8 @@ class UserUpdate(BaseModel):
     photo_url: Optional[str] = None
     time_spent: Optional[int] = None
     problems_solved: Optional[int] = None
+    daily_hours: Optional[int] = None
+    video_progress: Optional[Dict[str, Any]] = None
 
 class UserProfile(UserBase):
     id: UUID
@@ -31,10 +33,12 @@ class UserProfile(UserBase):
     photo_url: Optional[str] = None
     time_spent: int
     problems_solved: int
+    daily_hours: int
+    video_progress: Dict[str, Any]
     created_at: datetime
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 class TestScoreBase(BaseModel):
     course_id: str
@@ -50,7 +54,7 @@ class TestScore(TestScoreBase):
     created_at: datetime
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 class ScheduleItemBase(BaseModel):
     module_index: int
@@ -77,4 +81,4 @@ class Schedule(ScheduleBase):
     items: List[ScheduleItemBase]
 
     class Config:
-        orm_mode = True
+        from_attributes = True

@@ -126,15 +126,10 @@ document.addEventListener('DOMContentLoaded', () => {
         const avatarInitials = document.getElementById('profile-avatar-initials');
         
         if (avatarImg && avatarInitials) {
-            if (photoURL && photoURL.startsWith('http')) {
+            if (photoURL && (photoURL.startsWith('http') || photoURL.startsWith('/uploads/'))) {
                 avatarImg.src = photoURL;
                 avatarImg.style.display = 'block';
                 avatarInitials.style.display = 'none';
-                avatarImg.onerror = () => {
-                    avatarImg.style.display = 'none';
-                    avatarInitials.style.display = 'flex';
-                    avatarInitials.textContent = nameVal.charAt(0).toUpperCase();
-                };
             } else {
                 avatarImg.style.display = 'none';
                 avatarInitials.style.display = 'flex';
@@ -1387,7 +1382,12 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!userData.scores[pathKey]) userData.scores[pathKey] = {};
         userData.scores[pathKey][milestoneIndex] = pct;
         if (currentUser) {
-            api.saveScore(pathKey, milestoneIndex, pct).catch(e => console.error("Error saving score:", e));
+            api.saveScore(pathKey, milestoneIndex, pct)
+                .then(() => {
+                    if (currentPath === pathKey) showRoadmap(pathKey);
+                    updateProfileUI();
+                })
+                .catch(e => console.error("Error saving score:", e));
         }
 
         // Update result UI
@@ -1728,6 +1728,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             try {
                 if (isRegistering) {
+                    const fullName = document.getElementById('fullname').value.trim();
                     await api.register(email, password, fullName);
                     await api.login(email, password);
                 } else {
@@ -1735,22 +1736,26 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
                 clearAuthError();
             } catch (error) {
-                let message = 'An error occurred. Please try again.';
-                switch (error.code) {
-                    case 'auth/user-not-found':
-                    case 'auth/wrong-password':
-                    case 'auth/invalid-credential':
-                        message = '❌ Invalid email or password. Please check and try again.'; break;
-                    case 'auth/invalid-email':
-                        message = '⚠️ The email address is not valid.'; break;
-                    case 'auth/email-already-in-use':
-                        message = '⚠️ An account already exists with this email. Please sign in.'; break;
-                    case 'auth/weak-password':
-                        message = '⚠️ Password must be at least 6 characters.'; break;
-                    case 'auth/too-many-requests':
-                        message = '🔒 Too many failed attempts. Please wait and try again.'; break;
-                    case 'auth/network-request-failed':
-                        message = '🌐 Network error. Please check your connection.'; break;
+                let message = error.message || 'An error occurred. Please try again.';
+                if (error.message.includes('fetch') || error.message.includes('Failed to fetch')) {
+                    message = '⚠️ Backend server is not running. Please start the FastAPI server.';
+                } else {
+                    switch (error.code) {
+                        case 'auth/user-not-found':
+                        case 'auth/wrong-password':
+                        case 'auth/invalid-credential':
+                            message = '❌ Invalid email or password. Please check and try again.'; break;
+                        case 'auth/invalid-email':
+                            message = '⚠️ The email address is not valid.'; break;
+                        case 'auth/email-already-in-use':
+                            message = '⚠️ An account already exists with this email. Please sign in.'; break;
+                        case 'auth/weak-password':
+                            message = '⚠️ Password must be at least 6 characters.'; break;
+                        case 'auth/too-many-requests':
+                            message = '🔒 Too many failed attempts. Please wait and try again.'; break;
+                        case 'auth/network-request-failed':
+                            message = '🌐 Network error. Please check your connection.'; break;
+                    }
                 }
                 showAuthError(message);
             } finally {

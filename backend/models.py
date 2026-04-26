@@ -16,6 +16,8 @@ class User(Base):
     photo_url = Column(String)
     time_spent = Column(Integer, default=0)
     problems_solved = Column(Integer, default=0)
+    daily_hours = Column(Integer, default=2)
+    video_progress = Column(JSON, default={})
     created_at = Column(DateTime, default=datetime.utcnow)
     updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
 

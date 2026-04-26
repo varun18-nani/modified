@@ -109,6 +109,11 @@ async def update_user_profile(
         current_user.time_spent = profile_update.time_spent
     if profile_update.problems_solved is not None:
         current_user.problems_solved = profile_update.problems_solved
+    if profile_update.daily_hours is not None:
+        current_user.daily_hours = profile_update.daily_hours
+    if profile_update.video_progress is not None:
+        # Merge progress or replace
+        current_user.video_progress = profile_update.video_progress
     
     db.commit()
     db.refresh(current_user)
@@ -157,6 +162,8 @@ async def get_user_progress(
             "problems_solved": current_user.problems_solved,
             "member_level": "Senior" if total_tests > 10 else "Intermediate" if total_tests > 5 else "Junior"
         },
+        "dailyHours": current_user.daily_hours,
+        "videoProgress": current_user.video_progress,
         "scores": score_map,
         "schedules": schedule_list
     }
