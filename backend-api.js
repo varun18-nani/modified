@@ -1,4 +1,5 @@
-const API_URL = "https://studentcareerroadmap-platform.onrender.com";
+const API_URL = "https://studentcareerroadmapplatform.onrender.com";
+
 
 
 
