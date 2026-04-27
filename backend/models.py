@@ -18,7 +18,9 @@ class User(Base):
     problems_solved = Column(Integer, default=0)
     daily_hours = Column(Integer, default=2)
     video_progress = Column(JSON, default={})
+    completed_skills = Column(JSON, default=[])
     created_at = Column(DateTime, default=datetime.utcnow)
+
     updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
 
     test_scores = relationship("TestScore", back_populates="user")
@@ -104,3 +106,13 @@ class ScheduleItem(Base):
     skills = Column(JSON)
 
     schedule = relationship("Schedule", back_populates="items")
+
+class OTP(Base):
+    __tablename__ = "otps"
+
+    id = Column(Integer, primary_key=True, index=True)
+    email = Column(String, index=True, nullable=False)
+    otp_code = Column(String, nullable=False)
+    expires_at = Column(DateTime, nullable=False)
+    is_used = Column(Integer, default=0) # 0 for false, 1 for true
+

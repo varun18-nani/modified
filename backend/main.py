@@ -7,6 +7,7 @@ from jose import JWTError, jwt
 from datetime import datetime, timedelta
 import os
 import shutil
+import random
 from uuid import UUID
 
 from . import models, schemas, auth, database
@@ -114,6 +115,8 @@ async def update_user_profile(
     if profile_update.video_progress is not None:
         # Merge progress or replace
         current_user.video_progress = profile_update.video_progress
+    if profile_update.completed_skills is not None:
+        current_user.completed_skills = profile_update.completed_skills
     
     db.commit()
     db.refresh(current_user)
@@ -164,6 +167,7 @@ async def get_user_progress(
         },
         "dailyHours": current_user.daily_hours,
         "videoProgress": current_user.video_progress,
+        "completedSkills": current_user.completed_skills,
         "scores": score_map,
         "schedules": schedule_list
     }
@@ -265,6 +269,52 @@ async def save_schedule(
     
     db.commit()
     return {"success": True}
+
+# =============================================
+# PASSWORD RESET (OTP)
+# =============================================
+
+@app.post("/api/auth/otp/send")
+async def send_otp(request: schemas.OTPRequest, db: Session = Depends(get_db)):
+    user = db.query(models.User).filter(models.User.email == request.email).first()
+    if not user:
+        # Don't reveal if user exists for security, but for this app let's be helpful
+        raise HTTPException(status_code=404, detail="User not found")
+    
+    otp_code = "".join([str(random.randint(0, 9)) for _ in range(6)])
+    expires_at = datetime.utcnow() + timedelta(minutes=10)
+    
+    # Save OTP
+    db_otp = models.OTP(email=request.email, otp_code=otp_code, expires_at=expires_at)
+    db.add(db_otp)
+    db.commit()
+    
+    print(f"DEBUG: OTP for {request.email} is {otp_code}") # For user to see in terminal
+    
+    return {"success": True, "message": "OTP sent (check server terminal for code)"}
+
+@app.post("/api/auth/otp/reset")
+async def reset_password(request: schemas.OTPVerify, db: Session = Depends(get_db)):
+    db_otp = db.query(models.OTP).filter(
+        models.OTP.email == request.email,
+        models.OTP.otp_code == request.otp,
+        models.OTP.is_used == 0,
+        models.OTP.expires_at > datetime.utcnow()
+    ).first()
+    
+    if not db_otp:
+        raise HTTPException(status_code=400, detail="Invalid or expired OTP")
+    
+    user = db.query(models.User).filter(models.User.email == request.email).first()
+    if not user:
+        raise HTTPException(status_code=404, detail="User not found")
+    
+    user.password_hash = auth.get_password_hash(request.new_password)
+    db_otp.is_used = 1
+    db.commit()
+    
+    return {"success": True, "message": "Password reset successfully"}
+
 
 # Root and Static files
 @app.get("/api")

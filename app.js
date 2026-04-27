@@ -1,4 +1,4 @@
-import { api } from './backend-api.js';
+import { api, API_URL } from './backend-api.js';
 
 let currentUser = null;
 
@@ -67,6 +67,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let activePlaylist = [];
     let maxTimeWatched = 0;
     let antiSkipInterval = null;
+    let currentVideoId = null;
     let isQuizActive = false;
 
     // --- Initialization ---
@@ -1294,7 +1295,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 userData.dailyHours = hours;
                 // Persist
                 if (currentUser) {
-                    api.updateProfile({ dailyHours: hours }).catch(e => console.error(e));
+                    api.updateProfile({ daily_hours: hours }).catch(e => console.error(e));
                 }
                 // Re-render schedule
                 if (currentPath) {
@@ -1384,6 +1385,16 @@ document.addEventListener('DOMContentLoaded', () => {
         if (currentUser) {
             api.saveScore(pathKey, milestoneIndex, pct)
                 .then(() => {
+                    // Update completed skills if passed
+                    if (pct >= 80) {
+                        const milestone = ROADMAP_DATA[pathKey].milestones[milestoneIndex];
+                        milestone.skills.forEach(skill => {
+                            if (!userData.completedSkills.includes(skill.name)) {
+                                userData.completedSkills.push(skill.name);
+                            }
+                        });
+                        api.updateProfile({ completed_skills: userData.completedSkills });
+                    }
                     if (currentPath === pathKey) showRoadmap(pathKey);
                     updateProfileUI();
                 })
@@ -1810,7 +1821,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 const prevHtml = btn.innerHTML;
                 btn.innerHTML = '<i data-lucide="loader-2" class="spin"></i> Sending...';
                 try {
-                    const res = await fetch('http://localhost:8000/api/auth/otp/send', {
+                    const res = await fetch(`${API_URL}/api/auth/otp/send`, {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify({ email })
@@ -1845,7 +1856,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 btn.innerHTML = '<i data-lucide="loader-2" class="spin"></i> Resetting...';
                 
                 try {
-                    const res = await fetch('http://localhost:8000/api/auth/otp/reset', {
+                    const res = await fetch(`${API_URL}/api/auth/otp/reset`, {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify({ email, otp, new_password: newPassword })
@@ -1991,7 +2002,10 @@ document.addEventListener('DOMContentLoaded', () => {
             const goal = document.getElementById('edit-profile-goal').value;
             userData.profile = { ...userData.profile, name, goal };
             if (currentUser) {
-                await api.updateProfile(userData.profile);
+                await api.updateProfile({
+                    full_name: name,
+                    career_goal: goal
+                });
             }
             updateProfileUI();
             document.getElementById('profile-edit-modal').style.display = 'none';
@@ -2126,6 +2140,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const playerEl = document.getElementById('youtube-player');
         if (playerEl) playerEl.style.visibility = 'visible';
         
+        currentVideoId = video.youtubeId;
         maxTimeWatched = 0;
         clearInterval(antiSkipInterval);
 
@@ -2147,6 +2162,11 @@ document.addEventListener('DOMContentLoaded', () => {
                     'onStateChange': onPlayerStateChange,
                     'onReady': (e) => {
                         e.target.setPlaybackRate(1);
+                        const savedTime = (userData.videoProgress && userData.videoProgress[currentVideoId]) || 0;
+                        if (savedTime > 0) {
+                            e.target.seekTo(savedTime);
+                            maxTimeWatched = savedTime;
+                        }
                         startAntiSkipMonitor();
                     },
                     'onPlaybackRateChange': onPlaybackRateChange,
@@ -2166,8 +2186,9 @@ document.addEventListener('DOMContentLoaded', () => {
         } else {
             ytPlayer.loadVideoById({
                 videoId: video.youtubeId,
-                origin: window.location.origin
+                startSeconds: (userData.videoProgress && userData.videoProgress[video.youtubeId]) || 0
             });
+            maxTimeWatched = (userData.videoProgress && userData.videoProgress[video.youtubeId]) || 0;
             ytPlayer.setPlaybackRate(1);
             startAntiSkipMonitor();
         }
@@ -2225,6 +2246,11 @@ document.addEventListener('DOMContentLoaded', () => {
         if (event.data === YT.PlayerState.ENDED) {
             document.getElementById('video-quiz-overlay').style.display = 'flex';
             clearInterval(antiSkipInterval);
+            // Mark as finished (time = -1 or very high)
+            api.saveVideoProgress(currentVideoId, 999999);
+        } else if (event.data === YT.PlayerState.PAUSED) {
+            const currentTime = event.target.getCurrentTime();
+            api.saveVideoProgress(currentVideoId, currentTime);
         }
     }
 
@@ -2396,7 +2422,7 @@ document.addEventListener('DOMContentLoaded', () => {
             activeTestState.score = activeTestState.questions.length || 1;
             
             if (currentUser) {
-                api.updateProfile({ problemsSolved: userData.problemsSolved });
+                api.updateProfile({ problems_solved: userData.problemsSolved });
             }
             
             showTestResults();
@@ -2424,8 +2450,8 @@ document.addEventListener('DOMContentLoaded', () => {
                     
                     if (currentUser) {
                         await api.updateProfile({
-                            videoProgress: userData.videoProgress,
-                            problemsSolved: userData.problemsSolved
+                            video_progress: userData.videoProgress,
+                            problems_solved: userData.problemsSolved
                         });
                     }
                 }

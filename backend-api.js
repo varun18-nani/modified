@@ -1,4 +1,7 @@
-const API_URL = window.location.origin;
+const API_URL = (window.location.port === '8000' || window.location.hostname !== 'localhost') 
+    ? window.location.origin 
+    : 'http://localhost:8000';
+
 
 class API {
     constructor() {
@@ -112,6 +115,13 @@ class API {
         return res.json();
     }
 
+    async saveVideoProgress(videoId, time) {
+        if (!this.user) return;
+        const progress = this.user.videoProgress || {};
+        progress[videoId] = time;
+        return this.updateProfile({ video_progress: progress });
+    }
+
     async uploadAvatar(file) {
         const formData = new FormData();
         formData.append('file', file);
@@ -127,3 +137,5 @@ class API {
 }
 
 export const api = new API();
+export { API_URL };
+

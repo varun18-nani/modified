@@ -25,6 +25,7 @@ class UserUpdate(BaseModel):
     problems_solved: Optional[int] = None
     daily_hours: Optional[int] = None
     video_progress: Optional[Dict[str, Any]] = None
+    completed_skills: Optional[List[str]] = None
 
 class UserProfile(UserBase):
     id: UUID
@@ -35,6 +36,7 @@ class UserProfile(UserBase):
     problems_solved: int
     daily_hours: int
     video_progress: Dict[str, Any]
+    completed_skills: List[str]
     created_at: datetime
 
     class Config:
@@ -82,3 +84,12 @@ class Schedule(ScheduleBase):
 
     class Config:
         from_attributes = True
+
+class OTPRequest(BaseModel):
+    email: EmailStr
+
+class OTPVerify(BaseModel):
+    email: EmailStr
+    otp: str
+    new_password: str
+
