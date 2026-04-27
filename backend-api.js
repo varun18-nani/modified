@@ -1,6 +1,5 @@
-const API_URL = (window.location.port === '8000' || window.location.hostname !== 'localhost') 
-    ? window.location.origin 
-    : 'http://localhost:8000';
+const API_URL = "https://studentcareerroadmap-platform.onrender.com";
+
 
 
 class API {
