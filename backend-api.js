@@ -29,8 +29,17 @@ class API {
             method: 'POST',
             body: formData
         });
-        if (!res.ok) throw new Error('Invalid email or password');
+        
+        if (!res.ok) {
+            if (res.status === 401) throw new Error('Invalid email or password');
+            if (res.status === 405 || res.status === 404) {
+                throw new Error(`API Error: The backend server is not reachable at ${API_URL}. If you are on GitHub Pages, the backend must be hosted separately.`);
+            }
+            throw new Error('Server error. Please make sure the backend is running.');
+        }
+        
         const data = await res.json();
+
         this.token = data.access_token;
         localStorage.setItem('token', this.token);
         await this.checkAuth();
